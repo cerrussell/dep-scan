@@ -1,0 +1,34 @@
+name: CSAF Demo
+
+on:
+  push:
+    branches:
+      - master
+      - demo/csaf
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip setuptools
+        python3 -m pip install .[dev]
+        python3 -m pip install check-jsonschema
+        mkdir -p vuln_spring
+        cd vuln_spring
+        curl -o csaf.toml https://gist.githubusercontent.com/cerrussell/895d983973f79a066db61b7ade765915/raw/f9a4430b6855b647d6645505ca8c72b005db3ddb/vuln-spring.toml
+        curl -o bom.json https://gist.githubusercontent.com/cerrussell/d36743367da8e479c08e293897b13723/raw/b9b125e3aeb773dd847d3325984d267aa4fe5933/vuln-springbom.json
+
+    - name: Run depscan
+      run: |
+        cd vuln_spring
+        python3 ../depscan/cli.py --no-error --bom ./bom.json --csaf
+        cd ..
+        python3 check-jsonschema --schemafile ./contrib/csaf_json_schema.json
+        .vuln_spring/reports/csaf_v2.json
+    - uses: actions/upload-artifact@v1
+      with:
+        path: "./vuln_spring/reports"

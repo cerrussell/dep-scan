@@ -43,8 +43,9 @@ depscan = "depscan.cli:main"
 scan = "depscan.cli:main"
 
 [project.optional-dependencies]
-dev = ["black",
+dev = ["black>=23.11.0",
 "flake8",
+"pre-commit",
 "pytest",
 "pytest-cov",
 "httpretty"
@@ -62,7 +63,7 @@ packages = ["depscan", "depscan.lib", "vendor"]
 addopts = "--verbose --cov-append --cov-report term --cov depscan"
 
 [tool.flake8]
-ignore = "E203, E266, E501, W503, W605"
+ignore = "E203, E266, W503, W605"
 max-line-length = 80
 max-complexity = 18
 select = "B,C,E,F,W,T4,B9"

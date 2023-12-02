@@ -462,3 +462,34 @@ MIT License
 
 This project was donated to the OWASP Foundation in August 2023 by AppThreat
 Ltd.
+
+## Contributing
+
+### Submitting pull requests
+
+We welcome contributions! A few guidelines and considerations to keep in mind:
+
+* Base all your work off of the **master** branch, and rebase and address any
+  merge conflicts that occur.
+
+* Add new tests or update existing ones to demonstrate your code works.
+  Ideally this will occur and all tests will be passing before we go to review.
+
+* Format with black `black -l 80 --preview .`
+    * Preview will still modify the files, but it handles fixing lines that
+      exceed 80 characters that are otherwise left as is.
+
+* Pre-commit is used in the Lint workflow to make sure code in
+  pull-requests is formatted as desired. Use black as specified above. You
+  may check if the pre-commit check for pull requests will pass by running
+  `pre-commit run --all-files` locally.
+
+* Sign your commits with a GPG key that
+  you've [added to your GitHub account](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account).
+  If you don't have a GPG key, it is easy to generate one - just follow the
+  [GitHub docs](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key).
+
+* Be sure
+  your [author field in git](https://www.git-tower.com/learn/git/faq/change-author-name-email)
+  is properly filled out with your name and email address.
+

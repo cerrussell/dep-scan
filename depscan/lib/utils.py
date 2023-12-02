@@ -77,7 +77,9 @@ def is_binary_string(content):
     """
     Method to check if the given content is a binary string
     """
-    textchars = bytearray({7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)) - {0x7F})
+    textchars = bytearray(
+        {7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)) - {0x7F}
+    )
     return bool(content.translate(None, textchars))
 
 
@@ -228,16 +230,22 @@ def search_pkgs(db, project_type, pkg_list):
         version = pkg.get("version")
         if pkg.get("purl"):
             purl_aliases[pkg.get("purl")] = pkg.get("purl")
-            purl_aliases[f"{vendor.lower()}:{name.lower()}:{version}"] = pkg.get("purl")
+            purl_aliases[f"{vendor.lower()}:{name.lower()}:{version}"] = (
+                pkg.get("purl")
+            )
             if not purl_aliases.get(f"{vendor.lower()}:{name.lower()}"):
-                purl_aliases[f"{vendor.lower()}:{name.lower()}"] = pkg.get("purl")
+                purl_aliases[f"{vendor.lower()}:{name.lower()}"] = pkg.get(
+                    "purl"
+                )
         if variations:
             for vari in variations:
                 vari_full_pkg = f"""{vari.get("vendor")}:{vari.get("name")}"""
-                pkg_aliases[f"{vendor.lower()}:{name.lower()}:{version}"].append(
-                    vari_full_pkg
+                pkg_aliases[
+                    f"{vendor.lower()}:{name.lower()}:{version}"
+                ].append(vari_full_pkg)
+                purl_aliases[f"{vari_full_pkg.lower()}:{version}"] = pkg.get(
+                    "purl"
                 )
-                purl_aliases[f"{vari_full_pkg.lower()}:{version}"] = pkg.get("purl")
     quick_res = db_lib.bulk_index_search(expanded_list)
     raw_results = db_lib.pkg_bulk_search(db, quick_res)
     raw_results = normalize.dedup(project_type, raw_results)

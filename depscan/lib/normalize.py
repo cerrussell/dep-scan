@@ -62,7 +62,9 @@ def create_pkg_variations(pkg_dict):
                     name_aliases.add(f"""{os_distro}/{name}""")
                     # almalinux-9.2 becomes almalinux-9
                     if "-" in os_distro and "." in os_distro:
-                        name_aliases.add(f"""{os_distro.rsplit(".", 1)[0]}/{name}""")
+                        name_aliases.add(
+                            f"""{os_distro.rsplit(".", 1)[0]}/{name}"""
+                        )
         except Exception:
             tmp_parts = purl.split(":")
             if tmp_parts and len(tmp_parts) > 1:
@@ -172,18 +174,18 @@ def create_pkg_variations(pkg_dict):
     if len(vendor_aliases) > 0:
         for vvar in list(vendor_aliases):
             for nvar in list(name_aliases):
-                pkg_list.append(
-                    {"vendor": vvar, "name": nvar, "version": pkg_dict["version"]}
-                )
-    else:
-        for nvar in list(name_aliases):
-            pkg_list.append(
-                {
-                    "vendor": pkg_dict.get("vendor"),
+                pkg_list.append({
+                    "vendor": vvar,
                     "name": nvar,
                     "version": pkg_dict["version"],
-                }
-            )
+                })
+    else:
+        for nvar in list(name_aliases):
+            pkg_list.append({
+                "vendor": pkg_dict.get("vendor"),
+                "name": nvar,
+                "version": pkg_dict["version"],
+            })
     return pkg_list
 
 

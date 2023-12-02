@@ -7,7 +7,9 @@ def build_args():
     """
     Constructs command line arguments for the comparison tool
     """
-    parser = argparse.ArgumentParser(description="Compare depscan and trivy results.")
+    parser = argparse.ArgumentParser(
+        description="Compare depscan and trivy results."
+    )
     parser.add_argument(
         "--trivy-json",
         dest="trivy_json",
@@ -67,7 +69,9 @@ def compare(trivy_json, depscan_json):
             f"""{name}:{purl_obj.get("version")}:{line_obj.get("fix_version", "")}"""
         )
         print(
-            line_obj.get("id"), purl_obj.get("version"), line_obj.get("fix_version", "")
+            line_obj.get("id"),
+            purl_obj.get("version"),
+            line_obj.get("fix_version", ""),
         )
     print("-----------------------------------\n")
 
@@ -77,7 +81,10 @@ def compare(trivy_json, depscan_json):
     print("Packages in depscan but not in Trivy")
     print(depscan_pkgs.difference(trivy_pkgs))
 
-    print("CVEs in Trivy but not in depscan. Ignore any CVE which is older than 2018.")
+    print(
+        "CVEs in Trivy but not in depscan. Ignore any CVE which is older than"
+        " 2018."
+    )
     print(trivy_cves.difference(depscan_cves))
 
     print("CVEs in depscan but not in Trivy")

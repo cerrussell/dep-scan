@@ -34,7 +34,12 @@ from depscan.lib.analysis import (
     summary_stats,
 )
 from depscan.lib.audit import audit, risk_audit, risk_audit_map, type_audit_map
-from depscan.lib.bom import create_bom, get_pkg_by_type, get_pkg_list, submit_bom
+from depscan.lib.bom import (
+    create_bom,
+    get_pkg_by_type,
+    get_pkg_list,
+    submit_bom,
+)
 from depscan.lib.config import (
     UNIVERSAL_SCAN_TYPE,
     license_data_dir,
@@ -70,10 +75,14 @@ def build_args():
     Constructs command line arguments for the depscan tool
     """
     parser = argparse.ArgumentParser(
-        description="Fully open-source security and license audit for "
-        "application dependencies and container images based on "
-        "known vulnerabilities and advisories.",
-        epilog="Visit https://github.com/owasp-dep-scan/dep-scan to learn more.",
+        description=(
+            "Fully open-source security and license audit for "
+            "application dependencies and container images based on "
+            "known vulnerabilities and advisories."
+        ),
+        epilog=(
+            "Visit https://github.com/owasp-dep-scan/dep-scan to learn more."
+        ),
     )
     parser.add_argument(
         "--no-banner",
@@ -87,7 +96,9 @@ def build_args():
         action="store_true",
         default=False,
         dest="cache",
-        help="Cache vulnerability information in platform specific " "user_data_dir",
+        help=(
+            "Cache vulnerability information in platform specific user_data_dir"
+        ),
     )
     parser.add_argument(
         "--csaf",
@@ -101,8 +112,10 @@ def build_args():
         action="store_true",
         default=False,
         dest="sync",
-        help="Sync to receive the latest vulnerability data. Should have "
-        "invoked cache first.",
+        help=(
+            "Sync to receive the latest vulnerability data. Should have "
+            "invoked cache first."
+        ),
     )
     parser.add_argument(
         "--profile",
@@ -136,9 +149,11 @@ def build_args():
         "--private-ns",
         dest="private_ns",
         default=os.getenv("PKG_PRIVATE_NAMESPACE"),
-        help="Private namespace to use while performing oss risk audit. "
-        "Private packages should not be available in public registries "
-        "by default. Comma separated values accepted.",
+        help=(
+            "Private namespace to use while performing oss risk audit. "
+            "Private packages should not be available in public registries "
+            "by default. Comma separated values accepted."
+        ),
     )
     parser.add_argument(
         "-t",
@@ -150,8 +165,10 @@ def build_args():
     parser.add_argument(
         "--bom",
         dest="bom",
-        help="Examine using the given Software Bill-of-Materials (SBOM) file "
-        "in CycloneDX format. Use cdxgen command to produce one.",
+        help=(
+            "Examine using the given Software Bill-of-Materials (SBOM) file "
+            "in CycloneDX format. Use cdxgen command to produce one."
+        ),
     )
     parser.add_argument(
         "-i",
@@ -163,12 +180,16 @@ def build_args():
         "-o",
         "--report_file",
         dest="report_file",
-        help="DEPRECATED. Use reports directory since multiple files are "
-        "created. Report filename with directory",
+        help=(
+            "DEPRECATED. Use reports directory since multiple files are "
+            "created. Report filename with directory"
+        ),
     )
     parser.add_argument(
         "--reports-dir",
-        default=os.getenv("DEPSCAN_REPORTS_DIR", os.path.join(os.getcwd(), "reports")),
+        default=os.getenv(
+            "DEPSCAN_REPORTS_DIR", os.path.join(os.getcwd(), "reports")
+        ),
         dest="reports_dir",
         help="Reports directory",
     )
@@ -191,24 +212,30 @@ def build_args():
         action="store_true",
         default=False,
         dest="deep_scan",
-        help="Perform deep scan by passing this --deep argument to cdxgen. "
-        "Useful while scanning docker images and OS packages.",
+        help=(
+            "Perform deep scan by passing this --deep argument to cdxgen. "
+            "Useful while scanning docker images and OS packages."
+        ),
     )
     parser.add_argument(
         "--no-universal",
         action="store_true",
         default=False,
         dest="non_universal_scan",
-        help="Depscan would attempt to perform a single universal scan "
-        "instead of individual scans per language type.",
+        help=(
+            "Depscan would attempt to perform a single universal scan "
+            "instead of individual scans per language type."
+        ),
     )
     parser.add_argument(
         "--no-vuln-table",
         action="store_true",
         default=False,
         dest="no_vuln_table",
-        help="Do not print the table with the full list of vulnerabilities. "
-        "This can help reduce console output.",
+        help=(
+            "Do not print the table with the full list of vulnerabilities. "
+            "This can help reduce console output."
+        ),
     )
     parser.add_argument(
         "--threatdb-server",
@@ -271,7 +298,10 @@ def build_args():
         action="store_true",
         default=False,
         dest="explain",
-        help="Makes depscan to explain the various analysis. Useful for creating detailed reports.",
+        help=(
+            "Makes depscan to explain the various analysis. Useful for creating"
+            " detailed reports."
+        ),
     )
     parser.add_argument(
         "--reachables-slices-file",
@@ -306,7 +336,9 @@ def scan(db, project_type, pkg_list, suggest_mode):
         LOG.debug("Empty package search attempted!")
     else:
         LOG.debug("Scanning %d oss dependencies for issues", len(pkg_list))
-    results, pkg_aliases, purl_aliases = utils.search_pkgs(db, project_type, pkg_list)
+    results, pkg_aliases, purl_aliases = utils.search_pkgs(
+        db, project_type, pkg_list
+    )
     # pkg_aliases is a dict that can be used to find the original vendor and
     # package name This way we consistently use the same names used by the
     # caller irrespective of how the result was obtained
@@ -335,14 +367,12 @@ def scan(db, project_type, pkg_list, suggest_mode):
                             vendor = purl_obj.get("type")
                         name = purl_obj.get("name")
                         version = purl_obj.get("version")
-                        sug_pkg_list.append(
-                            {
-                                "vendor": vendor,
-                                "name": name,
-                                "version": version,
-                                "purl": k,
-                            }
-                        )
+                        sug_pkg_list.append({
+                            "vendor": vendor,
+                            "name": name,
+                            "version": version,
+                            "purl": k,
+                        })
                         continue
                     except Exception:
                         pass
@@ -356,14 +386,16 @@ def scan(db, project_type, pkg_list, suggest_mode):
                 full_pkg = f"{vendor}:{name}:{version}"
                 full_pkg = pkg_aliases.get(full_pkg, full_pkg)
                 vendor, name, version = full_pkg.split(":")
-                sug_pkg_list.append(
-                    {"vendor": vendor, "name": name, "version": version}
-                )
+                sug_pkg_list.append({
+                    "vendor": vendor, "name": name, "version": version
+                })
             LOG.debug(
                 "Re-checking our suggestion to ensure there are no further "
                 "vulnerabilities"
             )
-            override_results, _, _ = utils.search_pkgs(db, project_type, sug_pkg_list)
+            override_results, _, _ = utils.search_pkgs(
+                db, project_type, sug_pkg_list
+            )
             if override_results:
                 new_sug_dict = suggest_version(override_results)
                 LOG.debug("Received override results: %s", new_sug_dict)
@@ -446,15 +478,13 @@ def summarise(
                         components = tools.get("components", [])
                         ds_version = utils.get_version()
                         ds_purl = f"pkg:pypi/owasp-depscan@{ds_version}"
-                        components.append(
-                            {
-                                "type": "application",
-                                "name": "owasp-depscan",
-                                "version": ds_version,
-                                "purl": ds_purl,
-                                "bom-ref": ds_purl,
-                            }
-                        )
+                        components.append({
+                            "type": "application",
+                            "name": "owasp-depscan",
+                            "version": ds_version,
+                            "purl": ds_purl,
+                            "bom-ref": ds_purl,
+                        })
                         tools["components"] = components
                         metadata["tools"] = tools
                         bom_data["metadata"] = metadata
@@ -462,7 +492,9 @@ def summarise(
                     bom_data["vulnerabilities"] = pkg_vulnerabilities
                     with open(vdr_file, mode="w", encoding="utf-8") as vdrfp:
                         json.dump(bom_data, vdrfp, indent=4)
-                        LOG.debug("VDR file %s generated successfully", vdr_file)
+                        LOG.debug(
+                            "VDR file %s generated successfully", vdr_file
+                        )
         except Exception:
             LOG.warning("Unable to generate VDR file for this scan")
     summary = summary_stats(results)
@@ -474,7 +506,8 @@ def download_rafs_based_image():
     nydus_image_command = shutil.which("nydus-image", mode=os.X_OK)
     if nydus_image_command is not None:
         LOG.info(
-            "About to download the vulnerability database from %s. This might take a while ...",
+            "About to download the vulnerability database from %s. This might"
+            " take a while ...",
             vdb_rafs_database_url,
         )
 
@@ -499,11 +532,15 @@ def download_rafs_based_image():
                     os.path.join(rafs_data_dir.name, "meta.rafs"),
                 ]
                 _ = subprocess.run(
-                    nydus_download_command, check=True, stdout=subprocess.DEVNULL
+                    nydus_download_command,
+                    check=True,
+                    stdout=subprocess.DEVNULL,
                 )
                 if os.path.exists(os.path.join(data_dir, "vdb.tar")):
                     rafs_image_downloaded = True
-                    with tarfile.open(os.path.join(data_dir, "vdb.tar"), "r") as tar:
+                    with tarfile.open(
+                        os.path.join(data_dir, "vdb.tar"), "r"
+                    ) as tar:
                         tar.extractall(path=data_dir)
                     os.remove(os.path.join(data_dir, "vdb.tar"))
                 else:
@@ -514,7 +551,9 @@ def download_rafs_based_image():
         except Exception as e:
             LOG.info(f"Error: {e}")
             LOG.info(
-                f"Unable to pull the vulnerability database (rafs image) from {vdb_rafs_database_url}. Trying to pull the non-rafs-based VDB image."
+                "Unable to pull the vulnerability database (rafs image) from"
+                f" {vdb_rafs_database_url}. Trying to pull the non-rafs-based"
+                " VDB image."
             )
             rafs_image_downloaded = False
 
@@ -541,7 +580,8 @@ async def cache():
         rafs_image_downloaded, _ = download_rafs_based_image()
         if not rafs_image_downloaded:
             LOG.info(
-                "About to download the vulnerability database from %s. This might take a while ...",
+                "About to download the vulnerability database from %s. This"
+                " might take a while ...",
                 vdb_database_url,
             )
             oras_client = oras.client.OrasClient()
@@ -596,9 +636,11 @@ async def run_scan():
     if not db_lib.index_count(db["index_file"]):
         return {
             "error": "true",
-            "message": "Vulnerability database is empty. Prepare the "
-            "vulnerability database by invoking /cache endpoint "
-            "before running scans.",
+            "message": (
+                "Vulnerability database is empty. Prepare the "
+                "vulnerability database by invoking /cache endpoint "
+                "before running scans."
+            ),
         }, 500
     cdxgen_server = app.config.get("CDXGEN_SERVER_URL")
     with tempfile.NamedTemporaryFile(delete=False, suffix=".bom.json") as bfp:
@@ -651,7 +693,9 @@ async def run_scan():
         else:
             return {
                 "error": "true",
-                "message": "Unable to generate SBOM. Check your input path or url.",
+                "message": (
+                    "Unable to generate SBOM. Check your input path or url."
+                ),
             }, 500
 
 
@@ -662,7 +706,9 @@ def run_server(args):
     :param args: Command line arguments passed to the function.
     """
     print(LOGO)
-    console.print(f"Depscan server running on {args.server_host}:{args.server_port}")
+    console.print(
+        f"Depscan server running on {args.server_host}:{args.server_port}"
+    )
     app.config["CDXGEN_SERVER_URL"] = args.cdxgen_server
     app.run(
         host=args.server_host,
@@ -698,7 +744,9 @@ def main():
         if not os.path.exists(toml_file_path):
             LOG.info("CSAF toml not found, creating template in %s", src_dir)
             write_toml(toml_file_path)
-            LOG.info("Please fill out the toml with your details and rerun depscan.")
+            LOG.info(
+                "Please fill out the toml with your details and rerun depscan."
+            )
             LOG.info(
                 "Check out our CSAF documentation for an explanation of "
                 "this feature. https://github.com/owasp-dep-scan/dep-scan"
@@ -748,7 +796,9 @@ def main():
     for project_type in project_types_list:
         results = []
         report_file = areport_file.replace(".json", f"-{project_type}.json")
-        risk_report_file = areport_file.replace(".json", f"-risk.{project_type}.json")
+        risk_report_file = areport_file.replace(
+            ".json", f"-risk.{project_type}.json"
+        )
         if args.bom and os.path.exists(args.bom):
             bom_file = args.bom
             creation_status = True
@@ -791,14 +841,16 @@ def main():
             license_report_file = os.path.join(
                 reports_dir, "license-" + project_type + ".json"
             )
-            analyse_licenses(project_type, licenses_results, license_report_file)
+            analyse_licenses(
+                project_type, licenses_results, license_report_file
+            )
         if project_type in risk_audit_map:
             if args.risk_audit:
                 console.print(
                     Panel(
-                        f"Performing OSS Risk Audit for packages from "
+                        "Performing OSS Risk Audit for packages from "
                         f"{src_dir}\nNo of packages [bold]{len(pkg_list)}"
-                        f"[/bold]. This will take a while ...",
+                        "[/bold]. This will take a while ...",
                         title="OSS Risk Audit",
                         expand=False,
                     )
@@ -839,7 +891,9 @@ def main():
             try:
                 audit_results = audit(project_type, pkg_list)
                 if audit_results:
-                    LOG.debug("Remote audit yielded %d results", len(audit_results))
+                    LOG.debug(
+                        "Remote audit yielded %d results", len(audit_results)
+                    )
                     results = results + audit_results
             except Exception as e:
                 LOG.error("Remote audit was not successful")
@@ -847,7 +901,14 @@ def main():
                 results = []
         # In case of docker, bom, or universal type, check if there are any
         # npm packages that can be audited remotely
-        if project_type in ("podman", "docker", "oci", "container", "bom", "universal"):
+        if project_type in (
+            "podman",
+            "docker",
+            "oci",
+            "container",
+            "bom",
+            "universal",
+        ):
             npm_pkg_list = get_pkg_by_type(pkg_list, "npm")
             if npm_pkg_list:
                 LOG.debug("No of npm packages %d", len(npm_pkg_list))
@@ -865,7 +926,9 @@ def main():
         if not db_lib.index_count(db["index_file"]):
             run_cacher = True
         else:
-            LOG.debug("Vulnerability database loaded from %s", config.vdb_bin_file)
+            LOG.debug(
+                "Vulnerability database loaded from %s", config.vdb_bin_file
+            )
 
         sources_list = [OSVSource(), NvdSource()]
         github_token = os.environ.get("GITHUB_TOKEN")
@@ -875,14 +938,22 @@ def main():
 
                 if not github_client.can_authenticate():
                     LOG.error(
-                        "The GitHub personal access token supplied appears to be invalid or expired. Please see: https://github.com/owasp-dep-scan/dep-scan#github-security-advisory"
+                        "The GitHub personal access token supplied appears to"
+                        " be invalid or expired. Please see:"
+                        " https://github.com/owasp-dep-scan/dep-scan#github-security-advisory"
                     )
                 else:
                     sources_list.insert(0, GitHubSource())
                     scopes = github_client.get_token_scopes()
                     if scopes:
                         LOG.warning(
-                            "The GitHub personal access token was granted more permissions than is necessary for depscan to operate, including the scopes of: %s. It is recommended to use a dedicated token with only the minimum scope necesary for depscan to operate. Please see: https://github.com/owasp-dep-scan/dep-scan#github-security-advisory",
+                            "The GitHub personal access token was granted more"
+                            " permissions than is necessary for depscan to"
+                            " operate, including the scopes of: %s. It is"
+                            " recommended to use a dedicated token with only"
+                            " the minimum scope necesary for depscan to"
+                            " operate. Please see:"
+                            " https://github.com/owasp-dep-scan/dep-scan#github-security-advisory",
                             ", ".join(scopes),
                         )
             except Exception:
@@ -891,11 +962,14 @@ def main():
             rafs_image_downloaded, paths_list = download_rafs_based_image()
             if not rafs_image_downloaded:
                 LOG.info(
-                    "About to download the vulnerability database from %s. This might take a while ...",
+                    "About to download the vulnerability database from %s. This"
+                    " might take a while ...",
                     vdb_database_url,
                 )
                 oras_client = oras.client.OrasClient()
-                paths_list = oras_client.pull(target=vdb_database_url, outdir=data_dir)
+                paths_list = oras_client.pull(
+                    target=vdb_database_url, outdir=data_dir
+                )
 
             LOG.debug("VDB data is stored at: %s", paths_list)
             run_cacher = False
@@ -960,7 +1034,9 @@ def main():
             )
     console.save_html(
         html_file,
-        theme=MONOKAI if os.getenv("USE_DARK_THEME") else DEFAULT_TERMINAL_THEME,
+        theme=(
+            MONOKAI if os.getenv("USE_DARK_THEME") else DEFAULT_TERMINAL_THEME
+        ),
     )
     utils.export_pdf(html_file, pdf_file)
     # Submit vdr/vex files to threatdb server

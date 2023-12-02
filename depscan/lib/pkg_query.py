@@ -40,7 +40,9 @@ def get_lookup_url(registry_type, pkg):
     return None, None
 
 
-def metadata_from_registry(registry_type, scoped_pkgs, pkg_list, private_ns=None):
+def metadata_from_registry(
+    registry_type, scoped_pkgs, pkg_list, private_ns=None
+):
     """
     Method to query registry for the package metadata
 
@@ -64,7 +66,9 @@ def metadata_from_registry(registry_type, scoped_pkgs, pkg_list, private_ns=None
         redirect_stdout=False,
         refresh_per_second=1,
     ) as progress:
-        task = progress.add_task("[green] Auditing packages", total=len(pkg_list))
+        task = progress.add_task(
+            "[green] Auditing packages", total=len(pkg_list)
+        )
         for pkg in pkg_list:
             if circuit_breaker:
                 LOG.info(
@@ -96,14 +100,16 @@ def metadata_from_registry(registry_type, scoped_pkgs, pkg_list, private_ns=None
                 if private_ns:
                     namespace_prefixes = private_ns.split(",")
                     for ns in namespace_prefixes:
-                        if key.lower().startswith(ns.lower()) or key.lower().startswith(
-                            "@" + ns.lower()
-                        ):
+                        if key.lower().startswith(
+                            ns.lower()
+                        ) or key.lower().startswith("@" + ns.lower()):
                             is_private_pkg = True
                             break
                 risk_metrics = {}
                 if registry_type == "npm":
-                    risk_metrics = npm_pkg_risk(json_data, is_private_pkg, scope)
+                    risk_metrics = npm_pkg_risk(
+                        json_data, is_private_pkg, scope
+                    )
                 elif registry_type == "pypi":
                     project_type_pkg = f"python:{key}".lower()
                     required_pkgs = scoped_pkgs.get("required", [])
@@ -124,7 +130,9 @@ def metadata_from_registry(registry_type, scoped_pkgs, pkg_list, private_ns=None
                         or project_type_pkg in excluded_pkgs
                     ):
                         scope = "excluded"
-                    risk_metrics = pypi_pkg_risk(json_data, is_private_pkg, scope)
+                    risk_metrics = pypi_pkg_risk(
+                        json_data, is_private_pkg, scope
+                    )
                 metadata_dict[key] = {
                     "scope": scope,
                     "pkg_metadata": json_data,
@@ -269,14 +277,16 @@ def compute_time_risks(
     # Check if the package is at least 1 year old. Quarantine period.
     if created_now_diff.total_seconds() < config.created_now_quarantine_seconds:
         risk_metrics["created_now_quarantine_seconds_risk"] = True
-        risk_metrics[
-            "created_now_quarantine_seconds_value"
-        ] = latest_now_diff.total_seconds()
+        risk_metrics["created_now_quarantine_seconds_value"] = (
+            latest_now_diff.total_seconds()
+        )
 
     # Check for the maximum seconds difference between latest version and now
     if latest_now_diff.total_seconds() > config.latest_now_max_seconds:
         risk_metrics["latest_now_max_seconds_risk"] = True
-        risk_metrics["latest_now_max_seconds_value"] = latest_now_diff.total_seconds()
+        risk_metrics["latest_now_max_seconds_value"] = (
+            latest_now_diff.total_seconds()
+        )
         # Since the package is quite old we can relax the min versions risk
         risk_metrics["pkg_min_versions_risk"] = False
     else:
@@ -287,13 +297,15 @@ def compute_time_risks(
         # packages
         if mod_create_diff.total_seconds() < config.mod_create_min_seconds:
             risk_metrics["mod_create_min_seconds_risk"] = True
-            risk_metrics[
-                "mod_create_min_seconds_value"
-            ] = mod_create_diff.total_seconds()
+            risk_metrics["mod_create_min_seconds_value"] = (
+                mod_create_diff.total_seconds()
+            )
     # Check for the minimum seconds difference between latest version and now
     if latest_now_diff.total_seconds() < config.latest_now_min_seconds:
         risk_metrics["latest_now_min_seconds_risk"] = True
-        risk_metrics["latest_now_min_seconds_value"] = latest_now_diff.total_seconds()
+        risk_metrics["latest_now_min_seconds_value"] = (
+            latest_now_diff.total_seconds()
+        )
     return risk_metrics
 
 

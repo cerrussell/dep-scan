@@ -56,7 +56,9 @@ def test_get_pkg():
 
 
 def test_parse():
-    assert parse_bom_ref("pkg:maven/org.projectlombok/lombok@1.18.4?type=jar") == {
+    assert parse_bom_ref(
+        "pkg:maven/org.projectlombok/lombok@1.18.4?type=jar"
+    ) == {
         "vendor": "org.projectlombok",
         "name": "lombok",
         "version": "1.18.4",
@@ -133,7 +135,9 @@ def test_search(test_db):
         os.path.dirname(os.path.realpath(__file__)), "data", "bom.xml"
     )
     pkg_list = get_pkg_list(test_bom)
-    search_res, pkg_aliases, purl_aliases = search_pkgs(test_db, "java", pkg_list)
+    search_res, pkg_aliases, purl_aliases = search_pkgs(
+        test_db, "java", pkg_list
+    )
     assert not len(search_res)
 
 
@@ -142,7 +146,9 @@ def test_go_search(test_db):
         os.path.dirname(os.path.realpath(__file__)), "data", "bom-go.xml"
     )
     pkg_list = get_pkg_list(test_bom)
-    search_res, pkg_aliases, purl_aliases = search_pkgs(test_db, "golang", pkg_list)
+    search_res, pkg_aliases, purl_aliases = search_pkgs(
+        test_db, "golang", pkg_list
+    )
     assert not len(search_res)
 
 
@@ -151,7 +157,9 @@ def test_search_webgoat(test_db):
         os.path.dirname(os.path.realpath(__file__)), "data", "bom-webgoat.xml"
     )
     pkg_list = get_pkg_list(test_bom)
-    search_res, pkg_aliases, purl_aliases = search_pkgs(test_db, "java", pkg_list)
+    search_res, pkg_aliases, purl_aliases = search_pkgs(
+        test_db, "java", pkg_list
+    )
     assert not len(search_res)
 
 
@@ -161,7 +169,9 @@ def test_search_webgoat_json(test_db):
     )
     pkg_list = get_pkg_list(test_bom)
     assert len(pkg_list) == 157
-    search_res, pkg_aliases, purl_aliases = search_pkgs(test_db, "java", pkg_list)
+    search_res, pkg_aliases, purl_aliases = search_pkgs(
+        test_db, "java", pkg_list
+    )
     assert not len(search_res)
 
 

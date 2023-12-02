@@ -264,8 +264,10 @@ def test_format_references():
         "https://github.com/user/repo",
         "https://bugzilla.redhat.com/show_bug.cgi?id=cve-2021-1234",
         "https://github.com/FasterXML/jackson-databind/issues/2816",
-        "https://sec.cloudapps.cisco.com/security/center/content"
-        "/CiscoSecurityAdvisory/cisco-sa-apache-log4j-qRuKNEbd",
+        (
+            "https://sec.cloudapps.cisco.com/security/center/content"
+            "/CiscoSecurityAdvisory/cisco-sa-apache-log4j-qRuKNEbd"
+        ),
         "https://bitbucket.org/snakeyaml/snakeyaml/issues/525",
         "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47027",
     ]
@@ -301,7 +303,9 @@ def test_format_references():
         },
         {
             "summary": "Chromium Issue",
-            "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47027",
+            "url": (
+                "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=47027"
+            ),
         },
         {
             "summary": "Red Hat Bugzilla",
@@ -335,8 +339,10 @@ def test_format_references():
         },
         {
             "summary": "GitHub Advisory",
-            "url": "https://github.com/user/repo/security/advisories/GHSA"
-            "-5432-5432-5432",
+            "url": (
+                "https://github.com/user/repo/security/advisories/GHSA"
+                "-5432-5432-5432"
+            ),
         },
         {
             "summary": "CVE Record",
@@ -344,8 +350,10 @@ def test_format_references():
         },
         {
             "summary": "Cisco Advisory",
-            "url": "https://sec.cloudapps.cisco.com/security/center/content"
-            "/CiscoSecurityAdvisory/cisco-sa-apache-log4j-qRuKNEbd",
+            "url": (
+                "https://sec.cloudapps.cisco.com/security/center/content"
+                "/CiscoSecurityAdvisory/cisco-sa-apache-log4j-qRuKNEbd"
+            ),
         },
     ]
 
@@ -494,23 +502,25 @@ def test_csaf_occurence():
                 },
                 "fixed_location": None,
             },
-            "short_description": "# TaffyDB can allow access to any data items "
-            "in the DB\nTaffyDB allows attackers to forge "
-            "adding additional properties into user input "
-            "processed by taffy which can allow access to "
-            "any data items in the DB. Taffy sets an "
-            "internal index for each data item in its DB. "
-            "However, it is found that the internal index "
-            "can be forged by adding additional properties "
-            "into user input. If index is found in the "
-            "query, TaffyDB will ignore other query "
-            "conditions and directly return the indexed "
-            "data item. Moreover, the internal index is in "
-            "an easily guessable format (e.g., "
-            "T000002R000001). As such, attackers can use "
-            "this vulnerability to access any data items in "
-            "the DB. **Note:** `taffy` and its successor "
-            "package `taffydb` are not maintained.\nNone",
+            "short_description": (
+                "# TaffyDB can allow access to any data items "
+                "in the DB\nTaffyDB allows attackers to forge "
+                "adding additional properties into user input "
+                "processed by taffy which can allow access to "
+                "any data items in the DB. Taffy sets an "
+                "internal index for each data item in its DB. "
+                "However, it is found that the internal index "
+                "can be forged by adding additional properties "
+                "into user input. If index is found in the "
+                "query, TaffyDB will ignore other query "
+                "conditions and directly return the indexed "
+                "data item. Moreover, the internal index is in "
+                "an easily guessable format (e.g., "
+                "T000002R000001). As such, attackers can use "
+                "this vulnerability to access any data items in "
+                "the DB. **Note:** `taffy` and its successor "
+                "package `taffydb` are not maintained.\nNone"
+            ),
             "long_description": None,
             "related_urls": [],
             "effective_severity": "HIGH",
@@ -546,28 +556,34 @@ def test_csaf_occurence():
                 },
                 "fixed_location": "7.2.4",
             },
-            "short_description": "# protobufjs Prototype Pollution "
-            "vulnerability\nprotobuf.js ("
-            "aka protobufjs) 6.10.0 until 6.11.4 and 7.0.0 until 7.2.4 "
-            "allows Prototype Pollution, a different vulnerability than "
-            "CVE-2022-25878. A user-controlled protobuf message can be used "
-            "by an attacker to pollute the prototype of Object.prototype by "
-            "adding and overwriting its data and functions. Exploitation can "
-            "involve: (1) using the function parse to parse protobuf "
-            "messages on the fly, (2) loading .proto files by using "
-            "load/loadSync functions, or (3) providing untrusted input to "
-            "the functions ReflectionObject.setParsedOption and "
-            "util.setProperty. NOTE: this CVE Record is about "
-            "`Object.constructor.prototype.<new-property> = ...;` whereas "
-            "CVE-2022-25878 was about `Object.__proto__.<new-property> = "
-            "...;` instead.",
+            "short_description": (
+                "# protobufjs Prototype Pollution vulnerability\nprotobuf.js"
+                " (aka protobufjs) 6.10.0 until 6.11.4 and 7.0.0 until 7.2.4"
+                " allows Prototype Pollution, a different vulnerability than"
+                " CVE-2022-25878. A user-controlled protobuf message can be"
+                " used by an attacker to pollute the prototype of"
+                " Object.prototype by adding and overwriting its data and"
+                " functions. Exploitation can involve: (1) using the function"
+                " parse to parse protobuf messages on the fly, (2) loading"
+                " .proto files by using load/loadSync functions, or (3)"
+                " providing untrusted input to the functions"
+                " ReflectionObject.setParsedOption and util.setProperty. NOTE:"
+                " this CVE Record is about"
+                " `Object.constructor.prototype.<new-property> = ...;` whereas"
+                " CVE-2022-25878 was about `Object.__proto__.<new-property> ="
+                " ...;` instead."
+            ),
             "long_description": None,
             "related_urls": [
-                "https://github.com/markdown-it/markdown-it/security"
-                "/advisories/GHSA-6vfc-qv3f-vr6c",
+                (
+                    "https://github.com/markdown-it/markdown-it/security"
+                    "/advisories/GHSA-6vfc-qv3f-vr6c"
+                ),
                 "https://nvd.nist.gov/vuln/detail/CVE-2022-21670",
-                "https://github.com/markdown-it/markdown-it/commit"
-                "/ffc49ab46b5b751cd2be0aabb146f2ef84986101",
+                (
+                    "https://github.com/markdown-it/markdown-it/commit"
+                    "/ffc49ab46b5b751cd2be0aabb146f2ef84986101"
+                ),
                 "https://github.com/markdown-it/markdown-it",
             ],
             "effective_severity": "CRITICAL",
@@ -597,20 +613,22 @@ def test_csaf_occurence():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "# TaffyDB can allow access to any data items in the DB "
-                    "TaffyDB allows attackers to forge adding additional "
-                    "properties into user input processed by taffy which can "
-                    "allow access to any data items in the DB. Taffy sets an "
-                    "internal index for each data item in its DB. However, it "
-                    "is found that the internal index can be forged by adding "
-                    "additional properties into user input. If index is found "
-                    "in the query, TaffyDB will ignore other query conditions "
-                    "and directly return the indexed data item. Moreover, the "
-                    "internal index is in an easily guessable format (e.g., "
-                    "T000002R000001). As such, attackers can use this "
-                    "vulnerability to access any data items in the DB. "
-                    "**Note:** `taffy` and its successor package `taffydb` "
-                    "are not maintained. None",
+                    "text": (
+                        "# TaffyDB can allow access to any data items in the DB"
+                        " TaffyDB allows attackers to forge adding additional"
+                        " properties into user input processed by taffy which"
+                        " can allow access to any data items in the DB. Taffy"
+                        " sets an internal index for each data item in its DB."
+                        " However, it is found that the internal index can be"
+                        " forged by adding additional properties into user"
+                        " input. If index is found in the query, TaffyDB will"
+                        " ignore other query conditions and directly return the"
+                        " indexed data item. Moreover, the internal index is in"
+                        " an easily guessable format (e.g., T000002R000001). As"
+                        " such, attackers can use this vulnerability to access"
+                        " any data items in the DB. **Note:** `taffy` and its"
+                        " successor package `taffydb` are not maintained. None"
+                    ),
                 },
             ],
             "product_status": {"known_affected": ["taffydb:<=2.7.3"]},
@@ -624,8 +642,9 @@ def test_csaf_occurence():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "REQUIRED",
-                        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L"
-                        "/I:L/A:L",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["taffydb"],
@@ -636,8 +655,10 @@ def test_csaf_occurence():
             "cve": "CVE-2023-36665",
             "cwe": {
                 "id": "CWE-1321",
-                "name": "Improperly Controlled Modification of Object Prototype "
-                "Attributes",
+                "name": (
+                    "Improperly Controlled Modification of Object Prototype "
+                    "Attributes"
+                ),
             },
             "discovery_date": "2023-07-05T15:30:24",
             "ids": [
@@ -650,22 +671,24 @@ def test_csaf_occurence():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "# protobufjs Prototype Pollution vulnerability "
-                    "protobuf.js (aka protobufjs) 6.10.0 until 6.11.4 and "
-                    "7.0.0 until 7.2.4 allows Prototype Pollution, a "
-                    "different vulnerability than CVE-2022-25878. A "
-                    "user-controlled protobuf message can be used by an "
-                    "attacker to pollute the prototype of Object.prototype by "
-                    "adding and overwriting its data and functions. "
-                    "Exploitation can involve: (1) using the function parse "
-                    "to parse protobuf messages on the fly, (2) loading "
-                    ".proto files by using load/loadSync functions, or (3) "
-                    "providing untrusted input to the functions "
-                    "ReflectionObject.setParsedOption and util.setProperty. "
-                    "NOTE: this CVE Record is about "
-                    "`Object.constructor.prototype.<new-property> = ...;` "
-                    "whereas CVE-2022-25878 was about "
-                    "`Object.__proto__.<new-property> = ...;` instead.",
+                    "text": (
+                        "# protobufjs Prototype Pollution vulnerability"
+                        " protobuf.js (aka protobufjs) 6.10.0 until 6.11.4 and"
+                        " 7.0.0 until 7.2.4 allows Prototype Pollution, a"
+                        " different vulnerability than CVE-2022-25878. A"
+                        " user-controlled protobuf message can be used by an"
+                        " attacker to pollute the prototype of Object.prototype"
+                        " by adding and overwriting its data and functions."
+                        " Exploitation can involve: (1) using the function"
+                        " parse to parse protobuf messages on the fly, (2)"
+                        " loading .proto files by using load/loadSync"
+                        " functions, or (3) providing untrusted input to the"
+                        " functions ReflectionObject.setParsedOption and"
+                        " util.setProperty. NOTE: this CVE Record is about"
+                        " `Object.constructor.prototype.<new-property> = ...;`"
+                        " whereas CVE-2022-25878 was about"
+                        " `Object.__proto__.<new-property> = ...;` instead."
+                    ),
                 }
             ],
             "product_status": {
@@ -679,8 +702,10 @@ def test_csaf_occurence():
                 },
                 {
                     "summary": "GitHub Commit",
-                    "url": "https://github.com/markdown-it/markdown-it/commit"
-                    "/ffc49ab46b5b751cd2be0aabb146f2ef84986101",
+                    "url": (
+                        "https://github.com/markdown-it/markdown-it/commit"
+                        "/ffc49ab46b5b751cd2be0aabb146f2ef84986101"
+                    ),
                 },
                 {
                     "summary": "GitHub Repository",
@@ -688,8 +713,10 @@ def test_csaf_occurence():
                 },
                 {
                     "summary": "GitHub Advisory",
-                    "url": "https://github.com/markdown-it/markdown-it"
-                    "/security/advisories/GHSA-6vfc-qv3f-vr6c",
+                    "url": (
+                        "https://github.com/markdown-it/markdown-it"
+                        "/security/advisories/GHSA-6vfc-qv3f-vr6c"
+                    ),
                 },
             ],
             "scores": [
@@ -701,8 +728,9 @@ def test_csaf_occurence():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "REQUIRED",
-                        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H"
-                        "/I:H/A:H",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["protobufjs"],
@@ -724,8 +752,10 @@ def test_import_root_component():
                 "name": "vuln-spring",
                 "product_id": "vuln-spring:0.0.1-SNAPSHOT",
                 "product_identification_helper": {
-                    "purl": "pkg:maven/com.example/vuln-spring@0.0.1-SNAPSHOT"
-                    "?type=jar"
+                    "purl": (
+                        "pkg:maven/com.example/vuln-spring@0.0.1-SNAPSHOT"
+                        "?type=jar"
+                    )
                 },
             }
         ]
@@ -734,13 +764,17 @@ def test_import_root_component():
     assert ref == [
         {
             "summary": "website",
-            "url": "https://projects.spring.io/spring-boot/#/spring"
-            "-boot-starter-parent/vuln-spring",
+            "url": (
+                "https://projects.spring.io/spring-boot/#/spring"
+                "-boot-starter-parent/vuln-spring"
+            ),
         },
         {
             "summary": "vcs",
-            "url": "https://github.com/spring-projects/spring-boot"
-            "/spring-boot-starter-parent/vuln-spring",
+            "url": (
+                "https://github.com/spring-projects/spring-boot"
+                "/spring-boot-starter-parent/vuln-spring"
+            ),
         },
     ]
 
@@ -793,7 +827,9 @@ def test_verify_components_present():
                     "confidentiality_impact": "HIGH",
                     "integrity_impact": "HIGH",
                     "availability_impact": "HIGH",
-                    "vector_string": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "vector_string": (
+                        "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+                    ),
                 },
                 "package_issue": {
                     "affected_location": {
@@ -803,7 +839,12 @@ def test_verify_components_present():
                     },
                     "fixed_location": "2.9.10.8",
                 },
-                "short_description": "FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS.",
+                "short_description": (
+                    "FasterXML jackson-databind 2.x before 2.9.10.8 mishandles"
+                    " the interaction between serialization gadgets and typing,"
+                    " related to"
+                    " org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS."
+                ),
                 "long_description": None,
                 "related_urls": [
                     "https://github.com/FasterXML/jackson-databind/issues/3004",
@@ -812,7 +853,9 @@ def test_verify_components_present():
                 "effective_severity": "HIGH",
                 "source_update_time": "2023-09-13T14:56:00",
                 "source_orig_time": "2021-01-07T00:15:00",
-                "matched_by": "3647951461_3647986090|fasterxml|jackson-databind|2.9.6",
+                "matched_by": (
+                    "3647951461_3647986090|fasterxml|jackson-databind|2.9.6"
+                ),
             },
             {
                 "id": "CVE-2019-12086",
@@ -832,7 +875,9 @@ def test_verify_components_present():
                     "confidentiality_impact": "HIGH",
                     "integrity_impact": "NONE",
                     "availability_impact": "NONE",
-                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                    "vector_string": (
+                        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+                    ),
                 },
                 "package_issue": {
                     "affected_location": {
@@ -842,7 +887,18 @@ def test_verify_components_present():
                     },
                     "fixed_location": "2.9.9",
                 },
-                "short_description": "A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint, the service has the mysql-connector-java jar (8.0.14 or earlier) in the classpath, and an attacker can host a crafted MySQL server reachable by the victim, an attacker can send a crafted JSON message that allows them to read arbitrary local files on the server. This occurs because of missing com.mysql.cj.jdbc.admin.MiniAdmin validation.",
+                "short_description": (
+                    "A Polymorphic Typing issue was discovered in FasterXML"
+                    " jackson-databind 2.x before 2.9.9. When Default Typing is"
+                    " enabled (either globally or for a specific property) for"
+                    " an externally exposed JSON endpoint, the service has the"
+                    " mysql-connector-java jar (8.0.14 or earlier) in the"
+                    " classpath, and an attacker can host a crafted MySQL"
+                    " server reachable by the victim, an attacker can send a"
+                    " crafted JSON message that allows them to read arbitrary"
+                    " local files on the server. This occurs because of missing"
+                    " com.mysql.cj.jdbc.admin.MiniAdmin validation."
+                ),
                 "long_description": None,
                 "related_urls": [
                     "https://www.oracle.com/security-alerts/cpujul2020.html",
@@ -854,7 +910,9 @@ def test_verify_components_present():
                 "effective_severity": "HIGH",
                 "source_update_time": "2023-09-13T14:16:00",
                 "source_orig_time": "2019-05-17T17:29:00",
-                "matched_by": "3747044328_3747096861|fasterxml|jackson-databind|2.9.6",
+                "matched_by": (
+                    "3747044328_3747096861|fasterxml|jackson-databind|2.9.6"
+                ),
             },
             {
                 "id": "CVE-2018-11784",
@@ -874,7 +932,9 @@ def test_verify_components_present():
                     "confidentiality_impact": "MEDIUM",
                     "integrity_impact": "MEDIUM",
                     "availability_impact": "MEDIUM",
-                    "vector_string": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+                    "vector_string": (
+                        "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+                    ),
                 },
                 "package_issue": {
                     "affected_location": {
@@ -884,7 +944,16 @@ def test_verify_components_present():
                     },
                     "fixed_location": "8.5.34",
                 },
-                "short_description": "# Moderate severity vulnerability that affects org.apache.tomcat.embed:tomcat-embed-core\nWhen the default servlet in Apache Tomcat versions 9.0.0.M1 to 9.0.11, 8.5.0 to 8.5.33 and 7.0.23 to 7.0.90 returned a redirect to a directory (e.g. redirecting to '/foo/' when the user requested '/foo') a specially crafted URL could be used to cause the redirect to be generated to any URI of the attackers choice.",
+                "short_description": (
+                    "# Moderate severity vulnerability that affects"
+                    " org.apache.tomcat.embed:tomcat-embed-core\nWhen the"
+                    " default servlet in Apache Tomcat versions 9.0.0.M1 to"
+                    " 9.0.11, 8.5.0 to 8.5.33 and 7.0.23 to 7.0.90 returned a"
+                    " redirect to a directory (e.g. redirecting to '/foo/' when"
+                    " the user requested '/foo') a specially crafted URL could"
+                    " be used to cause the redirect to be generated to any URI"
+                    " of the attackers choice."
+                ),
                 "long_description": None,
                 "related_urls": [
                     "https://nvd.nist.gov/vuln/detail/CVE-2018-11784",
@@ -919,7 +988,9 @@ def test_verify_components_present():
                     "confidentiality_impact": "MEDIUM",
                     "integrity_impact": "MEDIUM",
                     "availability_impact": "MEDIUM",
-                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                    "vector_string": (
+                        "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H"
+                    ),
                 },
                 "package_issue": {
                     "affected_location": {
@@ -929,7 +1000,14 @@ def test_verify_components_present():
                     },
                     "fixed_location": "5.2.22.RELEASE",
                 },
-                "short_description": "# Allocation of Resources Without Limits or Throttling in Spring Framework\nIn spring framework versions prior to 5.3.20+ , 5.2.22+ and old unsupported versions, application with a STOMP over WebSocket endpoint is vulnerable to a denial of service attack by an authenticated user.",
+                "short_description": (
+                    "# Allocation of Resources Without Limits or Throttling in"
+                    " Spring Framework\nIn spring framework versions prior to"
+                    " 5.3.20+ , 5.2.22+ and old unsupported versions,"
+                    " application with a STOMP over WebSocket endpoint is"
+                    " vulnerable to a denial of service attack by an"
+                    " authenticated user."
+                ),
                 "long_description": None,
                 "related_urls": [
                     "https://nvd.nist.gov/vuln/detail/CVE-2022-22971",
@@ -960,7 +1038,9 @@ def test_verify_components_present():
                     "confidentiality_impact": "HIGH",
                     "integrity_impact": "HIGH",
                     "availability_impact": "HIGH",
-                    "vector_string": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                    "vector_string": (
+                        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+                    ),
                 },
                 "package_issue": {
                     "affected_location": {
@@ -970,7 +1050,14 @@ def test_verify_components_present():
                     },
                     "fixed_location": "1.5.2",
                 },
-                "short_description": "# Jettison memory exhaustion\nThose using Jettison to parse untrusted XML or JSON data may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by Out of memory. This effect may support a denial of service attack.",
+                "short_description": (
+                    "# Jettison memory exhaustion\nThose using Jettison to"
+                    " parse untrusted XML or JSON data may be vulnerable to"
+                    " Denial of Service attacks (DOS). If the parser is running"
+                    " on user supplied input, an attacker may supply content"
+                    " that causes the parser to crash by Out of memory. This"
+                    " effect may support a denial of service attack."
+                ),
                 "long_description": None,
                 "related_urls": [
                     "https://nvd.nist.gov/vuln/detail/CVE-2022-40150",
@@ -983,7 +1070,9 @@ def test_verify_components_present():
                 "effective_severity": "HIGH",
                 "source_update_time": "2023-07-13T19:19:12",
                 "source_orig_time": "2022-09-17T00:00:41",
-                "matched_by": "2662034264_2662079740|org.codehaus.jettison|jettison|1.3.7",
+                "matched_by": (
+                    "2662034264_2662079740|org.codehaus.jettison|jettison|1.3.7"
+                ),
             },
         ],
     }
@@ -1029,14 +1118,16 @@ def test_verify_components_present():
     assert template["document"]["notes"] == [
         {
             "category": "legal_disclaimer",
-            "text": "Depscan reachable code only covers the "
-            "project source code, not the code of "
-            "dependencies. A dependency may execute "
-            "vulnerable code when called even if it is "
-            "not in the project's source code. Regard the "
-            "Depscan-set flag of "
-            "'code_not_in_execute_path' with this in "
-            "mind.",
+            "text": (
+                "Depscan reachable code only covers the "
+                "project source code, not the code of "
+                "dependencies. A dependency may execute "
+                "vulnerable code when called even if it is "
+                "not in the project's source code. Regard the "
+                "Depscan-set flag of "
+                "'code_not_in_execute_path' with this in "
+                "mind."
+            ),
         }
     ]
     assert template["product_tree"] == {
@@ -1100,8 +1191,9 @@ def test_add_vulnerabilities():
         "vulnerabilities": [],
     }
     reached_purls = {
-        "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.31"
-        "?type=jar": 3,
+        "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@8.5.31?type=jar": (
+            3
+        ),
         "pkg:maven/org.codehaus.jettison/jettison@1.3.7?type=jar": 19,
     }
     direct_purls = {}
@@ -1128,13 +1220,19 @@ def test_add_vulnerabilities():
             },
             "package_issue": {
                 "affected_location": {
-                    "cpe_uri": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                    "cpe_uri": (
+                        "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*"
+                    ),
                     "package": "jackson-databind",
                     "version": ">=2.7.0-<2.9.10.8",
                 },
                 "fixed_location": "2.9.10.8",
             },
-            "short_description": "FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS.",
+            "short_description": (
+                "FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the"
+                " interaction between serialization gadgets and typing, related"
+                " to org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS."
+            ),
             "long_description": None,
             "related_urls": [
                 "https://github.com/FasterXML/jackson-databind/issues/3004",
@@ -1143,7 +1241,9 @@ def test_add_vulnerabilities():
             "effective_severity": "HIGH",
             "source_update_time": "2023-09-13T14:56:00",
             "source_orig_time": "2021-01-07T00:15:00",
-            "matched_by": "3647951461_3647986090|fasterxml|jackson-databind|2.9.6",
+            "matched_by": (
+                "3647951461_3647986090|fasterxml|jackson-databind|2.9.6"
+            ),
         },
         {
             "id": "CVE-2019-12086",
@@ -1167,13 +1267,26 @@ def test_add_vulnerabilities():
             },
             "package_issue": {
                 "affected_location": {
-                    "cpe_uri": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                    "cpe_uri": (
+                        "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*"
+                    ),
                     "package": "jackson-databind",
                     "version": ">=2.9.0-<2.9.9",
                 },
                 "fixed_location": "2.9.9",
             },
-            "short_description": "A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint, the service has the mysql-connector-java jar (8.0.14 or earlier) in the classpath, and an attacker can host a crafted MySQL server reachable by the victim, an attacker can send a crafted JSON message that allows them to read arbitrary local files on the server. This occurs because of missing com.mysql.cj.jdbc.admin.MiniAdmin validation.",
+            "short_description": (
+                "A Polymorphic Typing issue was discovered in FasterXML"
+                " jackson-databind 2.x before 2.9.9. When Default Typing is"
+                " enabled (either globally or for a specific property) for an"
+                " externally exposed JSON endpoint, the service has the"
+                " mysql-connector-java jar (8.0.14 or earlier) in the"
+                " classpath, and an attacker can host a crafted MySQL server"
+                " reachable by the victim, an attacker can send a crafted JSON"
+                " message that allows them to read arbitrary local files on the"
+                " server. This occurs because of missing"
+                " com.mysql.cj.jdbc.admin.MiniAdmin validation."
+            ),
             "long_description": None,
             "related_urls": [
                 "https://www.oracle.com/security-alerts/cpujul2020.html",
@@ -1185,7 +1298,9 @@ def test_add_vulnerabilities():
             "effective_severity": "HIGH",
             "source_update_time": "2023-09-13T14:16:00",
             "source_orig_time": "2019-05-17T17:29:00",
-            "matched_by": "3747044328_3747096861|fasterxml|jackson-databind|2.9.6",
+            "matched_by": (
+                "3747044328_3747096861|fasterxml|jackson-databind|2.9.6"
+            ),
         },
         {
             "id": "CVE-2018-11784",
@@ -1215,7 +1330,16 @@ def test_add_vulnerabilities():
                 },
                 "fixed_location": "8.5.34",
             },
-            "short_description": "# Moderate severity vulnerability that affects org.apache.tomcat.embed:tomcat-embed-core\nWhen the default servlet in Apache Tomcat versions 9.0.0.M1 to 9.0.11, 8.5.0 to 8.5.33 and 7.0.23 to 7.0.90 returned a redirect to a directory (e.g. redirecting to '/foo/' when the user requested '/foo') a specially crafted URL could be used to cause the redirect to be generated to any URI of the attackers choice.",
+            "short_description": (
+                "# Moderate severity vulnerability that affects"
+                " org.apache.tomcat.embed:tomcat-embed-core\nWhen the default"
+                " servlet in Apache Tomcat versions 9.0.0.M1 to 9.0.11, 8.5.0"
+                " to 8.5.33 and 7.0.23 to 7.0.90 returned a redirect to a"
+                " directory (e.g. redirecting to '/foo/' when the user"
+                " requested '/foo') a specially crafted URL could be used to"
+                " cause the redirect to be generated to any URI of the"
+                " attackers choice."
+            ),
             "long_description": None,
             "related_urls": [
                 "https://nvd.nist.gov/vuln/detail/CVE-2018-11784",
@@ -1260,7 +1384,13 @@ def test_add_vulnerabilities():
                 },
                 "fixed_location": "5.2.22.RELEASE",
             },
-            "short_description": "# Allocation of Resources Without Limits or Throttling in Spring Framework\nIn spring framework versions prior to 5.3.20+ , 5.2.22+ and old unsupported versions, application with a STOMP over WebSocket endpoint is vulnerable to a denial of service attack by an authenticated user.",
+            "short_description": (
+                "# Allocation of Resources Without Limits or Throttling in"
+                " Spring Framework\nIn spring framework versions prior to"
+                " 5.3.20+ , 5.2.22+ and old unsupported versions, application"
+                " with a STOMP over WebSocket endpoint is vulnerable to a"
+                " denial of service attack by an authenticated user."
+            ),
             "long_description": None,
             "related_urls": [
                 "https://nvd.nist.gov/vuln/detail/CVE-2022-22971",
@@ -1301,7 +1431,14 @@ def test_add_vulnerabilities():
                 },
                 "fixed_location": "1.5.2",
             },
-            "short_description": "# Jettison memory exhaustion\nThose using Jettison to parse untrusted XML or JSON data may be vulnerable to Denial of Service attacks (DOS). If the parser is running on user supplied input, an attacker may supply content that causes the parser to crash by Out of memory. This effect may support a denial of service attack.",
+            "short_description": (
+                "# Jettison memory exhaustion\nThose using Jettison to parse"
+                " untrusted XML or JSON data may be vulnerable to Denial of"
+                " Service attacks (DOS). If the parser is running on user"
+                " supplied input, an attacker may supply content that causes"
+                " the parser to crash by Out of memory. This effect may support"
+                " a denial of service attack."
+            ),
             "long_description": None,
             "related_urls": [
                 "https://nvd.nist.gov/vuln/detail/CVE-2022-40150",
@@ -1314,7 +1451,9 @@ def test_add_vulnerabilities():
             "effective_severity": "HIGH",
             "source_update_time": "2023-07-13T19:19:12",
             "source_orig_time": "2022-09-17T00:00:41",
-            "matched_by": "2662034264_2662079740|org.codehaus.jettison|jettison|1.3.7",
+            "matched_by": (
+                "2662034264_2662079740|org.codehaus.jettison|jettison|1.3.7"
+            ),
         },
     ]
     new_results = add_vulnerabilities(
@@ -1340,10 +1479,13 @@ def test_add_vulnerabilities():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "FasterXML jackson-databind 2.x before 2.9.10.8 "
-                    "mishandles the interaction between serialization gadgets "
-                    "and typing, related to "
-                    "org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS.",
+                    "text": (
+                        "FasterXML jackson-databind 2.x before 2.9.10.8 "
+                        "mishandles the interaction between serialization"
+                        " gadgets "
+                        "and typing, related to "
+                        "org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS."
+                    ),
                 }
             ],
             "product_status": {
@@ -1369,7 +1511,9 @@ def test_add_vulnerabilities():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "NONE",
-                        "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["jackson-databind"],
@@ -1389,16 +1533,19 @@ def test_add_vulnerabilities():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "A Polymorphic Typing issue was discovered in FasterXML "
-                    "jackson-databind 2.x before 2.9.9. When Default Typing "
-                    "is enabled (either globally or for a specific property) "
-                    "for an externally exposed JSON endpoint, the service has "
-                    "the mysql-connector-java jar (8.0.14 or earlier) in the "
-                    "classpath, and an attacker can host a crafted MySQL "
-                    "server reachable by the victim, an attacker can send a "
-                    "crafted JSON message that allows them to read arbitrary "
-                    "local files on the server. This occurs because of "
-                    "missing com.mysql.cj.jdbc.admin.MiniAdmin validation.",
+                    "text": (
+                        "A Polymorphic Typing issue was discovered in FasterXML"
+                        " jackson-databind 2.x before 2.9.9. When Default"
+                        " Typing is enabled (either globally or for a specific"
+                        " property) for an externally exposed JSON endpoint,"
+                        " the service has the mysql-connector-java jar (8.0.14"
+                        " or earlier) in the classpath, and an attacker can"
+                        " host a crafted MySQL server reachable by the victim,"
+                        " an attacker can send a crafted JSON message that"
+                        " allows them to read arbitrary local files on the"
+                        " server. This occurs because of missing"
+                        " com.mysql.cj.jdbc.admin.MiniAdmin validation."
+                    ),
                 }
             ],
             "product_status": {
@@ -1408,7 +1555,9 @@ def test_add_vulnerabilities():
             "references": [
                 {
                     "summary": "Oracle Security Alert",
-                    "url": "https://www.oracle.com/security-alerts/cpujul2020.html",
+                    "url": (
+                        "https://www.oracle.com/security-alerts/cpujul2020.html"
+                    ),
                 },
                 {
                     "summary": "Mailing List Other",
@@ -1416,15 +1565,21 @@ def test_add_vulnerabilities():
                 },
                 {
                     "summary": "Oracle Security Alert",
-                    "url": "https://www.oracle.com/security-alerts/cpuoct2020.html",
+                    "url": (
+                        "https://www.oracle.com/security-alerts/cpuoct2020.html"
+                    ),
                 },
                 {
                     "summary": "Oracle Security Alert",
-                    "url": "https://www.oracle.com/security-alerts/cpuApr2021.html",
+                    "url": (
+                        "https://www.oracle.com/security-alerts/cpuApr2021.html"
+                    ),
                 },
                 {
                     "summary": "Oracle Security Alert",
-                    "url": "https://www.oracle.com/security-alerts/cpuapr2022.html",
+                    "url": (
+                        "https://www.oracle.com/security-alerts/cpuapr2022.html"
+                    ),
                 },
             ],
             "scores": [
@@ -1436,7 +1591,9 @@ def test_add_vulnerabilities():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "NONE",
-                        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["jackson-databind"],
@@ -1468,14 +1625,16 @@ def test_add_vulnerabilities():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "# Moderate severity vulnerability that affects "
-                    "org.apache.tomcat.embed:tomcat-embed-core When the "
-                    "default servlet in Apache Tomcat versions 9.0.0.M1 to "
-                    "9.0.11, 8.5.0 to 8.5.33 and 7.0.23 to 7.0.90 returned a "
-                    "redirect to a directory (e.g. redirecting to '/foo/' "
-                    "when the user requested '/foo') a specially crafted URL "
-                    "could be used to cause the redirect to be generated to "
-                    "any URI of the attackers choice.",
+                    "text": (
+                        "# Moderate severity vulnerability that affects"
+                        " org.apache.tomcat.embed:tomcat-embed-core When the"
+                        " default servlet in Apache Tomcat versions 9.0.0.M1 to"
+                        " 9.0.11, 8.5.0 to 8.5.33 and 7.0.23 to 7.0.90 returned"
+                        " a redirect to a directory (e.g. redirecting to"
+                        " '/foo/' when the user requested '/foo') a specially"
+                        " crafted URL could be used to cause the redirect to be"
+                        " generated to any URI of the attackers choice."
+                    ),
                 }
             ],
             "product_status": {
@@ -1525,7 +1684,9 @@ def test_add_vulnerabilities():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "REQUIRED",
-                        "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+                        "vectorString": (
+                            "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+                        ),
                         "version": "3.0",
                     },
                     "products": ["tomcat-embed-core"],
@@ -1547,12 +1708,14 @@ def test_add_vulnerabilities():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "# Allocation of Resources Without Limits or Throttling "
-                    "in Spring Framework In spring framework versions prior "
-                    "to 5.3.20+ , 5.2.22+ and old unsupported versions, "
-                    "application with a STOMP over WebSocket endpoint is "
-                    "vulnerable to a denial of service attack by an "
-                    "authenticated user.",
+                    "text": (
+                        "# Allocation of Resources Without Limits or Throttling"
+                        " in Spring Framework In spring framework versions"
+                        " prior to 5.3.20+ , 5.2.22+ and old unsupported"
+                        " versions, application with a STOMP over WebSocket"
+                        " endpoint is vulnerable to a denial of service attack"
+                        " by an authenticated user."
+                    ),
                 }
             ],
             "product_status": {
@@ -1570,7 +1733,9 @@ def test_add_vulnerabilities():
                 },
                 {
                     "summary": "Oracle Security Alert",
-                    "url": "https://www.oracle.com/security-alerts/cpujul2022.html",
+                    "url": (
+                        "https://www.oracle.com/security-alerts/cpujul2022.html"
+                    ),
                 },
                 {
                     "summary": "NetApp Advisory",
@@ -1586,7 +1751,9 @@ def test_add_vulnerabilities():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "REQUIRED",
-                        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["spring-core"],
@@ -1618,13 +1785,15 @@ def test_add_vulnerabilities():
                 {
                     "category": "general",
                     "details": "Vulnerability Description",
-                    "text": "# Jettison memory exhaustion Those using Jettison to "
-                    "parse untrusted XML or JSON data may be vulnerable to "
-                    "Denial of Service attacks (DOS). If the parser is "
-                    "running on user supplied input, an attacker may supply "
-                    "content that causes the parser to crash by Out of "
-                    "memory. This effect may support a denial of service "
-                    "attack.",
+                    "text": (
+                        "# Jettison memory exhaustion Those using Jettison to"
+                        " parse untrusted XML or JSON data may be vulnerable to"
+                        " Denial of Service attacks (DOS). If the parser is"
+                        " running on user supplied input, an attacker may"
+                        " supply content that causes the parser to crash by Out"
+                        " of memory. This effect may support a denial of"
+                        " service attack."
+                    ),
                 },
             ],
             "product_status": {
@@ -1646,7 +1815,9 @@ def test_add_vulnerabilities():
                 },
                 {
                     "summary": "GitHub Issue",
-                    "url": "https://github.com/jettison-json/jettison/issues/45",
+                    "url": (
+                        "https://github.com/jettison-json/jettison/issues/45"
+                    ),
                 },
                 {
                     "summary": "Chromium Issue",
@@ -1666,7 +1837,9 @@ def test_add_vulnerabilities():
                         "privilegesRequired": "NONE",
                         "scope": "UNCHANGED",
                         "userInteraction": "REQUIRED",
-                        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                        "vectorString": (
+                            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+                        ),
                         "version": "3.1",
                     },
                     "products": ["jettison"],

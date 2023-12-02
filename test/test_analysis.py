@@ -157,7 +157,9 @@ def test_bom_dependency_tree():
             ],
         },
         {
-            "ref": "pkg:maven/org.apache.logging.log4j/log4j-api@2.12.1?type=jar",
+            "ref": (
+                "pkg:maven/org.apache.logging.log4j/log4j-api@2.12.1?type=jar"
+            ),
             "dependsOn": [],
         },
         {
@@ -182,7 +184,9 @@ def test_bom_dependency_tree():
             ],
         },
         {
-            "ref": "pkg:maven/org.springframework/spring-tx@5.2.5.RELEASE?type=jar",
+            "ref": (
+                "pkg:maven/org.springframework/spring-tx@5.2.5.RELEASE?type=jar"
+            ),
             "dependsOn": [
                 "pkg:maven/org.springframework/spring-beans@5.2.5.RELEASE?type=jar",
                 "pkg:maven/org.springframework/spring-core@5.2.5.RELEASE?type=jar",
@@ -339,7 +343,9 @@ def test_bom_dependency_tree():
             ],
         },
         {
-            "ref": "pkg:maven/org.jboss.logging/jboss-logging@3.4.1.Final?type=jar",
+            "ref": (
+                "pkg:maven/org.jboss.logging/jboss-logging@3.4.1.Final?type=jar"
+            ),
             "dependsOn": [],
         },
         {
@@ -403,10 +409,14 @@ def test_bom_dependency_tree():
         },
         {
             "ref": "pkg:maven/org.bouncycastle/bcpkix-jdk15on@1.65?type=jar",
-            "dependsOn": ["pkg:maven/org.bouncycastle/bcprov-jdk15on@1.65?type=jar"],
+            "dependsOn": [
+                "pkg:maven/org.bouncycastle/bcprov-jdk15on@1.65?type=jar"
+            ],
         },
         {
-            "ref": "pkg:maven/com.sun.activation/jakarta.activation@1.2.2?type=jar",
+            "ref": (
+                "pkg:maven/com.sun.activation/jakarta.activation@1.2.2?type=jar"
+            ),
             "dependsOn": [],
         },
         {
@@ -473,7 +483,9 @@ def test_bom_dependency_tree():
         },
         {"ref": "pkg:maven/org.ow2.asm/asm@5.0.4?type=jar", "dependsOn": []},
         {
-            "ref": "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@2.3.3?type=jar",
+            "ref": (
+                "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@2.3.3?type=jar"
+            ),
             "dependsOn": [
                 "pkg:maven/jakarta.activation/jakarta.activation-api@1.2.2?type=jar"
             ],
@@ -491,7 +503,9 @@ def test_bom_dependency_tree():
             ],
         },
         {
-            "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.5.2?type=jar",
+            "ref": (
+                "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.5.2?type=jar"
+            ),
             "dependsOn": [
                 "pkg:maven/org.apiguardian/apiguardian-api@1.1.0?type=jar",
                 "pkg:maven/org.opentest4j/opentest4j@1.2.0?type=jar",
@@ -508,7 +522,9 @@ def test_bom_dependency_tree():
         },
         {
             "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.5.2?type=jar",
-            "dependsOn": ["pkg:maven/org.apiguardian/apiguardian-api@1.1.0?type=jar"],
+            "dependsOn": [
+                "pkg:maven/org.apiguardian/apiguardian-api@1.1.0?type=jar"
+            ],
         },
         {
             "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.5.2?type=jar",
@@ -668,25 +684,31 @@ def test_locate_pkg_in_tree(test_bom_dependency_tree, test_js_deps_data):
         "pkg:npm/engine.io@6.2.1",
         "",
         test_js_deps_data,
-    )[
-        0
-    ] == ["pkg:npm/socket.io@4.5.4", "pkg:npm/engine.io@6.2.1"]
+    )[0] == ["pkg:npm/socket.io@4.5.4", "pkg:npm/engine.io@6.2.1"]
 
 
 def test_purl_usages():
     test_evinse_file = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), "data", "bom-evinse-java.json"
+        os.path.dirname(os.path.realpath(__file__)),
+        "data",
+        "bom-evinse-java.json",
     )
     direct_purls, reached_purls = analysis.find_purl_usages(
         test_evinse_file, None, None
     )
     assert direct_purls == {
         "pkg:maven/org.springframework/spring-jdbc@5.2.5.RELEASE?type=jar": 5,
-        "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@9.0.33?type=jar": 12,
-        "pkg:maven/org.springframework/spring-context@5.2.5.RELEASE?type=jar": 12,
+        "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@9.0.33?type=jar": (
+            12
+        ),
+        "pkg:maven/org.springframework/spring-context@5.2.5.RELEASE?type=jar": (
+            12
+        ),
         "pkg:maven/com.auth0/java-jwt@3.10.2?type=jar": 4,
         "pkg:maven/org.slf4j/slf4j-api@1.7.30?type=jar": 2,
-        "pkg:maven/org.springframework.boot/spring-boot@2.2.6.RELEASE?type=jar": 1,
+        "pkg:maven/org.springframework.boot/spring-boot@2.2.6.RELEASE?type=jar": (
+            1
+        ),
         "pkg:maven/commons-io/commons-io@2.11.0?type=jar": 2,
     }
     assert not reached_purls

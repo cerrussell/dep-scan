@@ -68,12 +68,28 @@ def test_dual_license(test_license_data):
                 "spdx-id": "MIT",
                 "featured": True,
                 "hidden": False,
-                "description": "A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.",
-                "how": "Create a text file (typically named LICENSE or LICENSE.txt) in the root of your source code and copy the text of the license into the file. Replace [year] with the current year and [fullname] with the name (or names) of the copyright holders.",
+                "description": (
+                    "A short and simple permissive license with conditions only"
+                    " requiring preservation of copyright and license notices."
+                    " Licensed works, modifications, and larger works may be"
+                    " distributed under different terms and without source"
+                    " code."
+                ),
+                "how": (
+                    "Create a text file (typically named LICENSE or"
+                    " LICENSE.txt) in the root of your source code and copy the"
+                    " text of the license into the file. Replace [year] with"
+                    " the current year and [fullname] with the name (or names)"
+                    " of the copyright holders."
+                ),
                 "using": {
-                    "Babel": "https://github.com/babel/babel/blob/master/LICENSE",
+                    "Babel": (
+                        "https://github.com/babel/babel/blob/master/LICENSE"
+                    ),
                     ".NET": "https://github.com/dotnet/runtime/blob/main/LICENSE.TXT",
-                    "Rails": "https://github.com/rails/rails/blob/master/MIT-LICENSE",
+                    "Rails": (
+                        "https://github.com/rails/rails/blob/master/MIT-LICENSE"
+                    ),
                 },
                 "permissions": [
                     "commercial-use",
@@ -120,11 +136,15 @@ def test_unvendor_license(test_license_data):
     assert pkg_lic_dict == {
         "npm:jszip@3.2.2": [
             {
-                "title": "Creative Commons Attribution Non Commercial 1.0 Generic",
+                "title": (
+                    "Creative Commons Attribution Non Commercial 1.0 Generic"
+                ),
                 "spdx-id": "CC-BY-NC-1.0",
                 "osi_approved": False,
                 "fsf_libre": False,
-                "conditions": ["See https://spdx.org/licenses/CC-BY-NC-1.0.json"],
+                "conditions": [
+                    "See https://spdx.org/licenses/CC-BY-NC-1.0.json"
+                ],
                 "condition_flag": True,
             }
         ]

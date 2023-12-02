@@ -19,17 +19,15 @@ class CustomHighlighter(RegexHighlighter):
     ]
 
 
-custom_theme = Theme(
-    {
-        "atom.path": "#7c8082",
-        "atom.params": "#5a7c90",
-        "atom.opers": "#7c8082",
-        "atom.method": "#FF753D",
-        "info": "#5A7C90",
-        "warning": "#FF753D",
-        "danger": "bold red",
-    }
-)
+custom_theme = Theme({
+    "atom.path": "#7c8082",
+    "atom.params": "#5a7c90",
+    "atom.opers": "#7c8082",
+    "atom.method": "#FF753D",
+    "info": "#5A7C90",
+    "warning": "#FF753D",
+    "danger": "bold red",
+})
 
 console = Console(
     log_time=False,
@@ -61,7 +59,10 @@ for _ in ("httpx", "oras"):
     logging.getLogger(_).disabled = True
 
 # Set logging level
-if os.getenv("SCAN_DEBUG_MODE") == "debug" or os.getenv("AT_DEBUG_MODE") == "debug":
+if (
+    os.getenv("SCAN_DEBUG_MODE") == "debug"
+    or os.getenv("AT_DEBUG_MODE") == "debug"
+):
     LOG.setLevel(logging.DEBUG)
 
 DEBUG = logging.DEBUG

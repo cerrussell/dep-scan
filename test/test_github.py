@@ -15,7 +15,9 @@ def test_can_authenticate_success():
         "X-Accepted-OAuth-Scopes": "repo",
     }
 
-    httpretty.register_uri(method=httpretty.GET, uri=url, adding_headers=headers)
+    httpretty.register_uri(
+        method=httpretty.GET, uri=url, adding_headers=headers
+    )
 
     github_client = github.GitHub("test-token")
     result = github_client.can_authenticate()
@@ -57,7 +59,9 @@ def test_get_token_scopes_success():
         "X-Accepted-OAuth-Scopes": "repo",
     }
 
-    httpretty.register_uri(method=httpretty.GET, uri=url, adding_headers=headers)
+    httpretty.register_uri(
+        method=httpretty.GET, uri=url, adding_headers=headers
+    )
 
     github_client = github.GitHub("test-token")
     result = github_client.get_token_scopes()
@@ -81,7 +85,9 @@ def test_get_token_scopes_none():
         "content-type": "application/json",
     }
 
-    httpretty.register_uri(method=httpretty.GET, uri=url, adding_headers=headers)
+    httpretty.register_uri(
+        method=httpretty.GET, uri=url, adding_headers=headers
+    )
 
     github_client = github.GitHub("test-token")
     result = github_client.get_token_scopes()
@@ -97,7 +103,9 @@ def test_get_token_scopes_empty():
 
     headers = {"content-type": "application/json", "x-oauth-scopes": ""}
 
-    httpretty.register_uri(method=httpretty.GET, uri=url, adding_headers=headers)
+    httpretty.register_uri(
+        method=httpretty.GET, uri=url, adding_headers=headers
+    )
 
     github_client = github.GitHub("test-token")
     result = github_client.get_token_scopes()

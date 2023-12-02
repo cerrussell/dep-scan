@@ -43,14 +43,14 @@ def explain(
         with open(reachables_slices_file, "r", encoding="utf-8") as f:
             reachables_data = json.load(f)
             if reachables_data:
-                rsection = Markdown(
-                    """## Reachable Flows
+                rsection = Markdown("""## Reachable Flows
 
 Below are some reachable flows identified by depscan. Use the provided tips to improve the securability of your application.
-                """
-                )
+                """)
                 console.print(rsection)
-                explain_reachables(reachables_data, pkg_group_rows, project_type)
+                explain_reachables(
+                    reachables_data, pkg_group_rows, project_type
+                )
 
 
 def explain_reachables(reachables, pkg_group_rows, project_type):
@@ -82,7 +82,9 @@ def explain_reachables(reachables, pkg_group_rows, project_type):
             show_lines=True,
             caption=comment,
             show_header=False,
-            title=f"[bold]#{reachable_explanations + 1}[/bold] {source_sink_desc}",
+            title=(
+                f"[bold]#{reachable_explanations + 1}[/bold] {source_sink_desc}"
+            ),
             title_justify="left",
             min_width=150,
         )
@@ -148,11 +150,14 @@ def flow_to_source_sink(flow, purls, project_type):
     ):
         source_sink_desc = "Flow starts from a callback function"
     elif (
-        "middleware" in source_sink_desc.lower() or "route" in source_sink_desc.lower()
+        "middleware" in source_sink_desc.lower()
+        or "route" in source_sink_desc.lower()
     ):
         source_sink_desc = "Flow starts from a middlware"
     elif len(purls) == 1:
-        source_sink_desc = f"{source_sink_desc} can be used to reach this package."
+        source_sink_desc = (
+            f"{source_sink_desc} can be used to reach this package."
+        )
     else:
         source_sink_desc = (
             f"{source_sink_desc} can be used to reach {len(purls)} packages."
@@ -165,7 +170,8 @@ def filter_tags(tags):
         tags = [
             atag
             for atag in tags.split(", ")
-            if atag not in ("RESOLVED_MEMBER", "UNKNOWN_METHOD", "UNKNOWN_TYPE_DECL")
+            if atag
+            not in ("RESOLVED_MEMBER", "UNKNOWN_METHOD", "UNKNOWN_TYPE_DECL")
         ]
         return ", ".join(tags)
     return tags
@@ -180,21 +186,30 @@ def flow_to_str(flow, project_type):
         and flow.get("lineNumber")
         and not flow.get("parentFileName").startswith("unknown")
     ):
-        file_loc = f'{flow.get("parentFileName").replace("src/main/java/", "").replace("src/main/scala/", "")}#{flow.get("lineNumber")}    '
+        file_loc = (
+            f'{flow.get("parentFileName").replace("src/main/java/", "").replace("src/main/scala/", "")}#{flow.get("lineNumber")}    '
+        )
     node_desc = flow.get("code").split("\n")[0]
     tags = filter_tags(flow.get("tags"))
     if flow.get("label") == "METHOD_PARAMETER_IN":
         param_name = flow.get("name")
         if param_name == "this":
             param_name = ""
-        node_desc = f'{flow.get("parentMethodName")}([red]{param_name}[/red]) :right_arrow_curving_left:'
+        node_desc = (
+            f'{flow.get("parentMethodName")}([red]{param_name}[/red])'
+            " :right_arrow_curving_left:"
+        )
         if tags:
-            node_desc = f"{node_desc}\n[bold]Tags:[/bold] [italic]{tags}[/italic]\n"
+            node_desc = (
+                f"{node_desc}\n[bold]Tags:[/bold] [italic]{tags}[/italic]\n"
+            )
     elif flow.get("label") == "IDENTIFIER":
         if node_desc.startswith("<"):
             node_desc = flow.get("name")
         if tags:
-            node_desc = f"{node_desc}\n[bold]Tags:[/bold] [italic]{tags}[/italic]\n"
+            node_desc = (
+                f"{node_desc}\n[bold]Tags:[/bold] [italic]{tags}[/italic]\n"
+            )
     if tags:
         for ctag in (
             "validation",
@@ -209,7 +224,11 @@ def flow_to_str(flow, project_type):
                 break
     if has_check_tag:
         node_desc = f"[green]{node_desc}[/green]"
-    return file_loc, f"""[gray37]{file_loc}[/gray37]{node_desc}""", has_check_tag
+    return (
+        file_loc,
+        f"""[gray37]{file_loc}[/gray37]{node_desc}""",
+        has_check_tag,
+    )
 
 
 def explain_flows(flows, purls, project_type):
@@ -218,7 +237,8 @@ def explain_flows(flows, purls, project_type):
     comments = []
     if len(purls) > max_purl_per_flow:
         comments.append(
-            ":exclamation_mark: Refactor this flow to reduce the number of external libraries used."
+            ":exclamation_mark: Refactor this flow to reduce the number of"
+            " external libraries used."
         )
     purls_str = "\n".join(purls)
     comments.append(f"[info]Reachable Packages:[/info]\n{purls_str}")
@@ -236,7 +256,9 @@ def explain_flows(flows, purls, project_type):
             continue
         if not source_sink_desc:
             source_sink_desc = flow_to_source_sink(aflow, purls, project_type)
-        file_loc, flow_str, has_check_tag_flow = flow_to_str(aflow, project_type)
+        file_loc, flow_str, has_check_tag_flow = flow_to_str(
+            aflow, project_type
+        )
         if last_file_loc == file_loc:
             continue
         last_file_loc = file_loc
@@ -252,6 +274,8 @@ def explain_flows(flows, purls, project_type):
     if has_check_tag:
         comments.insert(
             0,
-            ":white_medium_small_square: Check if the mitigation(s) used in this flow is valid and appropriate for your security requirements.",
+            ":white_medium_small_square: Check if the mitigation(s) used in"
+            " this flow is valid and appropriate for your security"
+            " requirements.",
         )
     return tree, "\n".join(comments), source_sink_desc, has_check_tag

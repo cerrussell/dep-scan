@@ -27,28 +27,32 @@ def test_max_version():
     assert ret == "2.0.0"
     ret = utils.max_version(["1.1.0", "2.1.1", "2.0.0"])
     assert ret == "2.1.1"
-    ret = utils.max_version(
-        ["2.9.10.1", "2.9.10.4", "2.9.10", "2.8.11.5", "2.8.11", "2.8.11.2"]
-    )
+    ret = utils.max_version([
+        "2.9.10.1", "2.9.10.4", "2.9.10", "2.8.11.5", "2.8.11", "2.8.11.2"
+    ])
     assert ret == "2.9.10.4"
     ret = utils.max_version(["2.9.10", "2.9.10.4"])
     assert ret == "2.9.10.4"
 
 
 def test_get_pkg_vendor_name():
-    vendor, name = utils.get_pkg_vendor_name({"vendor": "angular", "name": "cdk"})
+    vendor, name = utils.get_pkg_vendor_name({
+        "vendor": "angular", "name": "cdk"
+    })
     assert vendor == "angular"
     assert name == "cdk"
 
-    vendor, name = utils.get_pkg_vendor_name(
-        {"vendor": "", "purl": "pkg:npm/parse5@5.1.0", "name": "parse5"}
-    )
+    vendor, name = utils.get_pkg_vendor_name({
+        "vendor": "", "purl": "pkg:npm/parse5@5.1.0", "name": "parse5"
+    })
     assert vendor == "npm"
     assert name == "parse5"
 
 
 def test_get_pkgs_by_scope():
-    scoped_pkgs = utils.get_pkgs_by_scope([{"vendor": "angular", "name": "cdk"}])
+    scoped_pkgs = utils.get_pkgs_by_scope([
+        {"vendor": "angular", "name": "cdk"}
+    ])
     assert not scoped_pkgs
 
     scoped_pkgs = utils.get_pkgs_by_scope(
@@ -73,7 +77,11 @@ def test_get_pkgs_by_scope():
                 "name": "parse5",
                 "scope": "required",
             },
-            {"vendor": "angular-devkit", "name": "build-webpack", "scope": "optional"},
+            {
+                "vendor": "angular-devkit",
+                "name": "build-webpack",
+                "scope": "optional",
+            },
         ],
     )
     assert scoped_pkgs == {

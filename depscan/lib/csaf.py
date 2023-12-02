@@ -75,40 +75,53 @@ CWE_MAP = {
     "CWE-71": "DEPRECATED: Apple .DS_Store",
     "CWE-72": "Improper Handling of Apple HFS+ Alternate Data Stream Path",
     "CWE-73": "External Control of File Name or Path",
-    "CWE-74": "Improper Neutralization of Special Elements in Output Used by "
-    "a Downstream Component",
+    "CWE-74": (
+        "Improper Neutralization of Special Elements in Output Used by "
+        "a Downstream Component"
+    ),
     "CWE-75": "Failure to Sanitize Special Elements into a Different Plane",
     "CWE-76": "Improper Neutralization of Equivalent Special Elements",
     "CWE-77": "Improper Neutralization of Special Elements used in a Command",
-    "CWE-78": "Improper Neutralization of Special Elements used in an OS "
-    "Command",
+    "CWE-78": (
+        "Improper Neutralization of Special Elements used in an OS Command"
+    ),
     "CWE-79": "Improper Neutralization of Input During Web Page Generation",
-    "CWE-80": "Improper Neutralization of Script-Related HTML Tags in a Web "
-    "Page",
+    "CWE-80": (
+        "Improper Neutralization of Script-Related HTML Tags in a Web Page"
+    ),
     "CWE-81": "Improper Neutralization of Script in an Error Message Web Page",
-    "CWE-82": "Improper Neutralization of Script in Attributes of IMG Tags in "
-    "a Web Page",
+    "CWE-82": (
+        "Improper Neutralization of Script in Attributes of IMG Tags in "
+        "a Web Page"
+    ),
     "CWE-83": "Improper Neutralization of Script in Attributes in a Web Page",
     "CWE-84": "Improper Neutralization of Encoded URI Schemes in a Web Page",
     "CWE-85": "Doubled Character XSS Manipulations",
-    "CWE-86": "Improper Neutralization of Invalid Characters in Identifiers "
-    "in Web Pages",
+    "CWE-86": (
+        "Improper Neutralization of Invalid Characters in Identifiers "
+        "in Web Pages"
+    ),
     "CWE-87": "Improper Neutralization of Alternate XSS Syntax",
     "CWE-88": "Improper Neutralization of Argument Delimiters in a Command",
-    "CWE-89": "Improper Neutralization of Special Elements used in an SQL "
-    "Command",
-    "CWE-90": "Improper Neutralization of Special Elements used in an LDAP "
-    "Query",
+    "CWE-89": (
+        "Improper Neutralization of Special Elements used in an SQL Command"
+    ),
+    "CWE-90": (
+        "Improper Neutralization of Special Elements used in an LDAP Query"
+    ),
     "CWE-91": "XML Injection",
     "CWE-92": "DEPRECATED: Improper Sanitization of Custom Special Characters",
     "CWE-93": "Improper Neutralization of CRLF Sequences",
     "CWE-94": "Improper Control of Generation of Code",
-    "CWE-95": "Improper Neutralization of Directives in Dynamically Evaluated "
-    "Code",
+    "CWE-95": (
+        "Improper Neutralization of Directives in Dynamically Evaluated Code"
+    ),
     "CWE-96": "Improper Neutralization of Directives in Statically Saved Code",
     "CWE-97": "Improper Neutralization of Server-Side Includes",
-    "CWE-98": "Improper Control of Filename for Include/Require Statement in "
-    "PHP Program",
+    "CWE-98": (
+        "Improper Control of Filename for Include/Require Statement in "
+        "PHP Program"
+    ),
     "CWE-99": "Improper Control of Resource Identifiers",
     "CWE-102": "Struts: Duplicate Validation Forms",
     "CWE-103": "Struts: Incomplete validate",
@@ -127,8 +140,10 @@ CWE_MAP = {
     "CWE-116": "Improper Encoding or Escaping of Output",
     "CWE-117": "Improper Output Neutralization for Logs",
     "CWE-118": "Incorrect Access of Indexable Resource",
-    "CWE-119": "Improper Restriction of Operations within the Bounds of a "
-    "Memory Buffer",
+    "CWE-119": (
+        "Improper Restriction of Operations within the Bounds of a "
+        "Memory Buffer"
+    ),
     "CWE-120": "Buffer Copy without Checking Size of Input",
     "CWE-121": "Stack-based Buffer Overflow",
     "CWE-122": "Heap-based Buffer Overflow",
@@ -212,10 +227,12 @@ CWE_MAP = {
     "CWE-208": "Observable Timing Discrepancy",
     "CWE-209": "Generation of Error Message Containing Sensitive Information",
     "CWE-210": "Self-generated Error Message Containing Sensitive Information",
-    "CWE-211": "Externally-Generated Error Message Containing Sensitive "
-    "Information",
-    "CWE-212": "Improper Removal of Sensitive Information Before Storage or "
-    "Transfer",
+    "CWE-211": (
+        "Externally-Generated Error Message Containing Sensitive Information"
+    ),
+    "CWE-212": (
+        "Improper Removal of Sensitive Information Before Storage or Transfer"
+    ),
     "CWE-213": "Exposure of Sensitive Information Due to Incompatible Policies",
     "CWE-214": "Invocation of Process Using Visible Sensitive Information",
     "CWE-215": "Insertion of Sensitive Information Into Debugging Code",
@@ -344,8 +361,9 @@ CWE_MAP = {
     "CWE-347": "Improper Verification of Cryptographic Signature",
     "CWE-348": "Use of Less Trusted Source",
     "CWE-349": "Acceptance of Extraneous Untrusted Data With Trusted Data",
-    "CWE-350": "Reliance on Reverse DNS Resolution for a Security-Critical "
-    "Action",
+    "CWE-350": (
+        "Reliance on Reverse DNS Resolution for a Security-Critical Action"
+    ),
     "CWE-351": "Insufficient Type Distinction",
     "CWE-352": "Cross-Site Request Forgery",
     "CWE-353": "Missing Support for Integrity Check",
@@ -353,11 +371,14 @@ CWE_MAP = {
     "CWE-356": "Product UI does not Warn User of Unsafe Actions",
     "CWE-357": "Insufficient UI Warning of Dangerous Operations",
     "CWE-358": "Improperly Implemented Security Check for Standard",
-    "CWE-359": "Exposure of Private Personal Information to an Unauthorized "
-    "Actor",
+    "CWE-359": (
+        "Exposure of Private Personal Information to an Unauthorized Actor"
+    ),
     "CWE-360": "Trust of System Event Data",
-    "CWE-362": "Concurrent Execution using Shared Resource with Improper "
-    "Synchronization",
+    "CWE-362": (
+        "Concurrent Execution using Shared Resource with Improper "
+        "Synchronization"
+    ),
     "CWE-363": "Race Condition Enabling Link Following",
     "CWE-364": "Signal Handler Race Condition",
     "CWE-365": "DEPRECATED: Race Condition in Switch",
@@ -372,8 +393,9 @@ CWE_MAP = {
     "CWE-375": "Returning a Mutable Object to an Untrusted Caller",
     "CWE-377": "Insecure Temporary File",
     "CWE-378": "Creation of Temporary File With Insecure Permissions",
-    "CWE-379": "Creation of Temporary File in Directory with Insecure "
-    "Permissions",
+    "CWE-379": (
+        "Creation of Temporary File in Directory with Insecure Permissions"
+    ),
     "CWE-382": "J2EE Bad Practices: Use of System.exit",
     "CWE-383": "J2EE Bad Practices: Direct Use of Threads",
     "CWE-384": "Session Fixation",
@@ -384,8 +406,9 @@ CWE_MAP = {
     "CWE-392": "Missing Report of Error Condition",
     "CWE-393": "Return of Wrong Status Code",
     "CWE-394": "Unexpected Status Code or Return Value",
-    "CWE-395": "Use of NullPointerException Catch to Detect NULL Pointer "
-    "Dereference",
+    "CWE-395": (
+        "Use of NullPointerException Catch to Detect NULL Pointer Dereference"
+    ),
     "CWE-396": "Declaration of Catch for Generic Exception",
     "CWE-397": "Declaration of Throws for Generic Exception",
     "CWE-400": "Uncontrolled Resource Consumption",
@@ -416,12 +439,14 @@ CWE_MAP = {
     "CWE-428": "Unquoted Search Path or Element",
     "CWE-430": "Deployment of Wrong Handler",
     "CWE-431": "Missing Handler",
-    "CWE-432": "Dangerous Signal Handler not Disabled During Sensitive "
-    "Operations",
+    "CWE-432": (
+        "Dangerous Signal Handler not Disabled During Sensitive Operations"
+    ),
     "CWE-433": "Unparsed Raw Web Content Delivery",
     "CWE-434": "Unrestricted Upload of File with Dangerous Type",
-    "CWE-435": "Improper Interaction Between Multiple Correctly-Behaving "
-    "Entities",
+    "CWE-435": (
+        "Improper Interaction Between Multiple Correctly-Behaving Entities"
+    ),
     "CWE-436": "Interpretation Conflict",
     "CWE-437": "Incomplete Model of Endpoint Features",
     "CWE-439": "Behavioral Change in New Version or Environment",
@@ -475,8 +500,10 @@ CWE_MAP = {
     "CWE-494": "Download of Code Without Integrity Check",
     "CWE-495": "Private Data Structure Returned From A Public Method",
     "CWE-496": "Public Data Assigned to Private Array-Typed Field",
-    "CWE-497": "Exposure of Sensitive System Information to an Unauthorized "
-    "Control Sphere",
+    "CWE-497": (
+        "Exposure of Sensitive System Information to an Unauthorized "
+        "Control Sphere"
+    ),
     "CWE-498": "Cloneable Class Containing Sensitive Information",
     "CWE-499": "Serializable Class Containing Sensitive Data",
     "CWE-500": "Public Static Field Not Marked Final",
@@ -498,13 +525,18 @@ CWE_MAP = {
     "CWE-523": "Unprotected Transport of Credentials",
     "CWE-524": "Use of Cache Containing Sensitive Information",
     "CWE-525": "Use of Web Browser Cache Containing Sensitive Information",
-    "CWE-526": "Cleartext Storage of Sensitive Information in an Environment "
-    "Variable",
-    "CWE-527": "Exposure of Version-Control Repository to an Unauthorized "
-    "Control Sphere",
+    "CWE-526": (
+        "Cleartext Storage of Sensitive Information in an Environment Variable"
+    ),
+    "CWE-527": (
+        "Exposure of Version-Control Repository to an Unauthorized "
+        "Control Sphere"
+    ),
     "CWE-528": "Exposure of Core Dump File to an Unauthorized Control Sphere",
-    "CWE-529": "Exposure of Access Control List Files to an Unauthorized "
-    "Control Sphere",
+    "CWE-529": (
+        "Exposure of Access Control List Files to an Unauthorized "
+        "Control Sphere"
+    ),
     "CWE-530": "Exposure of Backup File to an Unauthorized Control Sphere",
     "CWE-531": "Inclusion of Sensitive Information in Test Code",
     "CWE-532": "Insertion of Sensitive Information into Log File",
@@ -513,29 +545,37 @@ CWE_MAP = {
     "CWE-535": "Exposure of Information Through Shell Error Message",
     "CWE-536": "Servlet Runtime Error Message Containing Sensitive Information",
     "CWE-537": "Java Runtime Error Message Containing Sensitive Information",
-    "CWE-538": "Insertion of Sensitive Information into Externally-Accessible "
-    "File or Directory",
+    "CWE-538": (
+        "Insertion of Sensitive Information into Externally-Accessible "
+        "File or Directory"
+    ),
     "CWE-539": "Use of Persistent Cookies Containing Sensitive Information",
     "CWE-540": "Inclusion of Sensitive Information in Source Code",
     "CWE-541": "Inclusion of Sensitive Information in an Include File",
     "CWE-542": "DEPRECATED: Information Exposure Through Cleanup Log Files",
-    "CWE-543": "Use of Singleton Pattern Without Synchronization in a "
-    "Multithreaded Context",
+    "CWE-543": (
+        "Use of Singleton Pattern Without Synchronization in a "
+        "Multithreaded Context"
+    ),
     "CWE-544": "Missing Standardized Error Handling Mechanism",
     "CWE-545": "DEPRECATED: Use of Dynamic Class Loading",
     "CWE-546": "Suspicious Comment",
     "CWE-547": "Use of Hard-coded, Security-relevant Constants",
     "CWE-548": "Exposure of Information Through Directory Listing",
     "CWE-549": "Missing Password Field Masking",
-    "CWE-550": "Server-generated Error Message Containing Sensitive "
-    "Information",
-    "CWE-551": "Incorrect Behavior Order: Authorization Before Parsing and "
-    "Canonicalization",
+    "CWE-550": (
+        "Server-generated Error Message Containing Sensitive Information"
+    ),
+    "CWE-551": (
+        "Incorrect Behavior Order: Authorization Before Parsing and "
+        "Canonicalization"
+    ),
     "CWE-552": "Files or Directories Accessible to External Parties",
     "CWE-553": "Command Shell in Externally Accessible Directory",
     "CWE-554": "ASP.NET Misconfiguration: Not Using Input Validation Framework",
-    "CWE-555": "J2EE Misconfiguration: Plaintext Password in Configuration "
-    "File",
+    "CWE-555": (
+        "J2EE Misconfiguration: Plaintext Password in Configuration File"
+    ),
     "CWE-556": "ASP.NET Misconfiguration: Use of Identity Impersonation",
     "CWE-558": "Use of getlogin",
     "CWE-560": "Use of umask",
@@ -545,8 +585,9 @@ CWE_MAP = {
     "CWE-564": "SQL Injection: Hibernate",
     "CWE-565": "Reliance on Cookies without Validation and Integrity Checking",
     "CWE-566": "Authorization Bypass Through User-Controlled SQL Primary Key",
-    "CWE-567": "Unsynchronized Access to Shared Data in a Multithreaded "
-    "Context",
+    "CWE-567": (
+        "Unsynchronized Access to Shared Data in a Multithreaded Context"
+    ),
     "CWE-568": "finalize",
     "CWE-570": "Expression is Always False",
     "CWE-571": "Expression is Always True",
@@ -559,8 +600,9 @@ CWE_MAP = {
     "CWE-578": "EJB Bad Practices: Use of Class Loader",
     "CWE-579": "J2EE Bad Practices: Non-serializable Object Stored in Session",
     "CWE-580": "clone",
-    "CWE-581": "Object Model Violation: Just One of Equals and Hashcode "
-    "Defined",
+    "CWE-581": (
+        "Object Model Violation: Just One of Equals and Hashcode Defined"
+    ),
     "CWE-582": "Array Declared Public, Final, and Static",
     "CWE-583": "finalize",
     "CWE-584": "Return Inside Finally Block",
@@ -572,8 +614,10 @@ CWE_MAP = {
     "CWE-590": "Free of Memory not on the Heap",
     "CWE-591": "Sensitive Data Storage in Improperly Locked Memory",
     "CWE-592": "DEPRECATED: Authentication Bypass Issues",
-    "CWE-593": "Authentication Bypass: OpenSSL CTX Object Modified after SSL "
-    "Objects are Created",
+    "CWE-593": (
+        "Authentication Bypass: OpenSSL CTX Object Modified after SSL "
+        "Objects are Created"
+    ),
     "CWE-594": "J2EE Framework: Saving Unserializable Objects to Disk",
     "CWE-595": "Comparison of Object References Instead of Object Contents",
     "CWE-596": "DEPRECATED: Incorrect Semantic Object Comparison",
@@ -589,11 +633,13 @@ CWE_MAP = {
     "CWE-607": "Public Static Final Field References Mutable Object",
     "CWE-608": "Struts: Non-private Field in ActionForm Class",
     "CWE-609": "Double-Checked Locking",
-    "CWE-610": "Externally Controlled Reference to a Resource in Another "
-    "Sphere",
+    "CWE-610": (
+        "Externally Controlled Reference to a Resource in Another Sphere"
+    ),
     "CWE-611": "Improper Restriction of XML External Entity Reference",
-    "CWE-612": "Improper Authorization of Index Containing Sensitive "
-    "Information",
+    "CWE-612": (
+        "Improper Authorization of Index Containing Sensitive Information"
+    ),
     "CWE-613": "Insufficient Session Expiration",
     "CWE-614": "Sensitive Cookie in HTTPS Session Without Secure Attribute",
     "CWE-615": "Inclusion of Sensitive Information in Source Code Comments",
@@ -623,8 +669,10 @@ CWE_MAP = {
     "CWE-646": "Reliance on File Name or Extension of Externally-Supplied File",
     "CWE-647": "Use of Non-Canonical URL Paths for Authorization Decisions",
     "CWE-648": "Incorrect Use of Privileged APIs",
-    "CWE-649": "Reliance on Obfuscation or Encryption of Security-Relevant "
-    "Inputs without Integrity Checking",
+    "CWE-649": (
+        "Reliance on Obfuscation or Encryption of Security-Relevant "
+        "Inputs without Integrity Checking"
+    ),
     "CWE-650": "Trusting HTTP Permission Methods on the Server Side",
     "CWE-651": "Exposure of WSDL File Containing Sensitive Information",
     "CWE-652": "Improper Neutralization of Data within XQuery Expressions",
@@ -675,15 +723,18 @@ CWE_MAP = {
     "CWE-708": "Incorrect Ownership Assignment",
     "CWE-710": "Improper Adherence to Coding Standards",
     "CWE-732": "Incorrect Permission Assignment for Critical Resource",
-    "CWE-733": "Compiler Optimization Removal or Modification of "
-    "Security-critical Code",
+    "CWE-733": (
+        "Compiler Optimization Removal or Modification of "
+        "Security-critical Code"
+    ),
     "CWE-749": "Exposed Dangerous Method or Function",
     "CWE-754": "Improper Check for Unusual or Exceptional Conditions",
     "CWE-755": "Improper Handling of Exceptional Conditions",
     "CWE-756": "Missing Custom Error Page",
     "CWE-757": "Selection of Less-Secure Algorithm During Negotiation",
-    "CWE-758": "Reliance on Undefined, Unspecified, or Implementation-Defined "
-    "Behavior",
+    "CWE-758": (
+        "Reliance on Undefined, Unspecified, or Implementation-Defined Behavior"
+    ),
     "CWE-759": "Use of a One-Way Hash without a Salt",
     "CWE-760": "Use of a One-Way Hash with a Predictable Salt",
     "CWE-761": "Free of Pointer not at Start of Buffer",
@@ -699,21 +750,27 @@ CWE_MAP = {
     "CWE-771": "Missing Reference to Active Allocated Resource",
     "CWE-772": "Missing Release of Resource after Effective Lifetime",
     "CWE-773": "Missing Reference to Active File Descriptor or Handle",
-    "CWE-774": "Allocation of File Descriptors or Handles Without Limits or "
-    "Throttling",
-    "CWE-775": "Missing Release of File Descriptor or Handle after Effective "
-    "Lifetime",
+    "CWE-774": (
+        "Allocation of File Descriptors or Handles Without Limits or Throttling"
+    ),
+    "CWE-775": (
+        "Missing Release of File Descriptor or Handle after Effective Lifetime"
+    ),
     "CWE-776": "Improper Restriction of Recursive Entity References in DTDs",
     "CWE-777": "Regular Expression without Anchors",
     "CWE-778": "Insufficient Logging",
     "CWE-779": "Logging of Excessive Data",
     "CWE-780": "Use of RSA Algorithm without OAEP",
-    "CWE-781": "Improper Address Validation in IOCTL with METHOD_NEITHER I/O "
-    "Control Code",
+    "CWE-781": (
+        "Improper Address Validation in IOCTL with METHOD_NEITHER I/O "
+        "Control Code"
+    ),
     "CWE-782": "Exposed IOCTL with Insufficient Access Control",
     "CWE-783": "Operator Precedence Logic Error",
-    "CWE-784": "Reliance on Cookies without Validation and Integrity Checking "
-    "in a Security Decision",
+    "CWE-784": (
+        "Reliance on Cookies without Validation and Integrity Checking "
+        "in a Security Decision"
+    ),
     "CWE-785": "Use of Path Manipulation Function without Maximum-sized Buffer",
     "CWE-786": "Access of Memory Location Before Start of Buffer",
     "CWE-787": "Out-of-bounds Write",
@@ -721,8 +778,9 @@ CWE_MAP = {
     "CWE-789": "Memory Allocation with Excessive Size Value",
     "CWE-790": "Improper Filtering of Special Elements",
     "CWE-791": "Incomplete Filtering of Special Elements",
-    "CWE-792": "Incomplete Filtering of One or More Instances of Special "
-    "Elements",
+    "CWE-792": (
+        "Incomplete Filtering of One or More Instances of Special Elements"
+    ),
     "CWE-793": "Only Filtering One Instance of a Special Element",
     "CWE-794": "Incomplete Filtering of Multiple Instances of Special Elements",
     "CWE-795": "Only Filtering Special Elements at a Specified Location",
@@ -742,8 +800,9 @@ CWE_MAP = {
     "CWE-825": "Expired Pointer Dereference",
     "CWE-826": "Premature Release of Resource During Expected Lifetime",
     "CWE-827": "Improper Control of Document Type Definition",
-    "CWE-828": "Signal Handler with Functionality that is not "
-    "Asynchronous-Safe",
+    "CWE-828": (
+        "Signal Handler with Functionality that is not Asynchronous-Safe"
+    ),
     "CWE-829": "Inclusion of Functionality from Untrusted Control Sphere",
     "CWE-830": "Inclusion of Web Functionality from an Untrusted Source",
     "CWE-831": "Signal Handler Function Associated with Multiple Signals",
@@ -767,20 +826,28 @@ CWE_MAP = {
     "CWE-912": "Hidden Functionality",
     "CWE-913": "Improper Control of Dynamically-Managed Code Resources",
     "CWE-914": "Improper Control of Dynamically-Identified Variables",
-    "CWE-915": "Improperly Controlled Modification of Dynamically-Determined "
-    "Object Attributes",
+    "CWE-915": (
+        "Improperly Controlled Modification of Dynamically-Determined "
+        "Object Attributes"
+    ),
     "CWE-916": "Use of Password Hash With Insufficient Computational Effort",
-    "CWE-917": "Improper Neutralization of Special Elements used in an "
-    "Expression Language Statement",
+    "CWE-917": (
+        "Improper Neutralization of Special Elements used in an "
+        "Expression Language Statement"
+    ),
     "CWE-918": "Server-Side Request Forgery",
     "CWE-920": "Improper Restriction of Power Consumption",
-    "CWE-921": "Storage of Sensitive Data in a Mechanism without Access "
-    "Control",
+    "CWE-921": (
+        "Storage of Sensitive Data in a Mechanism without Access Control"
+    ),
     "CWE-922": "Insecure Storage of Sensitive Information",
-    "CWE-923": "Improper Restriction of Communication Channel to Intended "
-    "Endpoints",
-    "CWE-924": "Improper Enforcement of Message Integrity During Transmission "
-    "in a Communication Channel",
+    "CWE-923": (
+        "Improper Restriction of Communication Channel to Intended Endpoints"
+    ),
+    "CWE-924": (
+        "Improper Enforcement of Message Integrity During Transmission "
+        "in a Communication Channel"
+    ),
     "CWE-925": "Improper Verification of Intent by Broadcast Receiver",
     "CWE-926": "Improper Export of Android Application Components",
     "CWE-927": "Use of Implicit Intent for Sensitive Communication",
@@ -788,66 +855,92 @@ CWE_MAP = {
     "CWE-940": "Improper Verification of Source of a Communication Channel",
     "CWE-941": "Incorrectly Specified Destination in a Communication Channel",
     "CWE-942": "Permissive Cross-domain Policy with Untrusted Domains",
-    "CWE-943": "Improper Neutralization of Special Elements in Data Query "
-    "Logic",
+    "CWE-943": (
+        "Improper Neutralization of Special Elements in Data Query Logic"
+    ),
     "CWE-1004": "Sensitive Cookie Without HttpOnly Flag",
-    "CWE-1007": "Insufficient Visual Distinction of Homoglyphs Presented to "
-    "User",
+    "CWE-1007": (
+        "Insufficient Visual Distinction of Homoglyphs Presented to User"
+    ),
     "CWE-1021": "Improper Restriction of Rendered UI Layers or Frames",
     "CWE-1022": "Use of Web Link to Untrusted Target with window.opener Access",
     "CWE-1023": "Incomplete Comparison with Missing Factors",
     "CWE-1024": "Comparison of Incompatible Types",
     "CWE-1025": "Comparison Using Wrong Factors",
-    "CWE-1037": "Processor Optimization Removal or Modification of "
-    "Security-critical Code",
+    "CWE-1037": (
+        "Processor Optimization Removal or Modification of "
+        "Security-critical Code"
+    ),
     "CWE-1038": "Insecure Automated Optimizations",
-    "CWE-1039": "Automated Recognition Mechanism with Inadequate Detection or "
-    "Handling of Adversarial Input Perturbations",
+    "CWE-1039": (
+        "Automated Recognition Mechanism with Inadequate Detection or "
+        "Handling of Adversarial Input Perturbations"
+    ),
     "CWE-1041": "Use of Redundant Code",
-    "CWE-1042": "Static Member Data Element outside of a Singleton Class "
-    "Element",
-    "CWE-1043": "Data Element Aggregating an Excessively Large Number of "
-    "Non-Primitive Elements",
-    "CWE-1044": "Architecture with Number of Horizontal Layers Outside of "
-    "Expected Range",
-    "CWE-1045": "Parent Class with a Virtual Destructor and a Child Class "
-    "without a Virtual Destructor",
+    "CWE-1042": (
+        "Static Member Data Element outside of a Singleton Class Element"
+    ),
+    "CWE-1043": (
+        "Data Element Aggregating an Excessively Large Number of "
+        "Non-Primitive Elements"
+    ),
+    "CWE-1044": (
+        "Architecture with Number of Horizontal Layers Outside of "
+        "Expected Range"
+    ),
+    "CWE-1045": (
+        "Parent Class with a Virtual Destructor and a Child Class "
+        "without a Virtual Destructor"
+    ),
     "CWE-1046": "Creation of Immutable Text Using String Concatenation",
     "CWE-1047": "Modules with Circular Dependencies",
     "CWE-1048": "Invokable Control Element with Large Number of Outward Calls",
     "CWE-1049": "Excessive Data Query Operations in a Large Data Table",
     "CWE-1050": "Excessive Platform Resource Consumption within a Loop",
-    "CWE-1051": "Initialization with Hard-Coded Network Resource "
-    "Configuration Data",
+    "CWE-1051": (
+        "Initialization with Hard-Coded Network Resource Configuration Data"
+    ),
     "CWE-1052": "Excessive Use of Hard-Coded Literals in Initialization",
     "CWE-1053": "Missing Documentation for Design",
-    "CWE-1054": "Invocation of a Control Element at an Unnecessarily Deep "
-    "Horizontal Layer",
+    "CWE-1054": (
+        "Invocation of a Control Element at an Unnecessarily Deep "
+        "Horizontal Layer"
+    ),
     "CWE-1055": "Multiple Inheritance from Concrete Classes",
     "CWE-1056": "Invokable Control Element with Variadic Parameters",
-    "CWE-1057": "Data Access Operations Outside of Expected Data Manager "
-    "Component",
-    "CWE-1058": "Invokable Control Element in Multi-Thread Context with "
-    "non-Final Static Storable or Member Element",
+    "CWE-1057": (
+        "Data Access Operations Outside of Expected Data Manager Component"
+    ),
+    "CWE-1058": (
+        "Invokable Control Element in Multi-Thread Context with "
+        "non-Final Static Storable or Member Element"
+    ),
     "CWE-1059": "Insufficient Technical Documentation",
     "CWE-1060": "Excessive Number of Inefficient Server-Side Data Accesses",
     "CWE-1061": "Insufficient Encapsulation",
     "CWE-1062": "Parent Class with References to Child Class",
     "CWE-1063": "Creation of Class Instance within a Static Code Block",
-    "CWE-1064": "Invokable Control Element with Signature Containing an "
-    "Excessive Number of Parameters",
-    "CWE-1065": "Runtime Resource Management Control Element in a Component "
-    "Built to Run on Application Servers",
+    "CWE-1064": (
+        "Invokable Control Element with Signature Containing an "
+        "Excessive Number of Parameters"
+    ),
+    "CWE-1065": (
+        "Runtime Resource Management Control Element in a Component "
+        "Built to Run on Application Servers"
+    ),
     "CWE-1066": "Missing Serialization Control Element",
     "CWE-1067": "Excessive Execution of Sequential Searches of Data Resource",
     "CWE-1068": "Inconsistency Between Implementation and Documented Design",
     "CWE-1069": "Empty Exception Block",
-    "CWE-1070": "Serializable Data Element Containing non-Serializable Item "
-    "Elements",
+    "CWE-1070": (
+        "Serializable Data Element Containing non-Serializable Item Elements"
+    ),
     "CWE-1071": "Empty Code Block",
     "CWE-1072": "Data Resource Access without Use of Connection Pooling",
-    "CWE-1073": "Non-SQL Invokable Control Element with Excessive Number of "
-    "Data Resource Accesses",
+    "CWE-1073": (
+        "Non-SQL Invokable Control Element with Excessive Number of "
+        "Data Resource Accesses"
+    ),
     "CWE-1074": "Class with Excessively Deep Inheritance",
     "CWE-1075": "Unconditional Control Flow Transfer outside of Switch Block",
     "CWE-1076": "Insufficient Adherence to Expected Conventions",
@@ -857,28 +950,39 @@ CWE_MAP = {
     "CWE-1080": "Source Code File with Excessive Number of Lines of Code",
     "CWE-1082": "Class Instance Self Destruction Control Element",
     "CWE-1083": "Data Access from Outside Expected Data Manager Component",
-    "CWE-1084": "Invokable Control Element with Excessive File or Data Access "
-    "Operations",
-    "CWE-1085": "Invokable Control Element with Excessive Volume of "
-    "Commented-out Code",
+    "CWE-1084": (
+        "Invokable Control Element with Excessive File or Data Access "
+        "Operations"
+    ),
+    "CWE-1085": (
+        "Invokable Control Element with Excessive Volume of Commented-out Code"
+    ),
     "CWE-1086": "Class with Excessive Number of Child Classes",
     "CWE-1087": "Class with Virtual Method without a Virtual Destructor",
     "CWE-1088": "Synchronous Access of Remote Resource without Timeout",
     "CWE-1089": "Large Data Table with Excessive Number of Indices",
-    "CWE-1090": "Method Containing Access of a Member Element from Another "
-    "Class",
+    "CWE-1090": (
+        "Method Containing Access of a Member Element from Another Class"
+    ),
     "CWE-1091": "Use of Object without Invoking Destructor Method",
-    "CWE-1092": "Use of Same Invokable Control Element in Multiple "
-    "Architectural Layers",
+    "CWE-1092": (
+        "Use of Same Invokable Control Element in Multiple Architectural Layers"
+    ),
     "CWE-1093": "Excessively Complex Data Representation",
     "CWE-1094": "Excessive Index Range Scan for a Data Resource",
     "CWE-1095": "Loop Condition Value Update within the Loop",
-    "CWE-1096": "Singleton Class Instance Creation without Proper Locking or "
-    "Synchronization",
-    "CWE-1097": "Persistent Storable Data Element without Associated "
-    "Comparison Control Element",
-    "CWE-1098": "Data Element containing Pointer Item without Proper Copy "
-    "Control Element",
+    "CWE-1096": (
+        "Singleton Class Instance Creation without Proper Locking or "
+        "Synchronization"
+    ),
+    "CWE-1097": (
+        "Persistent Storable Data Element without Associated "
+        "Comparison Control Element"
+    ),
+    "CWE-1098": (
+        "Data Element containing Pointer Item without Proper Copy "
+        "Control Element"
+    ),
     "CWE-1099": "Inconsistent Naming Conventions for Identifiers",
     "CWE-1100": "Insufficient Isolation of System-Dependent Functions",
     "CWE-1101": "Reliance on Runtime Component in Generated Code",
@@ -919,25 +1023,32 @@ CWE_MAP = {
     "CWE-1190": "DMA Device Enabled Too Early in Boot Phase",
     "CWE-1191": "On-Chip Debug and Test Interface With Improper Access Control",
     "CWE-1192": "System-on-Chip",
-    "CWE-1193": "Power-On of Untrusted Execution Core Before Enabling Fabric "
-    "Access Control",
+    "CWE-1193": (
+        "Power-On of Untrusted Execution Core Before Enabling Fabric "
+        "Access Control"
+    ),
     "CWE-1204": "Generation of Weak Initialization Vector",
     "CWE-1209": "Failure to Disable Reserved Bits",
     "CWE-1220": "Insufficient Granularity of Access Control",
     "CWE-1221": "Incorrect Register Defaults or Module Parameters",
-    "CWE-1222": "Insufficient Granularity of Address Regions Protected by "
-    "Register Locks",
+    "CWE-1222": (
+        "Insufficient Granularity of Address Regions Protected by "
+        "Register Locks"
+    ),
     "CWE-1223": "Race Condition for Write-Once Attributes",
     "CWE-1224": "Improper Restriction of Write-Once Bit Fields",
     "CWE-1229": "Creation of Emergent Resource",
     "CWE-1230": "Exposure of Sensitive Information Through Metadata",
     "CWE-1231": "Improper Prevention of Lock Bit Modification",
     "CWE-1232": "Improper Lock Behavior After Power State Transition",
-    "CWE-1233": "Security-Sensitive Hardware Controls with Missing Lock Bit "
-    "Protection",
+    "CWE-1233": (
+        "Security-Sensitive Hardware Controls with Missing Lock Bit Protection"
+    ),
     "CWE-1234": "Hardware Internal or Debug Modes Allow Override of Locks",
-    "CWE-1235": "Incorrect Use of Autoboxing and Unboxing for Performance "
-    "Critical Operations",
+    "CWE-1235": (
+        "Incorrect Use of Autoboxing and Unboxing for Performance "
+        "Critical Operations"
+    ),
     "CWE-1236": "Improper Neutralization of Formula Elements in a CSV File",
     "CWE-1239": "Improper Zeroization of Hardware Register",
     "CWE-1240": "Use of a Cryptographic Primitive with a Risky Implementation",
@@ -946,65 +1057,92 @@ CWE_MAP = {
     "CWE-1243": "Sensitive Non-Volatile Information Not Protected During Debug",
     "CWE-1244": "Internal Asset Exposed to Unsafe Debug Access Level or State",
     "CWE-1245": "Improper Finite State Machines",
-    "CWE-1246": "Improper Write Handling in Limited-write Non-Volatile "
-    "Memories",
+    "CWE-1246": (
+        "Improper Write Handling in Limited-write Non-Volatile Memories"
+    ),
     "CWE-1247": "Improper Protection Against Voltage and Clock Glitches",
-    "CWE-1248": "Semiconductor Defects in Hardware Logic with "
-    "Security-Sensitive Implications",
-    "CWE-1249": "Application-Level Admin Tool with Inconsistent View of "
-    "Underlying Operating System",
-    "CWE-1250": "Improper Preservation of Consistency Between Independent "
-    "Representations of Shared State",
+    "CWE-1248": (
+        "Semiconductor Defects in Hardware Logic with "
+        "Security-Sensitive Implications"
+    ),
+    "CWE-1249": (
+        "Application-Level Admin Tool with Inconsistent View of "
+        "Underlying Operating System"
+    ),
+    "CWE-1250": (
+        "Improper Preservation of Consistency Between Independent "
+        "Representations of Shared State"
+    ),
     "CWE-1251": "Mirrored Regions with Different Values",
-    "CWE-1252": "CPU Hardware Not Configured to Support Exclusivity of Write "
-    "and Execute Operations",
+    "CWE-1252": (
+        "CPU Hardware Not Configured to Support Exclusivity of Write "
+        "and Execute Operations"
+    ),
     "CWE-1253": "Incorrect Selection of Fuse Values",
     "CWE-1254": "Incorrect Comparison Logic Granularity",
     "CWE-1255": "Comparison Logic is Vulnerable to Power Side-Channel Attacks",
-    "CWE-1256": "Improper Restriction of Software Interfaces to Hardware "
-    "Features",
-    "CWE-1257": "Improper Access Control Applied to Mirrored or Aliased "
-    "Memory Regions",
-    "CWE-1258": "Exposure of Sensitive System Information Due to Uncleared "
-    "Debug Information",
+    "CWE-1256": (
+        "Improper Restriction of Software Interfaces to Hardware Features"
+    ),
+    "CWE-1257": (
+        "Improper Access Control Applied to Mirrored or Aliased Memory Regions"
+    ),
+    "CWE-1258": (
+        "Exposure of Sensitive System Information Due to Uncleared "
+        "Debug Information"
+    ),
     "CWE-1259": "Improper Restriction of Security Token Assignment",
     "CWE-1260": "Improper Handling of Overlap Between Protected Memory Ranges",
     "CWE-1261": "Improper Handling of Single Event Upsets",
     "CWE-1262": "Improper Access Control for Register Interface",
     "CWE-1263": "Improper Physical Access Control",
-    "CWE-1264": "Hardware Logic with Insecure De-Synchronization between "
-    "Control and Data Channels",
-    "CWE-1265": "Unintended Reentrant Invocation of Non-reentrant Code Via "
-    "Nested Calls",
-    "CWE-1266": "Improper Scrubbing of Sensitive Data from Decommissioned "
-    "Device",
+    "CWE-1264": (
+        "Hardware Logic with Insecure De-Synchronization between "
+        "Control and Data Channels"
+    ),
+    "CWE-1265": (
+        "Unintended Reentrant Invocation of Non-reentrant Code Via Nested Calls"
+    ),
+    "CWE-1266": (
+        "Improper Scrubbing of Sensitive Data from Decommissioned Device"
+    ),
     "CWE-1267": "Policy Uses Obsolete Encoding",
-    "CWE-1268": "Policy Privileges are not Assigned Consistently Between "
-    "Control and Data Agents",
+    "CWE-1268": (
+        "Policy Privileges are not Assigned Consistently Between "
+        "Control and Data Agents"
+    ),
     "CWE-1269": "Product Released in Non-Release Configuration",
     "CWE-1270": "Generation of Incorrect Security Tokens",
-    "CWE-1271": "Uninitialized Value on Reset for Registers Holding Security "
-    "Settings",
-    "CWE-1272": "Sensitive Information Uncleared Before Debug/Power State "
-    "Transition",
+    "CWE-1271": (
+        "Uninitialized Value on Reset for Registers Holding Security Settings"
+    ),
+    "CWE-1272": (
+        "Sensitive Information Uncleared Before Debug/Power State Transition"
+    ),
     "CWE-1273": "Device Unlock Credential Sharing",
-    "CWE-1274": "Improper Access Control for Volatile Memory Containing Boot "
-    "Code",
+    "CWE-1274": (
+        "Improper Access Control for Volatile Memory Containing Boot Code"
+    ),
     "CWE-1275": "Sensitive Cookie with Improper SameSite Attribute",
     "CWE-1276": "Hardware Child Block Incorrectly Connected to Parent System",
     "CWE-1277": "Firmware Not Updateable",
-    "CWE-1278": "Missing Protection Against Hardware Reverse Engineering "
-    "Using Integrated Circuit",
-    "CWE-1279": "Cryptographic Operations are run Before Supporting Units are "
-    "Ready",
+    "CWE-1278": (
+        "Missing Protection Against Hardware Reverse Engineering "
+        "Using Integrated Circuit"
+    ),
+    "CWE-1279": (
+        "Cryptographic Operations are run Before Supporting Units are Ready"
+    ),
     "CWE-1280": "Access Control Check Implemented After Asset is Accessed",
-    "CWE-1281": "Sequence of Processor Instructions Leads to Unexpected "
-    "Behavior",
+    "CWE-1281": (
+        "Sequence of Processor Instructions Leads to Unexpected Behavior"
+    ),
     "CWE-1282": "Assumed-Immutable Data is Stored in Writable Memory",
     "CWE-1283": "Mutable Attestation or Measurement Reporting Data",
     "CWE-1284": "Improper Validation of Specified Quantity in Input",
-    "CWE-1285": "Improper Validation of Specified Index, Position, or Offset "
-    "in Input",
+    "CWE-1285": (
+        "Improper Validation of Specified Index, Position, or Offset in Input"
+    ),
     "CWE-1286": "Improper Validation of Syntactic Correctness of Input",
     "CWE-1287": "Improper Validation of Specified Type of Input",
     "CWE-1288": "Improper Validation of Consistency within Input",
@@ -1016,39 +1154,53 @@ CWE_MAP = {
     "CWE-1294": "Insecure Security Identifier Mechanism",
     "CWE-1295": "Debug Messages Revealing Unnecessary Information",
     "CWE-1296": "Incorrect Chaining or Granularity of Debug Components",
-    "CWE-1297": "Unprotected Confidential Information on Device is Accessible "
-    "by OSAT Vendors",
+    "CWE-1297": (
+        "Unprotected Confidential Information on Device is Accessible "
+        "by OSAT Vendors"
+    ),
     "CWE-1298": "Hardware Logic Contains Race Conditions",
     "CWE-1299": "Missing Protection Mechanism for Alternate Hardware Interface",
     "CWE-1300": "Improper Protection of Physical Side Channels",
-    "CWE-1301": "Insufficient or Incomplete Data Removal within Hardware "
-    "Component",
+    "CWE-1301": (
+        "Insufficient or Incomplete Data Removal within Hardware Component"
+    ),
     "CWE-1302": "Missing Security Identifier",
     "CWE-1303": "Non-Transparent Sharing of Microarchitectural Resources",
-    "CWE-1304": "Improperly Preserved Integrity of Hardware Configuration "
-    "State During a Power Save/Restore Operation",
+    "CWE-1304": (
+        "Improperly Preserved Integrity of Hardware Configuration "
+        "State During a Power Save/Restore Operation"
+    ),
     "CWE-1310": "Missing Ability to Patch ROM Code",
     "CWE-1311": "Improper Translation of Security Attributes by Fabric Bridge",
-    "CWE-1312": "Missing Protection for Mirrored Regions in On-Chip Fabric "
-    "Firewall",
+    "CWE-1312": (
+        "Missing Protection for Mirrored Regions in On-Chip Fabric Firewall"
+    ),
     "CWE-1313": "Hardware Allows Activation of Test or Debug Logic at Runtime",
     "CWE-1314": "Missing Write Protection for Parametric Data Values",
-    "CWE-1315": "Improper Setting of Bus Controlling Capability in Fabric "
-    "End-point",
-    "CWE-1316": "Fabric-Address Map Allows Programming of Unwarranted "
-    "Overlaps of Protected and Unprotected Ranges",
+    "CWE-1315": (
+        "Improper Setting of Bus Controlling Capability in Fabric End-point"
+    ),
+    "CWE-1316": (
+        "Fabric-Address Map Allows Programming of Unwarranted "
+        "Overlaps of Protected and Unprotected Ranges"
+    ),
     "CWE-1317": "Improper Access Control in Fabric Bridge",
-    "CWE-1318": "Missing Support for Security Features in On-chip Fabrics or "
-    "Buses",
+    "CWE-1318": (
+        "Missing Support for Security Features in On-chip Fabrics or Buses"
+    ),
     "CWE-1319": "Improper Protection against Electromagnetic Fault Injection",
-    "CWE-1320": "Improper Protection for Outbound Error Messages and Alert "
-    "Signals",
-    "CWE-1321": "Improperly Controlled Modification of Object Prototype "
-    "Attributes",
+    "CWE-1320": (
+        "Improper Protection for Outbound Error Messages and Alert Signals"
+    ),
+    "CWE-1321": (
+        "Improperly Controlled Modification of Object Prototype Attributes"
+    ),
     "CWE-1322": "Use of Blocking Code in Single-threaded, Non-blocking Context",
     "CWE-1323": "Improper Management of Sensitive Trace Data",
-    "CWE-1324": "DEPRECATED: Sensitive Information Accessible by Physical "
-    "Probing of JTAG Interface",
+    "CWE-1324": (
+        "DEPRECATED: Sensitive Information Accessible by Physical "
+        "Probing of JTAG Interface"
+    ),
     "CWE-1325": "Improperly Controlled Sequential Memory Allocation",
     "CWE-1326": "Missing Immutable Root of Trust in Hardware",
     "CWE-1327": "Binding to an Unrestricted IP Address",
@@ -1060,15 +1212,20 @@ CWE_MAP = {
     "CWE-1333": "Inefficient Regular Expression Complexity",
     "CWE-1334": "Unauthorized Error Injection Can Degrade Hardware Redundancy",
     "CWE-1335": "Incorrect Bitwise Shift of Integer",
-    "CWE-1336": "Improper Neutralization of Special Elements Used in a "
-    "Template Engine",
+    "CWE-1336": (
+        "Improper Neutralization of Special Elements Used in a Template Engine"
+    ),
     "CWE-1338": "Improper Protections Against Hardware Overheating",
     "CWE-1339": "Insufficient Precision or Accuracy of a Real Number",
     "CWE-1341": "Multiple Releases of Same Resource or Handle",
-    "CWE-1342": "Information Exposure through Microarchitectural State after "
-    "Transient Execution",
-    "CWE-1351": "Improper Handling of Hardware Behavior in Exceptionally Cold "
-    "Environments",
+    "CWE-1342": (
+        "Information Exposure through Microarchitectural State after "
+        "Transient Execution"
+    ),
+    "CWE-1351": (
+        "Improper Handling of Hardware Behavior in Exceptionally Cold "
+        "Environments"
+    ),
     "CWE-1357": "Reliance on Insufficiently Trustworthy Component",
     "CWE-1384": "Improper Handling of Physical or Environmental Conditions",
     "CWE-1385": "Missing Origin Validation in WebSockets",
@@ -1127,11 +1284,13 @@ ref_map = {
     "npmjs.com/advisories/": "NPM Advisory",
     r"npmjs.com/package/@?\w+/?\w+": "NPM Package Page",
     "oracle.com/security-alerts": "Oracle Security Alert",
-    "security.snyk.io/vuln|https://snyk.io/vuln/": "Snyk Vulnerability "
-    "Database Entry",
+    "security.snyk.io/vuln|https://snyk.io/vuln/": (
+        "Snyk Vulnerability Database Entry"
+    ),
     "security.gentoo.org/glsa": "Advisory",
-    r"usn.ubuntu.com/[\d\-]+|ubuntu.com/security/notices/USN\-[\d\-]+":
-        "Ubuntu Security Notice",
+    r"usn.ubuntu.com/[\d\-]+|ubuntu.com/security/notices/USN\-[\d\-]+": (
+        "Ubuntu Security Notice"
+    ),
     r"lists.[\w\-]+.org/[\S]+announce": "Mailing List Announcement",
     r"lists.[\w\-]+.org/": "Mailing List Other",
     "blog": "Blog Post",
@@ -1187,13 +1346,11 @@ class CsafOccurence:
         [ids, vuln["references"]] = format_references(self.references)
         vuln["ids"] = ids
         vuln["scores"] = [{"cvss_v3": self.cvss_v3, "products": [self.pkg]}]
-        self.notes.append(
-            {
-                "category": "general",
-                "text": self.description,
-                "details": "Vulnerability Description",
-            }
-        )
+        self.notes.append({
+            "category": "general",
+            "text": self.description,
+            "details": "Vulnerability Description",
+        })
         vuln["notes"] = self.notes
         return vuln
 
@@ -1263,14 +1420,12 @@ def parse_cwe(cwe):
         # CSAF 2.0 only allows a single CWE per vulnerability, so we add
         # any additional CWEs to a note entry.
         else:
-            new_notes.append(
-                {
-                    "title": f"Additional CWE: {cweid}",
-                    "audience": "developers",
-                    "category": "other",
-                    "text": cwe_name,
-                }
-            )
+            new_notes.append({
+                "title": f"Additional CWE: {cweid}",
+                "audience": "developers",
+                "category": "other",
+                "text": cwe_name,
+            })
 
     return fmt_cwe, new_notes
 
@@ -1374,23 +1529,20 @@ def format_references(ref):
                 issue["host"].capitalize().replace("Github", "GitHub")
                 + " Issue"
             )
-            ids.append(
-                {
-                    "system_name": summary
-                    + (
-                        f" [{issue['owner']}/{issue['repo']}]"
-                        if issue["owner"] != "p"
-                        else f" [{issue['repo']}]"
-                    ),
-                    "text": issue["id"],
-                }
-            )
+            ids.append({
+                "system_name": summary + (
+                    f" [{issue['owner']}/{issue['repo']}]"
+                    if issue["owner"] != "p"
+                    else f" [{issue['repo']}]"
+                ),
+                "text": issue["id"],
+            })
         elif bugzilla := re.search(bugzilla_regex, url):
             system_name = f"{bugzilla['owner'].capitalize()} Bugzilla"
             system_name = system_name.replace("Redhat", "Red Hat")
-            ids.append(
-                {"system_name": f"{system_name} ID", "text": bugzilla["id"]}
-            )
+            ids.append({
+                "system_name": f"{system_name} ID", "text": bugzilla["id"]
+            })
             summary = system_name
         elif usn := re.search(usn_regex, url):
             ids.append({"system_name": summary, "text": f"USN-{usn[0]}"})
@@ -1479,13 +1631,11 @@ def parse_revision_history(tracking):
             tracking.get("initial_release_date"),
             tracking.get("current_release_date"),
         )
-        hx.append(
-            {
-                "date": choose_date,
-                "number": "1",
-                "summary": "Initial",
-            }
-        )
+        hx.append({
+            "date": choose_date,
+            "number": "1",
+            "summary": "Initial",
+        })
         tracking["current_release_date"] = choose_date
         tracking["initial_release_date"] = choose_date
     elif status == "final":
@@ -1493,13 +1643,11 @@ def parse_revision_history(tracking):
         tracking["initial_release_date"] = hx[0]["date"]
         if tracking["current_release_date"] == hx[-1]["date"]:
             tracking["current_release_date"] = dt
-        hx.append(
-            {
-                "date": tracking["current_release_date"],
-                "number": str(len(hx) + 1),
-                "summary": "Update",
-            }
-        )
+        hx.append({
+            "date": tracking["current_release_date"],
+            "number": str(len(hx) + 1),
+            "summary": "Update",
+        })
     if len(hx) > 0:
         tracking["version"] = str(
             max(int(tracking.get("version", 0)), int(hx[-1]["number"]))
@@ -1768,8 +1916,9 @@ def import_root_component(vdr_file):
             "full_product_names": [
                 {
                     "name": component.get("name"),
-                    "product_id": f"{component.get('name')}:"
-                    f"{component.get('version')}",
+                    "product_id": (
+                        f"{component.get('name')}:{component.get('version')}"
+                    ),
                     "product_identification_helper": {
                         "purl": component.get("purl"),
                     },
@@ -1815,16 +1964,18 @@ def verify_components_present(data, metadata, vdr_file):
     new_metadata = deepcopy(metadata)
     disclaimer = {
         "category": "legal_disclaimer",
-        "text": "Depscan reachable code only covers the project source code, "
-        "not the code of dependencies. A dependency may execute "
-        "vulnerable code when called even if it is not in the "
-        "project's source code. Regard the Depscan-set flag of "
-        "'code_not_in_execute_path' with this in mind.",
+        "text": (
+            "Depscan reachable code only covers the project source code, "
+            "not the code of dependencies. A dependency may execute "
+            "vulnerable code when called even if it is not in the "
+            "project's source code. Regard the Depscan-set flag of "
+            "'code_not_in_execute_path' with this in mind."
+        ),
     }
     if template["document"].get("notes"):
-        template["document"]["notes"].append(
-            {"category": "legal_disclaimer", "text": disclaimer}
-        )
+        template["document"]["notes"].append({
+            "category": "legal_disclaimer", "text": disclaimer
+        })
     else:
         template["document"]["notes"] = [disclaimer]
 
@@ -1845,8 +1996,7 @@ def verify_components_present(data, metadata, vdr_file):
 
     # Reset the id if it's one we've generated
     if re.match(
-        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}_v",
-            new_metadata["tracking"]["id"]
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}_v", new_metadata["tracking"]["id"]
     ):
         new_metadata["tracking"]["id"] = ""
 

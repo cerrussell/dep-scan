@@ -101,7 +101,7 @@ def build_args():
         action="store_true",
         default=False,
         dest="csaf",
-        help="Generate a OASIS CSAF VEX document",
+        help="Generate an OASIS CSAF 2.0 document",
     )
     parser.add_argument(
         "--sync",
@@ -280,7 +280,8 @@ def build_args():
         action="store_true",
         default=False,
         dest="explain",
-        help="Makes depscan to explain the various analysis. Useful for creating detailed reports.",
+        help="Explains the various analysis. Useful for creating detailed "
+             "reports.",
     )
     parser.add_argument(
         "--reachables-slices-file",
@@ -817,9 +818,7 @@ def main():
     db = db_lib.get()
     run_cacher = args.cache
     areport_file = (
-        args.report_file
-        if args.report_file
-        else os.path.join(reports_dir, "depscan.json")
+        args.report_file or os.path.join(reports_dir, "depscan.json")
     )
     html_file = areport_file.replace(".json", ".html")
     pdf_file = areport_file.replace(".json", ".pdf")
@@ -1049,7 +1048,7 @@ def main():
             reached_purls=reached_purls,
         )
         # Explain the results
-        if args.explain:
+        if args.explain and results:
             explainer.explain(
                 project_type,
                 src_dir,
@@ -1060,15 +1059,13 @@ def main():
                 direct_purls,
                 reached_purls,
             )
-        # CSAF VEX export
+        # CSAF 2.0 export
         if args.csaf:
             export_csaf(
-                results,
+                pkg_vulnerabilities,
                 src_dir,
                 reports_dir,
-                vdr_file,
-                direct_purls=direct_purls,
-                reached_purls=reached_purls,
+                bom_file
             )
     console.save_html(
         html_file,

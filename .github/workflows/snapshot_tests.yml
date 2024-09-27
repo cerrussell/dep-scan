@@ -41,6 +41,8 @@ jobs:
           DEPSCAN_CSAF_TEMPLATE: "/home/runner/work/dep-scan/dep-scan/contrib/csaf.toml"
         run: |
           mkdir /home/runner/work/new_snapshots
+          source venv/bin/activate
+          /home/runner/work/dep-scan/dep-scan/test/snapshots.py
 
       - name: Upload generated VDRs
         uses: actions/upload-artifact@v4

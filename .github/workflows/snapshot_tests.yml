@@ -39,6 +39,7 @@ jobs:
       - name: Generate snapshots and test
         env:
           DEPSCAN_CSAF_TEMPLATE: "/home/runner/work/dep-scan/dep-scan/contrib/csaf.toml"
+          INPUT_THANK_YOU: "I have sponsored OWASP-dep-scan."
         run: |
           mkdir /home/runner/work/new_snapshots
           source venv/bin/activate

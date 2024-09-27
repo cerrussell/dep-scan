@@ -324,8 +324,6 @@ def scan(project_type, pkg_list):
 
     :param project_type: Project Type
     :param pkg_list: List of packages
-    :param suggest_mode: True if package fix version should be normalized across
-            findings
     :returns: A list of package issue objects or dictionaries.
               A dictionary mapping package names to their aliases.
               A dictionary mapping packages to their suggested fix versions.
@@ -358,7 +356,6 @@ def summarise(
     :param results: Scan or audit results
     :param pkg_aliases: Package aliases used
     :param purl_aliases: Package URL to package name aliases
-    :param sug_version_dict: Dictionary containing version suggestions
     :param scoped_pkgs: Dict containing package scopes
     :param report_file: Output report file
     :param bom_file: SBOM file
@@ -436,7 +433,7 @@ def export_bom(bom_data, pkg_vulnerabilities, vdr_file):
         bom_data = summarise_tools(tools, metadata, bom_data)
     bom_data["vulnerabilities"] = pkg_vulnerabilities
     with open(vdr_file, mode="w", encoding="utf-8") as vdrfp:
-        json.dumps(bom_data, vdrfp, indent=4)
+        json.dump(bom_data, vdrfp, indent=4)
     LOG.debug("VDR file %s generated successfully", vdr_file)
 
 

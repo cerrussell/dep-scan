@@ -107,7 +107,7 @@ def generate_new_snapshots(bom_dir: str, output_dir: str, projects: Set):
         parser = build_parser()
         bom_file = os.path.join(bom_dir, f"{p}-bom.json")
         # vdr_file = os.path.join(output_dir, f"{p}-bom.vdr.json")
-        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir])
+        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir, "--csaf"])
         main(args)
 
 

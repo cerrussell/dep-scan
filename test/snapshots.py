@@ -1,9 +1,9 @@
 import argparse
-import csv
 import json
 import logging
 import os
 import re
+from typing import Set
 
 from custom_json_diff.lib.custom_diff import (
     compare_dicts,
@@ -12,6 +12,7 @@ from custom_json_diff.lib.custom_diff import (
 )
 from custom_json_diff.lib.custom_diff_classes import Options
 
+from depscan.cli import build_parser, main
 from depscan.lib.utils import get_description_detail
 
 
@@ -20,14 +21,28 @@ VERSION_REPLACE = re.compile(r"(?<=to version )\S+", re.IGNORECASE)
 logging.basicConfig(level=logging.DEBUG)
 
 
-def build_args(dir1, dir2,):
+def build_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--directories',
+        "--bom-dir",
+        "-b",
+        default="/home/runner/work/cdxgen-samples",
+        help="Directory containing the BOM files to analyze",
+        nargs=1,
+    )
+    parser.add_argument(
+        '--snapshot-dirs',
         '-d',
-        default=[dir1, dir2],
+        default=["/home/runner/work/depscan-snapshots", "/home/runner/work/new_snapshots"],
         help='Directories containing the snapshots to compare',
         nargs=2
+    )
+    parser.add_argument(
+        "--projects",
+        "-p",
+        default=["node-goat", "django-goat", "java-sec-code", "rasa", "restic", "syncthing", "tinydb"],
+        help="List of projects to compare",
+        nargs="+",
     )
     return parser.parse_args()
 
@@ -87,7 +102,16 @@ def get_all_purls(bom):
     return [i["purl"] for i in components if i.get("purl")]
 
 
-def generate_snapshot_diffs(dir1, dir2, repo_data):
+def generate_new_snapshots(bom_dir: str, output_dir: str, projects: Set):
+    for p in projects:
+        parser = build_parser()
+        bom_file = os.path.join(bom_dir, f"{p}-bom.json")
+        # vdr_file = os.path.join(output_dir, f"{p}-bom.vdr.json")
+        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir])
+        main(args)
+
+
+def generate_snapshot_diffs(dir1, dir2, projects):
     bom_diff_options = Options(
         allow_new_versions=True,
         allow_new_data=True,
@@ -129,21 +153,21 @@ def generate_snapshot_diffs(dir1, dir2, repo_data):
         sort_keys=[]
     )
     failed_diffs = {"bom": {}, "csaf": {}}
-    for repo in repo_data:
-        bom_diff_options.file_1 = f"{dir1}/{repo['project']}-bom.vdr.json"
-        bom_diff_options.file_2 = f"{dir2}/{repo['project']}-bom.vdr.json"
-        bom_diff_options.output = f"{dir2}/{repo['project']}-bom-diff.json"
-        bom_result, bom_summary = compare_snapshots(bom_diff_options, repo)
+    for p in projects:
+        bom_diff_options.file_1 = f"{dir1}/{p}-bom.vdr.json"
+        bom_diff_options.file_2 = f"{dir2}/{p}-bom.vdr.json"
+        bom_diff_options.output = f"{dir2}/{p}-bom-diff.json"
+        bom_result, bom_summary = compare_snapshots(bom_diff_options, p)
         if bom_result:
             print(bom_result)
-            failed_diffs["bom"] |= {repo["project"]: bom_summary}
-        csaf_diff_options.file_1 = f"{dir1}/{repo['project']}/csaf_v1.json"
-        csaf_diff_options.file_2 = f"{dir2}/{repo['project']}/csaf_v1.json"
-        csaf_diff_options.output = f"{dir2}/{repo['project']}-csaf-diff.json"
-        csaf_result, csaf_summary = compare_snapshots(csaf_diff_options, repo)
+            failed_diffs["bom"] |= {p: bom_summary}
+        csaf_diff_options.file_1 = f"{dir1}/{p}-csaf_v1.json"
+        csaf_diff_options.file_2 = f"{dir2}/{p}-csaf_v1.json"
+        csaf_diff_options.output = f"{dir2}/{p}-csaf-diff.json"
+        csaf_result, csaf_summary = compare_snapshots(csaf_diff_options, p)
         if csaf_result:
             print(csaf_result)
-            failed_diffs["csaf"] |= {repo["project"]: csaf_summary}
+            failed_diffs["csaf"] |= {p: csaf_summary}
     return failed_diffs
 
 
@@ -196,21 +220,13 @@ def migrate_old_vdr_formatting(bom_data):
     return bom_data
 
 
-def perform_snapshot_tests(dir1, dir2):
-    if failed_diffs := generate_snapshot_diffs(dir1, dir2, read_csv()):
+def perform_snapshot_tests(dir1, dir2, projects):
+    if failed_diffs := generate_snapshot_diffs(dir1, dir2, projects):
         diff_file = os.path.join(dir2, 'diffs.json')
         read_write_json(diff_file, failed_diffs)
         print(f"Results of failed diffs saved to {diff_file}")
     else:
         print("Snapshot tests passed!")
-
-
-def read_csv():
-    csv_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "repos.csv")
-    with open(csv_file, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        repo_data = list(reader)
-    return repo_data
 
 
 def read_write_json(filename, data = None):
@@ -223,6 +239,7 @@ def read_write_json(filename, data = None):
             return json.load(f)
 
 
-if __name__ == '__main__':
-    args = build_args(r'C:\Users\user\PycharmProjects\depscan-samples\v5', r'C:\Users\user\PycharmProjects\depscan-samples\v6')
-    perform_snapshot_tests(args.directories[0], args.directories[1])
+if __name__ == "__main__":
+    args = build_args()
+    generate_new_snapshots(args.bom_dir, args.snapshot_dirs[1], args.projects)
+    # perform_snapshot_tests(args.snapshot_dirs[0], args.snapshot_dirs[1], args.projects)

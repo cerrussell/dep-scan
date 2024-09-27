@@ -1,0 +1,53 @@
+name: Generate Depscan Snapshots
+
+on:
+  workflow_dispatch:
+
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.head_ref || github.run_id }}"
+  cancel-in-progress: true
+
+
+jobs:
+
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      -  name: install depscan
+         shell: bash
+         env:
+           SHELL: bash
+         run: |
+           python -m pip install --upgrade pip
+           python -m pip install .
+           git clone https://github.com/appthreat/cdxgen-samples.git /home/runner/work/cdxgen-samples
+           cd /home/runner/work/cdxgen-samples
+           git checkout b5dc7d02548bc8f8983d981dc21de5612e37731c
+
+      - name: Generate and run scripts
+        run: |
+          mkdir /home/runner/work/new_snapshots
+          python test/snapshots.py
+
+      - name: Upload generated VDRs
+        uses: actions/upload-artifact@v4
+        with:
+          name: vdrs
+          path: |
+            /home/runner/work/new_snapshots/*.vdr.json
+
+      - name: Upload generated CSAFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: csafs
+          path: |
+            /home/runner/work/new_snapshots/*.csaf_v1.json

@@ -43,7 +43,7 @@ def build_args():
     parser.add_argument(
         "--projects",
         "-p",
-        default=["node-goat", "django-goat", "java-sec-code", "rasa", "restic", "syncthing", "tinydb"],
+        default=["node-goat", "django-goat", "java-sec-code", "rasa", "restic", "tinydb"],
         help="List of projects to compare",
         nargs="+",
     )
@@ -134,9 +134,9 @@ def generate_snapshot_diffs(dir1, dir2, projects):
         if bom_result:
             print(bom_result)
             failed_diffs["bom"] |= {p: bom_summary}
-        csaf_diff_options.file_1 = f"{dir1}/{p}-csaf_v1.json"
-        csaf_diff_options.file_2 = f"{dir2}/{p}-csaf_v1.json"
-        csaf_diff_options.output = f"{dir2}/{p}-csaf-diff.json"
+        csaf_diff_options.file_1 = f"{dir1}/{p}.csaf_v1.json"
+        csaf_diff_options.file_2 = f"{dir2}/{p}.csaf_v1.json"
+        csaf_diff_options.output = f"{dir2}/{p}.csaf-diff.json"
         csaf_result, csaf_summary = compare_snapshots(csaf_diff_options, p)
         if csaf_result:
             print(csaf_result)

@@ -28,14 +28,15 @@ def build_args():
     parser.add_argument(
         "--bom-dir",
         "-b",
-        default="/home/runner/work/cdxgen-samples",
+        default="/home/runner/work/new_snapshots",
         help="Directory containing the BOM files to analyze",
         nargs=1,
     )
     parser.add_argument(
         '--snapshot-dirs',
         '-d',
-        default=["/home/runner/work/depscan-snapshots", "/home/runner/work/new_snapshots"],
+        # Preserving with the intention of allowing an output directory in the depscan cli
+        default=["/home/runner/work/original_snapshots", "/home/runner/work/new_snapshots"],
         help='Directories containing the snapshots to compare',
         nargs=2
     )
@@ -108,8 +109,7 @@ def generate_new_snapshots(bom_dir: str, output_dir: str, projects: Set):
     for p in projects:
         parser = build_parser()
         bom_file = os.path.join(bom_dir, f"{p}-bom.json")
-        # vdr_file = os.path.join(output_dir, f"{p}-bom.vdr.json")
-        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir, "--csaf"])
+        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir, "--csaf", "--no-vuln-table"])
         main(args)
 
 
@@ -118,41 +118,12 @@ def generate_snapshot_diffs(dir1, dir2, projects):
         allow_new_versions=True,
         allow_new_data=True,
         preconfig_type="bom",
-        include=["properties", "evidence", "licenses"],
-        exclude=[
-            "tools.components", "components", "dependencies","services",
-                 # "vulnerabilities.[].ratings.[].vector",
-                 # "vulnerabilities.[].description",
-                 # "vulnerabilities.[].detail",
-                 # "vulnerabilities.[].advisories",
-                 # "vulnerabilities.[].affects",
-                 # "vulnerabilities.[].source",
-                 # "vulnerabilities.[].analysis",
-                 # "vulnerabilities.[].updated",
-                 # "vulnerabilities.[].properties",
-                 # "vulnerabilities.[].references",
-                 # "vulnerabilities.[].published",
-                 # "vulnerabilities.[].recommendation",
-                 # "vulnerabilities.[].ratings",
-                 # "vulnerabilities.[].cwes"
-                 ],
-        sort_keys=["cve", "text", "url"]
+        exclude=["tools", "components", "dependencies","services"],
     )
     csaf_diff_options = Options(
         allow_new_versions=True,
         allow_new_data=True,
         preconfig_type="csaf",
-        include=[],
-        exclude=[
-            # "vulnerabilities.[].acknowledgements",
-            # "vulnerabilities.[].discovery_date",
-            # "vulnerabilities.[].ids",
-            # "vulnerabilities.[].notes",
-            # "vulnerabilities.[].product_status",
-            # "vulnerabilities.[].references",
-            # "vulnerabilities.[].scores.[].products",
-        ],
-        sort_keys=[]
     )
     failed_diffs = {"bom": {}, "csaf": {}}
     for p in projects:
@@ -244,4 +215,4 @@ def read_write_json(filename, data = None):
 if __name__ == "__main__":
     args = build_args()
     generate_new_snapshots(args.bom_dir, args.snapshot_dirs[1], args.projects)
-    # perform_snapshot_tests(args.snapshot_dirs[0], args.snapshot_dirs[1], args.projects)
+    perform_snapshot_tests(args.snapshot_dirs[0], args.snapshot_dirs[1], args.projects)

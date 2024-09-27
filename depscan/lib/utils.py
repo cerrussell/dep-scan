@@ -438,22 +438,21 @@ def render_template_report(
     and summary dict using the template_file with Jinja, rendered output is written
     to named result_file in reports directory.
     """
-    if vdr_file and os.path.isfile(vdr_file):
-        with open(vdr_file, "r", encoding="utf-8") as f:
-            bom = json.load(f)
-    else:
-        with open(bom_file, "r", encoding="utf-8") as f:
-            bom = json.load(f)
+    bom = {}
+    if vdr_file:
+        bom = json_load(vdr_file)
+    if not bom:
+        bom = json_load(bom_file)
     with open(template_file, "r", encoding="utf-8") as tmpl_file:
         template = tmpl_file.read()
     jinja_env = Environment(autoescape=False)
     jinja_tmpl = jinja_env.from_string(template)
     report_result = jinja_tmpl.render(
-        metadata=bom.get("metadata", None),
-        vulnerabilities=bom.get("vulnerabilities", None),
-        components=bom.get("components", None),
-        dependencies=bom.get("dependencies", None),
-        services=bom.get("services", None),
+        metadata=bom.get("metadata"),
+        vulnerabilities=bom.get("vulnerabilities"),
+        components=bom.get("components"),
+        dependencies=bom.get("dependencies"),
+        services=bom.get("services"),
         summary=summary,
         pkg_vulnerabilities=pkg_vulnerabilities,
         pkg_group_rows=pkg_group_rows,
@@ -641,6 +640,15 @@ def get_suggested_versions(pkg_list, project_type):
             for nk, nv in new_sug_dict.items():
                 sug_version_dict[nk] = nv
     return sug_version_dict, pkg_aliases
+
+
+def json_load(json_file: str) -> Dict:
+    try:
+        with open(json_file, "r", encoding="utf-8") as fp:
+            return json.load(fp)
+    except json.JSONDecodeError as e:
+        LOG.debug(e)
+    return {}
 
 
 def make_version_suggestions(vdrs, project_type):

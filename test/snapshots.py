@@ -66,9 +66,9 @@ def compare_snapshots(options, repo):
         result, result_summary = perform_csaf_diff(j1, j2)
     report_results(result, result_summary, options, j1, j2)
     if result != 0:
-        return f"{repo['project']} {options.preconfig_type} diff failed.", result_summary
+        return f"{repo} {options.preconfig_type} diff failed.", result_summary
     else:
-        return f"{repo['project']} {options.preconfig_type} diff succeeded.", result_summary
+        return f"{repo} {options.preconfig_type} diff succeeded.", result_summary
 
 
 def filter_normalize_jsons(filename, options):

@@ -45,6 +45,7 @@ from depscan.lib.csaf import export_csaf, write_toml
 from depscan.lib.license import build_license_data, bulk_lookup
 from depscan.lib.logger import DEBUG, LOG, console
 from depscan.lib.orasclient import download_image
+from depscan.lib.utils import json_load
 
 with contextlib.suppress(Exception):
     os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -66,6 +67,11 @@ def build_args():
     """
     Constructs command line arguments for the depscan tool
     """
+    parser = build_parser()
+    return parser.parse_args()
+
+
+def build_parser():
     parser = argparse.ArgumentParser(
         description="Fully open-source security and license audit for "
         "application dependencies and container images based on "
@@ -308,7 +314,7 @@ def build_args():
         action="version",
         version="%(prog)s " + get_version(),
     )
-    return parser.parse_args()
+    return parser
 
 
 # Deprecated
@@ -377,11 +383,9 @@ def summarise(
     pkg_vulnerabilities, pkg_group_rows = prepare_vdr(options)
     vdr_file = bom_file.replace(".json", ".vdr.json") if bom_file else None
     if pkg_vulnerabilities and bom_file:
-        try:
-            with open(bom_file, encoding="utf-8") as fp:
-                if bom_data := json.load(fp):
-                    export_bom(bom_data, pkg_vulnerabilities, vdr_file)
-        except json.JSONDecodeError:
+        if bom_data := json_load(bom_file):
+            export_bom(bom_data, pkg_vulnerabilities, vdr_file)
+        else:
             LOG.warning("Unable to generate VDR file for this scan")
     summary = summary_stats(pkg_vulnerabilities)
     return summary, vdr_file, pkg_vulnerabilities, pkg_group_rows, options
@@ -432,7 +436,7 @@ def export_bom(bom_data, pkg_vulnerabilities, vdr_file):
         bom_data = summarise_tools(tools, metadata, bom_data)
     bom_data["vulnerabilities"] = pkg_vulnerabilities
     with open(vdr_file, mode="w", encoding="utf-8") as vdrfp:
-        json.dump(bom_data, vdrfp, indent=4)
+        json.dumps(bom_data, vdrfp, indent=4)
     LOG.debug("VDR file %s generated successfully", vdr_file)
 
 
@@ -699,12 +703,11 @@ def run_server(args):
     )
 
 
-def main():
+def main(args):
     """
     Detects the project type, performs various scans and audits,
     and generates reports based on the results.
     """
-    args = build_args()
     perform_risk_audit = args.risk_audit
     # declare variables that get initialized only conditionally
     (
@@ -1079,4 +1082,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    args = build_args()
+    main(args)

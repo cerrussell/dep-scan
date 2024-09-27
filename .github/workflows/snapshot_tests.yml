@@ -29,11 +29,14 @@ jobs:
          run: |
            python -m pip install --upgrade pip
            python -m pip install .
+           python vdb --download-image
+
+      - name: Get boms
            git clone https://github.com/appthreat/cdxgen-samples.git /home/runner/work/cdxgen-samples
            cd /home/runner/work/cdxgen-samples
            git checkout b5dc7d02548bc8f8983d981dc21de5612e37731c
 
-      - name: Generate and run scripts
+      - name: Generate snapshots and test
         run: |
           mkdir /home/runner/work/new_snapshots
           python test/snapshots.py

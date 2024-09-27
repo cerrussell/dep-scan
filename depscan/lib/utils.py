@@ -594,6 +594,12 @@ def combine_vdrs(v1, v2):
     }
 
 
+def choose_source(v1, v2):
+    if v1.get("name", "") >= v2.get("name", ""):
+        return v1
+    return v2
+
+
 def get_suggested_version_map(pkg_vulnerabilities: List[Dict]) -> Dict[str, str]:
     suggested_version_map = {}
     for i, v in enumerate(pkg_vulnerabilities):

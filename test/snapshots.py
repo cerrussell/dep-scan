@@ -187,10 +187,10 @@ def perform_snapshot_tests(dir1: str, dir2: str, projects: List, v5: bool):
         print("Snapshot tests passed!")
 
 
-def read_write_json(filename: str, data = None) -> Dict:
+def read_write_json(filename: str, data: Dict = None) -> Dict:
     if data:
         with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+            json.dump(data, f, ensure_ascii=False)
         return {}
     else:
         with open(filename, 'r', encoding='utf-8') as f:

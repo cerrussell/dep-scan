@@ -65,7 +65,6 @@ jobs:
             /home/runner/work/new_snapshots/diffs.json
             /home/runner/work/new_snapshots/*.html
 
-
       - name: Exit with error
         if: ${{ env.status == 'FAILED' }}
         run: exit 1

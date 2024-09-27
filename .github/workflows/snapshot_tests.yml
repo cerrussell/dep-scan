@@ -32,6 +32,7 @@ jobs:
            python vdb --download-image
 
       - name: Get boms
+        run: |
            git clone https://github.com/appthreat/cdxgen-samples.git /home/runner/work/cdxgen-samples
            cd /home/runner/work/cdxgen-samples
            git checkout b5dc7d02548bc8f8983d981dc21de5612e37731c

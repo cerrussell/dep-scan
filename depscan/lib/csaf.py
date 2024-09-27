@@ -486,9 +486,9 @@ def export_csaf(pkg_vulnerabilities, src_dir, reports_dir, bom_file):
     :type bom_file: str
 
     """
-    toml_file_path = os.getenv(
-        "DEPSCAN_CSAF_TEMPLATE", os.path.join(src_dir, "csaf.toml")
-    )
+    toml_file_path = os.getenv("DEPSCAN_CSAF_TEMPLATE")
+    if not toml_file_path:
+        os.path.join(src_dir, "csaf.toml")
     metadata = import_csaf_toml(toml_file_path)
     metadata = toml_compatibility(metadata)
     template = parse_toml(metadata)

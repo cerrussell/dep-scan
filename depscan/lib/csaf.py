@@ -497,11 +497,8 @@ def export_csaf(pkg_vulnerabilities, src_dir, reports_dir, bom_file):
     new_results, metadata = verify_components_present(
         new_results, metadata, bom_file
     )
-
-    outfile = os.path.join(
-        reports_dir,
-        f"csaf_v{new_results['document']['tracking']['version']}.json",
-    )
+    fn = bom_file.replace("-bom.json", f".csaf_v{new_results['document']['tracking']['version']}.json")
+    outfile = os.path.join(reports_dir, fn)
 
     with open(outfile, "w", encoding="utf-8") as f:
         json.dump(new_results, f, indent=4, sort_keys=True)

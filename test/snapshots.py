@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import argparse
-import json
 import logging
 import os
 import re
@@ -15,8 +14,7 @@ from custom_json_diff.lib.custom_diff import (
 from custom_json_diff.lib.custom_diff_classes import Options
 
 from depscan.cli import build_parser, main as depscan
-from depscan.lib.utils import get_description_detail
-
+from depscan.lib.utils import get_description_detail, json_load, json_dump
 
 VERSION_REPLACE = re.compile(r"(?<=to version )\S+", re.IGNORECASE)
 
@@ -37,7 +35,6 @@ def build_args():
         "-b",
         default="/home/runner/work/new_snapshots",
         help="Directory containing the BOM files to analyze",
-        nargs=1,
     )
     parser.add_argument(
         '--snapshot-dirs',
@@ -79,11 +76,11 @@ def compare_snapshots(options: Options, v5: bool, repo: str):
 
 
 def filter_normalize_jsons(filename: str, options: Options, v5: bool):
-    data = read_write_json(filename)
+    data = json_load(filename)
     data["vulnerabilities"] = filter_years(data.get("vulnerabilities", []))
     if v5:
         data = handle_legacy_output(data, options, filename)
-    read_write_json(f"{filename.replace('.json', '.parsed.json')}", data)
+    json_dump(f"{filename.replace('.json', '.parsed.json')}", data, True)
 
 
 def filter_years(vdrs: List) -> List:
@@ -102,7 +99,7 @@ def generate_new_snapshots(bom_dir: str, output_dir: str, projects: Set):
     for p in projects:
         parser = build_parser()
         bom_file = os.path.join(bom_dir, f"{p}-bom.json")
-        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir, "--csaf", "--no-vuln-table"])
+        args = parser.parse_args(["--bom", bom_file, "--reports-dir", output_dir, "--csaf", "--no-banner", "--no-vuln-table"])
         depscan(args)
 
 
@@ -111,14 +108,14 @@ def generate_snapshot_diffs(dir1: str, dir2: str, projects: List, v5: bool):
         allow_new_versions=True,
         allow_new_data=True,
         preconfig_type="bom",
-        exclude=["tools", "components", "dependencies","services"],
-        sort_keys=["cve", "text", "url"]
+        exclude=["tools", "components", "dependencies","services", "vulnerabilities.[].source"],
+        sort_keys=["cve", "text", "url"],
     )
     csaf_diff_options = Options(
         allow_new_versions=True,
         allow_new_data=True,
         preconfig_type="csaf",
-        exclude=["vulnerabilities.[].acknowledgements"]
+        exclude=["vulnerabilities.[].acknowledgements"],
     )
     failed_diffs = {"bom": {}, "csaf": {}}
     for p in projects:
@@ -183,20 +180,10 @@ def migrate_old_vdr_formatting(bom_data: Dict):
 def perform_snapshot_tests(dir1: str, dir2: str, projects: List, v5: bool):
     if failed_diffs := generate_snapshot_diffs(dir1, dir2, projects, v5):
         diff_file = os.path.join(dir2, 'diffs.json')
-        read_write_json(diff_file, failed_diffs)
+        json_dump(diff_file, failed_diffs)
         print(f"Results of failed diffs saved to {diff_file}")
     else:
         print("Snapshot tests passed!")
-
-
-def read_write_json(filename: str, data: Dict = None) -> Dict:
-    if data:
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False)
-        return {}
-    else:
-        with open(filename, 'r', encoding='utf-8') as f:
-            return json.load(f)
 
 
 def main():

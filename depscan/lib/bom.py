@@ -10,7 +10,7 @@ import httpx
 from defusedxml.ElementTree import parse
 
 from depscan.lib.logger import LOG
-from depscan.lib.utils import cleanup_license_string, find_files
+from depscan.lib.utils import cleanup_license_string, find_files, json_load, json_dump
 
 headers = {
     "Content-Type": "application/json",
@@ -161,38 +161,36 @@ def get_pkg_list_json(jsonfile):
     return List of dicts representing extracted packages
     """
     pkgs = []
-    with open(jsonfile, encoding="utf-8") as fp:
-        try:
-            bom_data = json.load(fp)
-            if bom_data and bom_data.get("components"):
-                for comp in bom_data.get("components"):
-                    licenses = []
-                    vendor = comp.get("group")
-                    if not vendor:
-                        vendor = ""
-                    if comp.get("licenses"):
-                        for lic in comp.get("licenses"):
-                            license_obj = lic
-                            # licenses has list of dict with either license
-                            # or expression as key Only license is supported
-                            # for now
-                            if lic.get("license"):
-                                license_obj = lic.get("license")
-                            if license_obj.get("id"):
-                                licenses.append(license_obj.get("id"))
-                            elif license_obj.get("name"):
-                                licenses.append(
-                                    cleanup_license_string(
-                                        license_obj.get("name")
-                                    )
-                                )
-                    pkgs.append(
-                        {**comp, "vendor": vendor, "licenses": licenses}
-                    )
-        except Exception:
-            # Ignore json errors
-            pass
+    if bom_data := json_load(jsonfile):
+        if bom_data.get("components"):
+            for comp in bom_data.get("components"):
+                licenses, vendor = get_license_vendor(comp)
+                pkgs.append({**comp, "vendor": vendor, "licenses": licenses})
         return pkgs
+
+
+def get_license_vendor(comp):
+    licenses = []
+    vendor = comp.get("group")
+    if not vendor:
+        vendor = ""
+    if comp.get("licenses"):
+        for lic in comp.get("licenses"):
+            license_obj = lic
+            # licenses has list of dict with either license
+            # or expression as key Only license is supported
+            # for now
+            if lic.get("license"):
+                license_obj = lic.get("license")
+            if license_obj.get("id"):
+                licenses.append(license_obj.get("id"))
+            elif license_obj.get("name"):
+                licenses.append(
+                    cleanup_license_string(
+                        license_obj.get("name")
+                    )
+                )
+    return licenses, vendor
 
 
 def get_pkg_list(xmlfile):
@@ -351,10 +349,7 @@ def create_bom(project_type, bom_file, src_dir=".", deep=False, options={}):
                     try:
                         json_response = r.json()
                         if json_response:
-                            with open(
-                                bom_file, mode="w", encoding="utf-8"
-                            ) as fp:
-                                json.dump(json_response, fp)
+                            json_dump(bom_file, json_response)
                             return os.path.exists(bom_file)
                     except Exception as je:
                         LOG.error(je)

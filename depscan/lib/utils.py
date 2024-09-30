@@ -7,8 +7,9 @@ import re
 import shutil
 from collections import defaultdict
 from datetime import datetime
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, LiteralString
 
+from custom_json_diff.lib.custom_diff import load_json
 from jinja2 import Environment
 from packageurl import PackageURL
 from vdb.lib.config import PLACEHOLDER_FIX_VERSION, PLACEHOLDER_EXCLUDE_VERSION
@@ -57,9 +58,7 @@ def find_python_reqfiles(path):
     ]
     for root, dirs, files in os.walk(path):
         filter_ignored_dirs(dirs)
-        for name in req_files:
-            if name in files:
-                result.append(os.path.join(root, name))
+        result.extend(os.path.join(root, name) for name in req_files if name in files)
     return result
 
 
@@ -221,7 +220,6 @@ def search_pkgs(project_type: str | None, pkg_list: List[Dict[str, Any]]):
     """
     Method to search packages in our vulnerability database
 
-    :param db: DB instance
     :param project_type: Project type
     :param pkg_list: List of packages to search
     :returns: raw_results, pkg_aliases, purl_aliases
@@ -370,9 +368,7 @@ def get_all_imports(src_dir):
     if not py_files:
         return import_list
     for afile in py_files:
-        with open(os.path.join(afile), "rb", encoding="utf-8") as f:
-            content = f.read()
-        parsed = ast.parse(content)
+        parsed = ast.parse(file_read(os.path.join(afile), True))
         for node in ast.walk(parsed):
             if isinstance(node, ast.Import):
                 for name in node.names:
@@ -443,8 +439,7 @@ def render_template_report(
         bom = json_load(vdr_file)
     if not bom:
         bom = json_load(bom_file)
-    with open(template_file, "r", encoding="utf-8") as tmpl_file:
-        template = tmpl_file.read()
+    template = file_read(template_file)
     jinja_env = Environment(autoescape=False)
     jinja_tmpl = jinja_env.from_string(template)
     report_result = jinja_tmpl.render(
@@ -457,8 +452,7 @@ def render_template_report(
         pkg_vulnerabilities=pkg_vulnerabilities,
         pkg_group_rows=pkg_group_rows,
     )
-    with open(result_file, "w", encoding="utf-8") as outfile:
-        outfile.write(report_result)
+    file_write(result_file, report_result)
 
 
 def format_system_name(system_name):
@@ -488,7 +482,8 @@ def get_description_detail(data: Descriptions | str) -> Tuple[str, str]:
         description = detail.split("\\n")[0]
     elif "." in detail:
         description = detail.split(".")[0]
-    detail = detail.replace("\\n", " ").replace("\\t", " ").replace("\\r", " ").replace("\n", " ").replace("\t", " ").replace("\r", " ")
+    # TODO: Remove ` characters
+    detail = detail.replace("\\n", " ").replace("\\t", " ").replace("\\r", " ").replace("\n", " ").replace("\t", " ").replace("\r", " ").replace("\\`", "")
     detail = bytes.decode(encodings.utf_8.encode(detail)[0], errors="replace")
     description = description.lstrip("# ")
     return description, detail
@@ -507,19 +502,6 @@ def choose_date(d1, d2, choice):
     except TypeError:
         d3 = max(d1.date(), d2.date()) if choice == "max" else min(d1.date(), d2.date())
         return d3.strftime(TIME_FMT)
-
-
-def combine_advisories(v1, v2):
-    if not v1 or not v2:
-        return v1 or v2
-    seen_adv = set()
-    v3 = []
-    for i in v1 + v2:
-        url = i.get("url", "")
-        if url not in seen_adv:
-            v3.append(i)
-            seen_adv.add(url)
-    return v3
 
 
 def combine_affects(v1, v2):
@@ -572,7 +554,7 @@ def combine_references(v1, v2):
 
 def combine_vdrs(v1, v2):
     return {
-        "advisories": combine_advisories(v1.get("advisories", []), v2.get("advisories", [])),
+        "advisories": combine_references(v1.get("advisories", []), v2.get("advisories", [])),
         "affects": combine_affects(v1.get("affects", []), v2.get("affects", [])),
         "analysis": v1.get("analysis", "") or v2.get("analysis", ""),
         "bom-ref": v1.get("bom-ref"),
@@ -598,6 +580,19 @@ def choose_source(v1, v2):
     if v1.get("name", "") >= v2.get("name", ""):
         return v1
     return v2
+
+
+def file_read(filename: LiteralString | str | bytes, binary: bool = False):
+    if not binary:
+        with open(filename, "r", encoding="utf-8") as f:
+            return f.read()
+    with open(filename, "rb", encoding="utf-8") as f:
+        return f.read()
+
+
+def file_write(filename: LiteralString | str | bytes, contents) -> None:
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(contents)
 
 
 def get_suggested_version_map(pkg_vulnerabilities: List[Dict]) -> Dict[str, str]:
@@ -648,13 +643,31 @@ def get_suggested_versions(pkg_list, project_type):
     return sug_version_dict, pkg_aliases
 
 
-def json_load(json_file: str) -> Dict:
+def json_load(json_file: str, error_msg: str = "") -> Dict:
     try:
         with open(json_file, "r", encoding="utf-8") as fp:
             return json.load(fp)
     except json.JSONDecodeError as e:
         LOG.debug(e)
+        LOG.debug(f"Unable to load json data for {json_file}.")
+        if error_msg:
+            LOG.debug(error_msg)
     return {}
+
+
+def json_dump(filename: str, data: Dict, compact: bool = False, error_msg: str = "") -> None:
+    try:
+        if compact:
+            formatted = json.dumps(data, separators=(',', ':'), sort_keys=True)
+        else:
+            formatted = json.dumps(data, indent=2, sort_keys=True)
+    except TypeError:
+        if error_msg:
+            LOG.debug(error_msg)
+        else:
+            LOG.debug(f"Unable to serialize json data and write to {filename}.")
+        return
+    file_write(filename, formatted)
 
 
 def make_version_suggestions(vdrs, project_type):

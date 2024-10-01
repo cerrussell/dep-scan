@@ -34,6 +34,10 @@ jobs:
            source venv/bin/activate
            pip install .
            vdb --download-image
+           git clone https://github.com/appthreat/custom-json-diff.git /home/runner/work/cjd
+           cd /home/runner/work/cjd
+           git checkout ba78ed5e802a1132f638773d77255edd85be4170
+           pip install .
 
       - name: Get boms
         run: |

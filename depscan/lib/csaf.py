@@ -270,7 +270,7 @@ def get_ref_summary(url, patterns):
 
 def get_ref_summary_helper(url, patterns):
     lower_url = url.lower().rstrip("/")
-    if any(("github.com" in lower_url, "bitbucket.org" in lower_url, "chromium" in lower_url)) and "advisory" not in lower_url and "advisories" not in lower_url:
+    if any(("github.com" in lower_url, "bitbucket.org" in lower_url, "chromium" in lower_url)) and "advisory" not in lower_url and "advisories" not in lower_url and "nvd.nist.gov/vuln/detail/CVE" not in lower_url:
         value, match = get_ref_summary(url, patterns["repo_hosts"])
         if match:
             if value == "Generic":

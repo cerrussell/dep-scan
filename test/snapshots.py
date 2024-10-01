@@ -108,7 +108,7 @@ def generate_snapshot_diffs(dir1: str, dir2: str, projects: List, v5: bool):
         allow_new_versions=True,
         allow_new_data=True,
         preconfig_type="bom",
-        exclude=["tools", "components", "dependencies","services", "vulnerabilities.[].source"],
+        exclude=["tools", "components", "dependencies","services", "vulnerabilities"],
         sort_keys=["cve", "text", "url"],
     )
     csaf_diff_options = Options(

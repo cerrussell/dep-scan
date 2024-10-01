@@ -1084,8 +1084,8 @@ def classify_links(related_urls):
             clinks["Forum"] = rurl
         elif "bugzilla." in rurl or "bugs." in rurl or "chat." in rurl:
             clinks["Issue"] = rurl
-        else:
-            clinks["other"] = rurl
+        # else:
+        #     clinks["other"] = rurl
     return clinks
 
 
@@ -1290,7 +1290,7 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
             adv_id = rmatch["id"]
             if "vuldb" in i.lower():
                 adv_id = f"vuldb-{adv_id}"
-            if system_name in {"Jfrog", "Gentoo"}:
+            if system_name in {"Jfrog Advisory", "Gentoo Advisory"}:
                 adv_id, system_name = adv_ref_parsing(adv_id, i, rmatch, system_name)
             if adv_id.lower() == vid and not source:
                 source = {"name": system_name, "url": i}
@@ -1331,12 +1331,15 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
                         "source": {"name": system_name, "url": i}
                     })
         elif category == "Mailing List":
-            if rmatch := ADVISORY.search(i):
+            if "openwall" in i:
+                rmatch = config.REF_MAP["openwall"].search(i)
+                adv_id = f"openwall-{rmatch['list_type']}-msg-{rmatch['id'].replace('/', '-')}"
+            else:
+                rmatch = ADVISORY.search(i)
+                adv_id = f"{rmatch['org']}-msg-{rmatch['id']}"
+            if rmatch:
                 system_name = f"{format_system_name(rmatch['org'])} {category}"
-                refs.append({
-                    "id": f"{rmatch['org']}-msg-{rmatch['id']}",
-                    "source": {"name": system_name, "url": i}
-                })
+                refs.append({"id": f"{adv_id}", "source": {"name": system_name, "url": i}})
                 vendor.append(i)
         elif category == "Generic":
             refs.append({
@@ -1349,10 +1352,10 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
 
 
 def adv_ref_parsing(adv_id, i, match, system_name):
-    if system_name == "Gentoo":
-        adv_id = f"glsa-{match['id']}"
-    if system_name == "Jfrog":
-        system_name = "JFrog"
+    if system_name == "Gentoo Advisory":
+        adv_id = f"glsa-{adv_id}"
+    if system_name == "Jfrog Advisory":
+        system_name = "JFrog Advisory"
         if id_match := JFROG_ADVISORY.search(i):
             adv_id = id_match["id"]
     return adv_id, system_name
@@ -1749,17 +1752,9 @@ def process_vuln_occ(bom_dependency_tree, direct_purls, oci_product_types, optio
         counts.has_os_packages = True
     if pkg_requires_attn and fixed_location and purl:
         add_to_pkg_group_rows = True
-    properties = [
-        {
-            "name": "depscan:insights",
-            "value": "\\n".join(plain_insights),
-        },
-        {
-            "name": "depscan:prioritized",
-            "value": "true" if pkg_requires_attn and fixed_location and purl else "false",
-        },
-    ]
-    vuln |= {"insights": insights, "properties": properties}
+    vuln |= {
+        "insights": insights,
+        "properties": get_vuln_properties(fixed_location, pkg_requires_attn, plain_insights, purl)}
     return counts, add_to_pkg_group_rows, vuln
 
 
@@ -1998,11 +1993,23 @@ def analyze_cve_vuln(vuln, reached_purls, direct_purls, optional_pkgs, required_
     add_to_pkg_group_rows = pkg_requires_attn and fixed_location and purl
     insights = list(set(insights))
     plain_insights = list(set(plain_insights))
-    vdict["insights"] = insights
     if exploits or pocs:
-        vdict["analysis"] = get_analysis({"exploits": exploits[0] if exploits else [], "pocs": pocs[0] if pocs else []}, pkg_tree_list)
-    vdict |= {"properties": [
-        {"name": "depscan:insights", "value": "\\n".join(plain_insights)},
-        {"name": "depscan:prioritized", "value": "true" if pkg_requires_attn and fixed_location and purl else "false"},
-    ]}
+        vdict["analysis"] = get_analysis(
+            {"exploits": exploits[0] if exploits else [], "pocs": pocs[0] if pocs else []},
+            pkg_tree_list
+            )
+    vdict |= {
+        "insights": insights,
+        "properties": get_vuln_properties(fixed_location, pkg_requires_attn, plain_insights, purl)}
     return counts, vdict, add_to_pkg_group_rows
+
+
+def get_vuln_properties(fixed_location, pkg_requires_attn, plain_insights, purl):
+    properties = [{
+        "name": "depscan:prioritized",
+        "value": "true" if pkg_requires_attn and fixed_location and purl else "false",
+    }]
+    if plain_insights:
+        plain_insights.sort()
+        properties.append({"name": "depscan:insights", "value": "\\n".join(plain_insights)})
+    return properties

@@ -8,6 +8,7 @@ import os
 import sys
 import tempfile
 
+from custom_json_diff.lib.utils import json_load, json_dump, file_write
 from defusedxml.ElementTree import parse
 from quart import Quart, request
 from rich.panel import Panel
@@ -45,7 +46,6 @@ from depscan.lib.csaf import export_csaf, write_toml
 from depscan.lib.license import build_license_data, bulk_lookup
 from depscan.lib.logger import DEBUG, LOG, console
 from depscan.lib.orasclient import download_image
-from depscan.lib.utils import json_load, json_dump, file_write
 
 with contextlib.suppress(Exception):
     os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -380,10 +380,10 @@ def summarise(
     pkg_vulnerabilities, pkg_group_rows = prepare_vdr(options)
     vdr_file = bom_file.replace(".json", ".vdr.json") if bom_file else None
     if pkg_vulnerabilities and bom_file:
-        if bom_data := json_load(bom_file):
+        if bom_data := json_load(bom_file, log=LOG):
             export_bom(bom_data, pkg_vulnerabilities, vdr_file)
         else:
-            LOG.warning("Unable to generate VDR file for this scan")
+            LOG.warning("Unable to generate VDR file for this scan.")
     summary = summary_stats(pkg_vulnerabilities)
     return summary, vdr_file, pkg_vulnerabilities, pkg_group_rows, options
 
@@ -432,8 +432,7 @@ def export_bom(bom_data, pkg_vulnerabilities, vdr_file):
     if isinstance(tools, dict):
         bom_data = summarise_tools(tools, metadata, bom_data)
     bom_data["vulnerabilities"] = pkg_vulnerabilities
-    json_dump(vdr_file, bom_data)
-    LOG.debug("VDR file %s generated successfully", vdr_file)
+    json_dump(vdr_file, bom_data, error_msg=f"Unable to generate VDR file at {vdr_file}", log=LOG)
 
 
 def set_project_types(args, src_dir):

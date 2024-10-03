@@ -539,13 +539,13 @@ def combine_generic(v1, v2, keys):
 
 
 def combine_references(v1, v2):
-    if not v1 or not v2:
+    if not v1 and not v2:
         return v1 or v2
     seen_urls = set()
     v3 = []
     for i in v1 + v2:
-        url = i.get("url", "")
-        if url not in seen_urls:
+        url = i.get("url") or f"{i.get('id', '')}.{i.get('source', {}).get('url', '')}"
+        if url and url not in seen_urls:
             v3.append(i)
             seen_urls.add(url)
     return v3

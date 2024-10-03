@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 import cvss
-from custom_json_diff.lib.utils import compare_versions
+from custom_json_diff.lib.utils import compare_versions, json_load, json_dump, file_write
 from cvss import CVSSError
 from packageurl import PackageURL
 from rich import box
@@ -34,7 +34,7 @@ from depscan.lib.utils import (
     max_version,
     get_description_detail,
     format_system_name,
-    make_version_suggestions, combine_vdrs, make_purl, json_load, file_write, json_dump
+    make_version_suggestions, combine_vdrs, make_purl, combine_references
 )
 
 NEWLINE = "\\n"
@@ -397,7 +397,7 @@ def generate_console_output(pkg_vulnerabilities, bom_dependency_tree, include_pk
 
 
 def output_results(counts, direct_purls, options, pkg_group_rows, pkg_vulnerabilities, reached_purls, table):
-    json_dump("pkg_vulnerabilities.json", pkg_vulnerabilities, True)
+    json_dump("pkg_vulnerabilities.json", pkg_vulnerabilities, True, log=LOG)
     if pkg_vulnerabilities:
         console.print()
         console.print(table)
@@ -841,7 +841,7 @@ def analyse_pkg_risks(
         console.print(table)
         # Store the risk audit findings in jsonl format
         if risk_report_file:
-            file_write(risk_report_file, "\n".join([json.dumps(row) for row in report_data]))
+            file_write(risk_report_file, "\n".join([json.dumps(row) for row in report_data]), log=LOG)
     else:
         LOG.info("No package risks detected ✅")
 
@@ -1323,13 +1323,12 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
                 vendor.append(i)
             if rmatch := ADVISORY.search(i):
                 system_name = f"{format_system_name(rmatch['org'])} Mailing List"
+                refs.append({
+                    "id": f"{rmatch['org']}-msg-{rmatch['id']}",
+                    "source": {"name": system_name, "url": i}
+                })
                 if not rmatch["id"].isalpha():
                     advisories.append({"title": f"{system_name} {rmatch['id']}", "url": i})
-                if "announce" in i:
-                    refs.append({
-                        "id": f"{rmatch['org']}-msg-{rmatch['id']}",
-                        "source": {"name": system_name, "url": i}
-                    })
         elif category == "Mailing List":
             if "openwall" in i:
                 rmatch = config.REF_MAP["openwall"].search(i)
@@ -1348,7 +1347,7 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
                     "name": f"{format_system_name(rmatch['host'])} {rmatch['type'].capitalize()}",
                     "url": i}
             })
-    return advisories, refs, bug_bounty, poc, exploit, vendor, source
+    return combine_references(advisories, []), combine_references(refs, []), bug_bounty, poc, exploit, vendor, source
 
 
 def adv_ref_parsing(adv_id, i, match, system_name):

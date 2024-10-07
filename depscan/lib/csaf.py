@@ -215,9 +215,12 @@ def format_references(references: List) -> Tuple[List[Dict], List[Dict]]:
             url = r.get("url", "")
         if "Bugzilla" in system_name:
             ids.append({"system_name": system_name, "text": ref_id})
-        elif "CVE" in ref_id:
+        elif "cve-" in ref_id.lower():
             system_name = "CVE Record"
+            ref_id = f"CVE-{ref_id.lower().split('cve-')[1]}"
+            ref_id = "-".join(ref_id.split("-")[:3])
             ids.append({"system_name": system_name, "text": ref_id})
+            system_name += f" {ref_id}"
         elif any((i in ref_id for i in id_types)):
             ids.append({"system_name": system_name, "text": ref_id})
         elif "Advisory" in system_name:
@@ -225,10 +228,10 @@ def format_references(references: List) -> Tuple[List[Dict], List[Dict]]:
             system_name += f" {ref_id}"
         fmt_refs.append({"summary": system_name, "url": url})
     # remove duplicates
-    new_ids = {(idx["system_name"], idx["text"]) for idx in ids}
+    new_ids = {(idx["system_name"], idx["text"]) for idx in ids if not idx["text"].replace("-", "").isalpha()}
     ids = [{"system_name": idx[0], "text": idx[1]} for idx in new_ids]
     ids = sorted(ids, key=lambda x: x["text"])
-    new_refs = {(idx["summary"], idx["url"]) for idx in fmt_refs}
+    new_refs = {(idx["summary"], idx["url"]) for idx in fmt_refs if not idx["summary"].startswith("Cve ")}
     fmt_refs = [{"summary": idx[0], "url": idx[1]} for idx in new_refs]
     fmt_refs = sorted(fmt_refs, key=lambda x: x["url"])
     return ids, fmt_refs
@@ -480,9 +483,7 @@ def export_csaf(pkg_vulnerabilities, src_dir, reports_dir, bom_file):
     template = parse_toml(metadata)
     new_results = add_vulnerabilities(template, pkg_vulnerabilities)
     new_results = cleanup_dict(new_results)
-    new_results, metadata = verify_components_present(
-        new_results, metadata, bom_file
-    )
+    new_results, metadata = verify_components_present(new_results, metadata, bom_file)
     fn = bom_file.replace("-bom.json", f".csaf_v{new_results['document']['tracking']['version']}.json")
     outfile = os.path.join(reports_dir, fn)
     json_dump(outfile, new_results, log=LOG)

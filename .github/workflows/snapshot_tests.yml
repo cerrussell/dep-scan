@@ -27,13 +27,19 @@ jobs:
         with:
           python-version: 3.12
 
+      - name: Cache vdb
+        id: cache-vdb
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.local/share/vdb
+          key: vdb-snapshot-cache
+
       -  name: Install depscan
          run: |
            python -m pip install --upgrade pip
            python -m venv venv
            source venv/bin/activate
            pip install .
-           vdb --download-image
 
       - name: Get boms
         run: |

@@ -213,22 +213,26 @@ def format_references(references: List) -> Tuple[List[Dict], List[Dict]]:
         else:
             ref_id, system_name = extract_ids(r.get("title", ""))
             url = r.get("url", "")
+        if (tmp := ref_id.replace("-", "")) and tmp.isalpha():
+            continue
         if "Bugzilla" in system_name:
             ids.append({"system_name": system_name, "text": ref_id})
-        elif "CVE" in ref_id:
-            system_name = "CVE Record"
-            ids.append({"system_name": system_name, "text": ref_id})
+        elif "cve-" in ref_id.lower() and len(ref_id) >= 5 and ref_id[4].isdigit():
+            ref_id = f"CVE-{ref_id.lower().split('cve-')[1]}"
+            ref_id = "-".join(ref_id.split("-")[:3])
+            if len(ref_id) in range(13, 15):
+                system_name = "CVE Record"
+                ids.append({"system_name": system_name, "text": ref_id})
         elif any((i in ref_id for i in id_types)):
             ids.append({"system_name": system_name, "text": ref_id})
-        elif "Advisory" in system_name:
+        if "Advisory" in system_name and "blog" not in system_name and (tmp := ref_id.replace("-", "")) and not tmp.isalpha():
             ids.append({"system_name": system_name, "text": ref_id})
-            system_name += f" {ref_id}"
         fmt_refs.append({"summary": system_name, "url": url})
     # remove duplicates
-    new_ids = {(idx["system_name"], idx["text"]) for idx in ids}
-    ids = [{"system_name": idx[0], "text": idx[1]} for idx in new_ids]
+    new_ids = {(idx["system_name"], idx["text"]) for idx in ids if not idx["text"].replace("-", "").isalpha()}
+    ids = [{"system_name": idx[0], "text": idx[1].upper()} for idx in new_ids]
     ids = sorted(ids, key=lambda x: x["text"])
-    new_refs = {(idx["summary"], idx["url"]) for idx in fmt_refs}
+    new_refs = {(idx["summary"], idx["url"]) for idx in fmt_refs if not idx["summary"].startswith("Cve ")}
     fmt_refs = [{"summary": idx[0], "url": idx[1]} for idx in new_refs]
     fmt_refs = sorted(fmt_refs, key=lambda x: x["url"])
     return ids, fmt_refs
@@ -480,9 +484,7 @@ def export_csaf(pkg_vulnerabilities, src_dir, reports_dir, bom_file):
     template = parse_toml(metadata)
     new_results = add_vulnerabilities(template, pkg_vulnerabilities)
     new_results = cleanup_dict(new_results)
-    new_results, metadata = verify_components_present(
-        new_results, metadata, bom_file
-    )
+    new_results, metadata = verify_components_present(new_results, metadata, bom_file)
     fn = bom_file.replace("-bom.json", f".csaf_v{new_results['document']['tracking']['version']}.json")
     outfile = os.path.join(reports_dir, fn)
     json_dump(outfile, new_results, log=LOG)

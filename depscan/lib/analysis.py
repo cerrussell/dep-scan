@@ -1288,6 +1288,8 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
             advisories.append({"title": rmatch[0], "url": i})
         elif "Advisory" in category:
             adv_id = rmatch["id"]
+            if (tmp := adv_id.replace("-", "")) and tmp.isalpha() and len(tmp) < 20:
+                continue
             if "vuldb" in i.lower():
                 adv_id = f"vuldb-{adv_id}"
             if system_name in {"Jfrog Advisory", "Gentoo Advisory"}:
@@ -1305,7 +1307,7 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
             elif category == "BugBounty":
                 bug_bounty.append(i)
             else:
-                adv_id = f"{system_name.lower().replace(' ', '')}-{rmatch['id']}"
+                adv_id = f"{system_name.lower().replace(' ', '-')}-{rmatch['id']}"
                 refs.append({"id": adv_id, "source": {"name": system_name, "url": i}})
                 if system_name in {"Synology", "Samba", "CISA", "Zero Day Initiative"}:
                     advisories.append({"title": f"{system_name} Advisory {rmatch['id']}", "url": i})
@@ -1327,8 +1329,6 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
                     "id": f"{rmatch['org']}-msg-{rmatch['id']}",
                     "source": {"name": system_name, "url": i}
                 })
-                if not rmatch["id"].isalpha():
-                    advisories.append({"title": f"{system_name} {rmatch['id']}", "url": i})
         elif category == "Mailing List":
             if "openwall" in i:
                 rmatch = config.REF_MAP["openwall"].search(i)
@@ -1338,7 +1338,7 @@ def refs_to_vdr(references: References | None, vid) -> Tuple[List, List, List, L
                 adv_id = f"{rmatch['org']}-msg-{rmatch['id']}"
             if rmatch:
                 system_name = f"{format_system_name(rmatch['org'])} {category}"
-                refs.append({"id": f"{adv_id}", "source": {"name": system_name, "url": i}})
+                refs.append({"id": adv_id, "source": {"name": system_name, "url": i}})
                 vendor.append(i)
         elif category == "Generic":
             refs.append({

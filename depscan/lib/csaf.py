@@ -55,6 +55,8 @@ def vdr_to_csaf(res):
             "details": "Vulnerability Details",
         }
     ])
+    if res.get("recommendation"):
+        notes.append({"category": "other", "title": "Recommended Action", "text": res["recommendation"]})
     vuln = {
         "cwe": cwe,
         "acknowledgements": acknowledgements,

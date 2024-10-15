@@ -45,7 +45,7 @@ from depscan.lib.csaf import export_csaf, write_toml
 from depscan.lib.license import build_license_data, bulk_lookup
 from depscan.lib.logger import DEBUG, LOG, console
 from depscan.lib.orasclient import download_image
-from depscan.lib.utils import json_load
+from depscan.lib.utils import json_load, json_dump, file_write
 
 with contextlib.suppress(Exception):
     os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -324,8 +324,6 @@ def scan(project_type, pkg_list):
 
     :param project_type: Project Type
     :param pkg_list: List of packages
-    :param suggest_mode: True if package fix version should be normalized across
-            findings
     :returns: A list of package issue objects or dictionaries.
               A dictionary mapping package names to their aliases.
               A dictionary mapping packages to their suggested fix versions.
@@ -358,7 +356,6 @@ def summarise(
     :param results: Scan or audit results
     :param pkg_aliases: Package aliases used
     :param purl_aliases: Package URL to package name aliases
-    :param sug_version_dict: Dictionary containing version suggestions
     :param scoped_pkgs: Dict containing package scopes
     :param report_file: Output report file
     :param bom_file: SBOM file
@@ -435,8 +432,7 @@ def export_bom(bom_data, pkg_vulnerabilities, vdr_file):
     if isinstance(tools, dict):
         bom_data = summarise_tools(tools, metadata, bom_data)
     bom_data["vulnerabilities"] = pkg_vulnerabilities
-    with open(vdr_file, mode="w", encoding="utf-8") as vdrfp:
-        json.dumps(bom_data, vdrfp, indent=4)
+    json_dump(vdr_file, bom_data)
     LOG.debug("VDR file %s generated successfully", vdr_file)
 
 
@@ -598,9 +594,8 @@ async def run_scan():
         tmp_bom_file = tempfile.NamedTemporaryFile(
             delete=False, suffix=f".bom.{bom_file_suffix}"
         )
-        with open(tmp_bom_file.name, "w", encoding="utf-8") as f:
-            f.write(bom_file_content)
         path = tmp_bom_file.name
+        file_write(path, bom_file_content)
 
     # Path points to a project directory
     # Bug# 233. Path could be a url
@@ -645,8 +640,7 @@ async def run_scan():
             LOG.debug("Scanning %d oss dependencies for issues", len(pkg_list))
         vdb_results, pkg_aliases, purl_aliases = utils.search_pkgs(project_type, pkg_list)
         results.extend(vdb_results)
-        with open(bom_file_path, encoding="utf-8") as fp:
-            bom_data = json.load(fp)
+        bom_data = json_load(bom_file_path)
         if not bom_data:
             return (
                 {
@@ -1082,5 +1076,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    args = build_args()
-    main(args)
+    cli_args = build_args()
+    main(cli_args)

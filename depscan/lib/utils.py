@@ -9,6 +9,7 @@ from collections import defaultdict
 from datetime import datetime
 from typing import List, Dict, Any, Tuple
 
+from custom_json_diff.lib.custom_diff import load_json
 from jinja2 import Environment
 from packageurl import PackageURL
 from vdb.lib.config import PLACEHOLDER_FIX_VERSION, PLACEHOLDER_EXCLUDE_VERSION
@@ -370,9 +371,7 @@ def get_all_imports(src_dir):
     if not py_files:
         return import_list
     for afile in py_files:
-        with open(os.path.join(afile), "rb", encoding="utf-8") as f:
-            content = f.read()
-        parsed = ast.parse(content)
+        parsed = ast.parse(file_read(os.path.join(afile), True))
         for node in ast.walk(parsed):
             if isinstance(node, ast.Import):
                 for name in node.names:
@@ -438,28 +437,25 @@ def render_template_report(
     and summary dict using the template_file with Jinja, rendered output is written
     to named result_file in reports directory.
     """
-    if vdr_file and os.path.isfile(vdr_file):
-        with open(vdr_file, "r", encoding="utf-8") as f:
-            bom = json.load(f)
-    else:
-        with open(bom_file, "r", encoding="utf-8") as f:
-            bom = json.load(f)
-    with open(template_file, "r", encoding="utf-8") as tmpl_file:
-        template = tmpl_file.read()
+    bom = {}
+    if vdr_file:
+        bom = json_load(vdr_file)
+    if not bom:
+        bom = json_load(bom_file)
+    template = file_read(template_file)
     jinja_env = Environment(autoescape=False)
     jinja_tmpl = jinja_env.from_string(template)
     report_result = jinja_tmpl.render(
-        metadata=bom.get("metadata", None),
-        vulnerabilities=bom.get("vulnerabilities", None),
-        components=bom.get("components", None),
-        dependencies=bom.get("dependencies", None),
-        services=bom.get("services", None),
+        metadata=bom.get("metadata"),
+        vulnerabilities=bom.get("vulnerabilities"),
+        components=bom.get("components"),
+        dependencies=bom.get("dependencies"),
+        services=bom.get("services"),
         summary=summary,
         pkg_vulnerabilities=pkg_vulnerabilities,
         pkg_group_rows=pkg_group_rows,
     )
-    with open(result_file, "w", encoding="utf-8") as outfile:
-        outfile.write(report_result)
+    file_write(result_file, report_result)
 
 
 def format_system_name(system_name):
@@ -593,6 +589,19 @@ def combine_vdrs(v1, v2):
         "purl_prefix": v1.get("purl_prefix") or v2.get("purl_prefix"),
         "fixed_location": v1.get("fixed_location") or v2.get("fixed_location")
     }
+
+
+def file_read(filename, binary: bool = False):
+    if not binary:
+        with open(filename, "r", encoding="utf-8") as f:
+            return f.read()
+    with open(filename, "rb", encoding="utf-8") as f:
+        return f.read()
+
+
+def file_write(filename, contents) -> None:
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(contents)
 
 
 def get_suggested_version_map(pkg_vulnerabilities: List[Dict]) -> Dict[str, str]:

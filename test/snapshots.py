@@ -13,10 +13,8 @@ from custom_json_diff.lib.custom_diff import (
 )
 from custom_json_diff.lib.custom_diff_classes import Options
 
-from depscan.cli import build_parser, main
-from depscan.lib.utils import get_description_detail
-
 from depscan.cli import build_parser, main as depscan
+from depscan.lib.utils import get_description_detail, json_load, json_dump
 
 VERSION_REPLACE = re.compile(r"(?<=to version )\S+", re.IGNORECASE)
 
@@ -77,17 +75,12 @@ def compare_snapshots(options: Options, v5: bool, repo: str):
         return f"{repo} {options.preconfig_type} diff succeeded.", result_summary
 
 
-def filter_normalize_jsons(filename, options):
-    data = read_write_json(filename)
+def filter_normalize_jsons(filename: str, options: Options, v5: bool):
+    data = json_load(filename)
     data["vulnerabilities"] = filter_years(data.get("vulnerabilities", []))
-    if options.preconfig_type == "bom":
-        if filename == options.file_1:
-            data = migrate_old_vdr_formatting(data)
-        else:
-            data = handle_new_recommendation_for_comparison(data)
-    elif options.preconfig_type == "csaf":
-        data = migrate_old_csaf_formatting(data)
-    read_write_json(f"{filename.replace('.json', '.parsed.json')}", data)
+    if v5:
+        data = handle_legacy_output(data, options, filename)
+    json_dump(f"{filename.replace('.json', '.parsed.json')}", data, True)
 
 
 def filter_years(vdrs: List) -> List:
@@ -187,7 +180,7 @@ def migrate_old_vdr_formatting(bom_data: Dict):
 def perform_snapshot_tests(dir1: str, dir2: str, projects: List, v5: bool):
     if failed_diffs := generate_snapshot_diffs(dir1, dir2, projects, v5):
         diff_file = os.path.join(dir2, 'diffs.json')
-        read_write_json(diff_file, failed_diffs)
+        json_dump(diff_file, failed_diffs)
         print(f"Results of failed diffs saved to {diff_file}")
     else:
         print("Snapshot tests passed!")

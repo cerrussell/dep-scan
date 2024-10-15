@@ -1,4 +1,3 @@
-import json
 import os
 import shlex
 import shutil
@@ -7,10 +6,11 @@ import sys
 from urllib.parse import unquote_plus
 
 import httpx
+from custom_json_diff.lib.utils import json_load, json_dump
 from defusedxml.ElementTree import parse
 
 from depscan.lib.logger import LOG
-from depscan.lib.utils import cleanup_license_string, find_files, json_load, json_dump
+from depscan.lib.utils import cleanup_license_string, find_files
 
 headers = {
     "Content-Type": "application/json",
@@ -161,7 +161,7 @@ def get_pkg_list_json(jsonfile):
     return List of dicts representing extracted packages
     """
     pkgs = []
-    if bom_data := json_load(jsonfile):
+    if bom_data := json_load(jsonfile, log=LOG):
         if bom_data.get("components"):
             for comp in bom_data.get("components"):
                 licenses, vendor = get_license_vendor(comp)
@@ -309,7 +309,7 @@ def exec_cdxgen(use_bin=True):
             return None
 
 
-def create_bom(project_type, bom_file, src_dir=".", deep=False, options={}):
+def create_bom(project_type, bom_file, src_dir=".", deep=False, options=None):
     """
     Method to create BOM file by executing cdxgen command
 
@@ -321,6 +321,8 @@ def create_bom(project_type, bom_file, src_dir=".", deep=False, options={}):
     :returns: True if the command was executed. False if the executable was
     not found.
     """
+    if not options:
+        options = {}
     cdxgen_server = options.get("cdxgen_server")
     # Generate SBOM by calling cdxgen server
     if cdxgen_server:
@@ -349,7 +351,7 @@ def create_bom(project_type, bom_file, src_dir=".", deep=False, options={}):
                     try:
                         json_response = r.json()
                         if json_response:
-                            json_dump(bom_file, json_response)
+                            json_dump(bom_file, json_response, log=LOG)
                             return os.path.exists(bom_file)
                     except Exception as je:
                         LOG.error(je)

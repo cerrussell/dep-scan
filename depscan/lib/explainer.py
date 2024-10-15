@@ -1,15 +1,14 @@
-import json
 import os
 import re
 
+from custom_json_diff.lib.utils import json_load
 from rich import box
 from rich.markdown import Markdown
 from rich.table import Table
 from rich.tree import Tree
 
 from depscan.lib.config import max_purl_per_flow, max_reachable_explanations
-from depscan.lib.logger import console
-from depscan.lib.utils import json_load
+from depscan.lib.logger import console, LOG
 
 
 def explain(
@@ -41,7 +40,7 @@ def explain(
     ):
         reachables_slices_file = os.path.join(src_dir, "reachables.slices.json")
     if reachables_slices_file:
-        if (reachables_data := json_load(reachables_slices_file)) and reachables_data.get("reachables"):
+        if (reachables_data := json_load(reachables_slices_file, error_msg=f"Could not load reachables from {reachables_slices_file}", log=LOG)) and reachables_data.get("reachables"):
             rsection = Markdown(
                 """## Reachable Flows
 
